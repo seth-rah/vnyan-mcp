@@ -1,0 +1,5472 @@
+{
+  "_meta": {
+    "unityVersion": "2022.3.62f3",
+    "generatedFrom": "Assembly-CSharp.dll (decompiled offline; node classes retain real names despite obfuscation elsewhere)",
+    "typeCount": 304,
+    "note": "VNyan itself does not expose a separate app version number in an easily discoverable file - this schema is tied to whichever VNyan build shipped the above Unity engine version. If a node type is missing or a graph misbehaves after a VNyan update, check vnyan_status/rpc.health first."
+  },
+  "types": {
+    "APIMessageNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/APIMessageNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "actionSocket",
+        "jsonSocket",
+        "dictSocket"
+      ],
+      "values": [
+        "action",
+        "dict"
+      ]
+    },
+    "AdBreakNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/AdBreakNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "secondsSocket"
+      ],
+      "values": []
+    },
+    "AddBoneRotNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/AddBoneRotNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "rotXInput",
+        "rotYInput",
+        "rotZInput",
+        "smoothInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "rotx",
+        "roty",
+        "rotz",
+        "bone",
+        "space",
+        "seconds"
+      ]
+    },
+    "AmbientNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/AmbientNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "intensityInput",
+        "colorInput",
+        "smoothInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "color_r",
+        "color_g",
+        "color_b",
+        "seconds"
+      ]
+    },
+    "AppQuitNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/AppQuitNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "AppStartNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/AppStartNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "ArrayGetFlexNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ArrayGetFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "arrayNameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts",
+        "name"
+      ]
+    },
+    "ArraySetFlexNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ArraySetFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayNameInput",
+        "appendInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts",
+        "name"
+      ]
+    },
+    "ArrayToFileNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ArrayToFileNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "fileInput",
+        "arrayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "near"
+      ]
+    },
+    "ArrayValueNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ArrayValueNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "indexInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": [
+        "array",
+        "index"
+      ]
+    },
+    "AvatarLoadedNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/AvatarLoadedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "avatarSocket"
+      ],
+      "values": []
+    },
+    "AvatarPosNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/AvatarPosNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "posInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "service"
+      ]
+    },
+    "BitsNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/BitsNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputBits",
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "minValue",
+        "maxValue"
+      ]
+    },
+    "BlendshapeBinaryNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeBinaryNode",
+      "possiblyIncomplete": true,
+      "valueIn": 3,
+      "valueInFields": [
+        "listInput",
+        "bsInput",
+        "thresholdInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "bs",
+        "th"
+      ]
+    },
+    "BlendshapeConstraintNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeConstraintNode",
+      "possiblyIncomplete": true,
+      "valueIn": 3,
+      "valueInFields": [
+        "listInput",
+        "constraintInput",
+        "constrainedInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "constraint",
+        "constrained"
+      ]
+    },
+    "BlendshapeCurveNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeCurveNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "listInput",
+        "namesInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "PressInputPropertiesButton"
+      ]
+    },
+    "BlendshapeMapperNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeMapperNode",
+      "possiblyIncomplete": true,
+      "valueIn": 8,
+      "valueInFields": [
+        "listInput",
+        "sourceInput",
+        "targetInput",
+        "multiplierInput",
+        "conditionInput",
+        "minInput",
+        "maxInput",
+        "activeInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "source",
+        "target",
+        "multiplier",
+        "condition",
+        "min",
+        "max"
+      ]
+    },
+    "BlendshapeNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "nameInput",
+        "valueInput",
+        "smoothInput",
+        "toggleInput",
+        "constInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "bsValue",
+        "bsName",
+        "isToggle",
+        "smoothTime",
+        "const"
+      ]
+    },
+    "BlendshapePriorityNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapePriorityNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "listInput",
+        "priorityInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "scale"
+      ]
+    },
+    "BlendshapeReplacerNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeReplacerNode",
+      "possiblyIncomplete": true,
+      "valueIn": 6,
+      "valueInFields": [
+        "listInput",
+        "sourceInput",
+        "targetInput",
+        "conditionInput",
+        "minInput",
+        "maxInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "source",
+        "target",
+        "condition",
+        "min",
+        "max"
+      ]
+    },
+    "BlendshapeSmoothNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeSmoothNode",
+      "possiblyIncomplete": true,
+      "valueIn": 3,
+      "valueInFields": [
+        "listInput",
+        "bsInput",
+        "smoothInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "bs",
+        "smooth"
+      ]
+    },
+    "BlendshapeToMeshNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BlendshapeToMeshNode",
+      "possiblyIncomplete": true,
+      "valueIn": 3,
+      "valueInFields": [
+        "listInput",
+        "sourceInput",
+        "targetInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "source",
+        "target"
+      ]
+    },
+    "BoneResetNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/BoneResetNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "bone",
+        "rot",
+        "scale"
+      ]
+    },
+    "BoneRotNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/BoneRotNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "rotXInput",
+        "rotYInput",
+        "rotZInput",
+        "smoothInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "rotx",
+        "roty",
+        "rotz",
+        "bone",
+        "seconds",
+        "toggle"
+      ]
+    },
+    "BoneScaleNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/BoneScaleNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "scaXInput",
+        "scaYInput",
+        "scaZInput",
+        "smoothInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "scalex",
+        "scaley",
+        "scalez",
+        "bone",
+        "seconds",
+        "toggle"
+      ]
+    },
+    "BoneToVector3Node": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BoneToVector3Node",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 5,
+      "valueOutFields": [
+        "lPosOutput",
+        "lRotOutput",
+        "lScaOutput",
+        "wPosOutput",
+        "wRotOutput"
+      ],
+      "values": [
+        "off"
+      ]
+    },
+    "BonkNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/BonkNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "BoolToNumberNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BoolToNumberNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "boolInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "numberOutput"
+      ],
+      "values": []
+    },
+    "BoolToTextNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/BoolToTextNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "boolInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": []
+    },
+    "BubbleNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/BubbleNode",
+      "possiblyIncomplete": false,
+      "valueIn": 8,
+      "valueInFields": [
+        "amountInput",
+        "flinchInput",
+        "tagInput",
+        "scaleInput",
+        "speedInput",
+        "popInput",
+        "stickyInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "items",
+        "flinch",
+        "scale",
+        "speed",
+        "tag",
+        "sticky",
+        "pop",
+        "dir",
+        "destroy"
+      ]
+    },
+    "CBateChatNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CBateChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "userFilter",
+        "userLevel"
+      ]
+    },
+    "CBateFanNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CBateFanNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputUsername"
+      ],
+      "values": []
+    },
+    "CBateFollowNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CBateFollowNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputUsername"
+      ],
+      "values": []
+    },
+    "CBateTipsNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CBateTipsNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputTokens",
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "minValue",
+        "maxValue"
+      ]
+    },
+    "CMOrbitNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CMOrbitNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "activeInput",
+        "timeInput",
+        "mirrorInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "active",
+        "speed",
+        "mirror"
+      ]
+    },
+    "CMTiltNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CMTiltNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "activeInput",
+        "timeInput",
+        "angleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "active",
+        "duration",
+        "angle"
+      ]
+    },
+    "CObjectForceNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CObjectForceNode",
+      "possiblyIncomplete": false,
+      "valueIn": 8,
+      "valueInFields": [
+        "idInput",
+        "fxInput",
+        "fyInput",
+        "fzInput",
+        "txInput",
+        "tyInput",
+        "tzInput",
+        "relativeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "fx",
+        "fy",
+        "fz",
+        "tx",
+        "ty",
+        "tz",
+        "id",
+        "relative"
+      ]
+    },
+    "CObjectTransformNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CObjectTransformNode",
+      "possiblyIncomplete": false,
+      "valueIn": 10,
+      "valueInFields": [
+        "idInput",
+        "pxInput",
+        "pyInput",
+        "pzInput",
+        "rxInput",
+        "ryInput",
+        "rzInput",
+        "sxInput",
+        "syInput",
+        "szInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "posx",
+        "posy",
+        "posz",
+        "rotx",
+        "roty",
+        "rotz",
+        "id",
+        "scalex",
+        "scaley",
+        "scalez"
+      ]
+    },
+    "CalibrationSlotNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CalibrationSlotNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "slotInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "slot"
+      ]
+    },
+    "CallTriggerNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CallTriggerNode",
+      "possiblyIncomplete": true,
+      "valueIn": 7,
+      "valueInFields": [
+        "nameInput",
+        "value1Input",
+        "value2Input",
+        "value3Input",
+        "text1Input",
+        "text2Input",
+        "text3Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "triggerName",
+        "callTime"
+      ]
+    },
+    "CameraLookNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CameraLookNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "activeInput",
+        "smoothInput",
+        "distanceInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "active",
+        "duration",
+        "distance",
+        "bone"
+      ]
+    },
+    "CameraMoveNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CameraMoveNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "distance",
+        "posx",
+        "posy",
+        "rotx",
+        "roty",
+        "rotz",
+        "duration"
+      ]
+    },
+    "CameraNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CameraNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "cameraInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "camera",
+        "duration"
+      ]
+    },
+    "CameraSmoothNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CameraSmoothNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "smoothInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "duration"
+      ]
+    },
+    "CameraTransformNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/CameraTransformNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "positionOutput",
+        "rotationOutput",
+        "fovOutput",
+        "focalOutput"
+      ],
+      "values": []
+    },
+    "ChannelPointNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ChannelPointNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "outputUsername",
+        "outputValue",
+        "outputMessage",
+        "outputRedeem"
+      ],
+      "values": [
+        "redeemValue"
+      ]
+    },
+    "ChatNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "userFilter",
+        "userLevel",
+        "excludeFilter"
+      ]
+    },
+    "ClearDictionaryNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ClearDictionaryNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity"
+      ]
+    },
+    "ClearPoseNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ClearPoseNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "ClipPlaneNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ClipPlaneNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nearInput",
+        "farInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "near",
+        "far"
+      ]
+    },
+    "CollisionNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CollisionNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputType",
+        "outputTag",
+        "outputCollider"
+      ],
+      "values": [
+        "colType",
+        "tag"
+      ]
+    },
+    "ColorToDecimalNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ColorToDecimalNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "colorInput"
+      ],
+      "valueOut": 7,
+      "valueOutFields": [
+        "rOutput",
+        "gOutput",
+        "bOutput",
+        "hOutput",
+        "sOutput",
+        "vOutput",
+        "aOutput"
+      ],
+      "values": [
+        "color_r",
+        "color_g",
+        "color_b"
+      ]
+    },
+    "ColorToTextNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ColorToTextNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "colorInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": []
+    },
+    "CommandNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CommandNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputUsername",
+        "outputValue",
+        "outputMessage"
+      ],
+      "values": [
+        "commandName",
+        "userFilter",
+        "userLevel",
+        "excludeFilter"
+      ]
+    },
+    "CompareDecimalNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CompareDecimalNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "value1Input",
+        "value2Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "v1",
+        "v2"
+      ]
+    },
+    "CompareTextNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CompareTextNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "text1Input",
+        "text2Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "value",
+        "compare",
+        "type"
+      ]
+    },
+    "ConfettiNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ConfettiNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "ContainsTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ContainsTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "pname",
+        "pvalue"
+      ]
+    },
+    "ConvertToTextNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ConvertToTextNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "UIComponent"
+      ]
+    },
+    "CooldownNode": {
+      "execIn": 1,
+      "execOut": 2,
+      "path": "Nodes/CooldownNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "tapeNoiseAmount"
+      ]
+    },
+    "CountArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CountArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "paramName"
+      ]
+    },
+    "CountTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CountTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "paramName"
+      ]
+    },
+    "CrowdControlEffectVisibilityNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CrowdControlEffectVisibilityNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "visible",
+        "effectID"
+      ]
+    },
+    "CrowdControlGameEffectNode": {
+      "execIn": 0,
+      "execOut": 3,
+      "path": "Nodes/CrowdControlGameEffectNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 5,
+      "valueOutFields": [
+        "outputRequestID",
+        "outputViewerName",
+        "outputCost",
+        "outputQuantity",
+        "outputDuration"
+      ],
+      "values": [
+        "pID",
+        "eID",
+        "cS"
+      ]
+    },
+    "CrowdControlInstantNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CrowdControlInstantNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 5,
+      "valueOutFields": [
+        "outputRequestID",
+        "outputViewerName",
+        "outputCost",
+        "outputQuantity",
+        "outputParameters"
+      ],
+      "values": [
+        "SetInputAudioTracks"
+      ]
+    },
+    "CrowdControlSessionCallbackNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CrowdControlSessionCallbackNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "outputSessionID",
+        "outputGamePackID",
+        "outputMenuName",
+        "outputIsInternal"
+      ],
+      "values": [
+        "transitionName"
+      ]
+    },
+    "CrowdControlSetSessionNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CrowdControlSetSessionNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "eID"
+      ]
+    },
+    "CrowdControlTimedNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/CrowdControlTimedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 6,
+      "valueOutFields": [
+        "outputRequestID",
+        "outputViewerName",
+        "outputCost",
+        "outputQuantity",
+        "outputDuration",
+        "outputParameters"
+      ],
+      "values": [
+        "lip"
+      ]
+    },
+    "CustomObjectCollisionNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/CustomObjectCollisionNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputCObjId",
+        "outputCollision",
+        "outputColId"
+      ],
+      "values": [
+        "Thrusting"
+      ]
+    },
+    "CyclerFlexNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CyclerFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts"
+      ]
+    },
+    "CyclerNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/CyclerNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "DateTimeDiffNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DateTimeDiffNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "dateTime1Input",
+        "dateTime2Input"
+      ],
+      "valueOut": 3,
+      "valueOutFields": [
+        "diffMilliseconds",
+        "diffSeconds",
+        "diffMinutes"
+      ],
+      "values": []
+    },
+    "DateTimeNowNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DateTimeNowNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "dateTimeOutput"
+      ],
+      "values": []
+    },
+    "DateTimeParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/DateTimeParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "datecomponent"
+      ]
+    },
+    "DateTimeToTextNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DateTimeToTextNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "dateTimeInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": []
+    },
+    "DecimalOperationNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DecimalOperationNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "value1Input",
+        "value2Input"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": [
+        "superStickerEvent"
+      ]
+    },
+    "DecimalToColorNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DecimalToColorNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "rInput",
+        "gInput",
+        "bInput",
+        "aInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "colorOutput"
+      ],
+      "values": [
+        "mode"
+      ]
+    },
+    "DecimalToNumberNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DecimalToNumberNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "numberInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": []
+    },
+    "DecimalToTextNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DecimalToTextNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "decimalInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "tag"
+      ]
+    },
+    "DecimalToVector3Node": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DecimalToVector3Node",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "xInput",
+        "yInput",
+        "zInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "vectorOutput"
+      ],
+      "values": [
+        "x",
+        "y",
+        "z"
+      ]
+    },
+    "DequeueArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/DequeueArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "paramName"
+      ]
+    },
+    "DequeueTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/DequeueTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "paramName"
+      ]
+    },
+    "DestroyCObjectNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/DestroyCObjectNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "idInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "filterName"
+      ]
+    },
+    "DictionaryGetFlexNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DictionaryGetFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "dictInput",
+        "dictNameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts",
+        "name"
+      ]
+    },
+    "DictionarySetFlexNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/DictionarySetFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "dictNameInput",
+        "appendInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "z1",
+        "xmultiplier"
+      ]
+    },
+    "DictionaryValueNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/DictionaryValueNode",
+      "possiblyIncomplete": true,
+      "valueIn": 3,
+      "valueInFields": [
+        "dictInput",
+        "arrayInput",
+        "keyInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "intensity",
+        "Images"
+      ]
+    },
+    "DropItemNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/DropItemNode",
+      "possiblyIncomplete": false,
+      "valueIn": 8,
+      "valueInFields": [
+        "timeInput",
+        "amountInput",
+        "randomInput",
+        "volumeInput",
+        "massInput",
+        "dragInput",
+        "tagInput",
+        "scaleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "items",
+        "amount",
+        "destroy",
+        "random",
+        "volume",
+        "mass",
+        "drag",
+        "tag",
+        "scale"
+      ]
+    },
+    "EditTwitchRedeemNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EditTwitchRedeemNode",
+      "possiblyIncomplete": false,
+      "valueIn": 7,
+      "valueInFields": [
+        "enableInput",
+        "titleInput",
+        "channelInput",
+        "usePromptInput",
+        "promptInput",
+        "useCooldownInput",
+        "cooldownInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "enabled",
+        "redeemId",
+        "title",
+        "cost",
+        "useprompt",
+        "prompt",
+        "usecooldown",
+        "cooldown"
+      ]
+    },
+    "EffectAONode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectAONode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "thicknessInput",
+        "colorInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "thickness",
+        "color_r",
+        "color_g",
+        "color_b",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectAnalogGlitchNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectAnalogGlitchNode",
+      "possiblyIncomplete": true,
+      "valueIn": 7,
+      "valueInFields": [
+        "activeInput",
+        "scanInput",
+        "verticalInput",
+        "horizontalInput",
+        "driftInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "scanline",
+        "vertical",
+        "horizontal",
+        "drift",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectBinaryNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectBinaryNode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "activeInput",
+        "scaleInput",
+        "colorInput",
+        "opacityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "type",
+        "scale",
+        "opacity",
+        "color_r",
+        "color_g",
+        "color_b",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectBloomNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectBloomNode",
+      "possiblyIncomplete": false,
+      "valueIn": 8,
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "thresholdInput",
+        "diffusionInput",
+        "colorInput",
+        "cintensityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "threshold",
+        "diffusion",
+        "color_r",
+        "color_g",
+        "color_b",
+        "color_i",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectChromaticNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectChromaticNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectColorNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectColorNode",
+      "possiblyIncomplete": true,
+      "valueIn": 9,
+      "valueInFields": [
+        "activeInput",
+        "tempInput",
+        "tintInput",
+        "hueInput",
+        "saturationInput",
+        "brightnessInput",
+        "contrastInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "temperature",
+        "tint",
+        "hue",
+        "saturation",
+        "brightness",
+        "contrast",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectDigitalGlitchNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectDigitalGlitchNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "activeInput",
+        "opacityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opacity",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectDirtNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectDirtNode",
+      "possiblyIncomplete": true,
+      "valueIn": 6,
+      "valueInFields": [
+        "activeInput",
+        "thresholdInput",
+        "saturationInput",
+        "intensityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "threshold",
+        "saturation",
+        "intensity",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectDoFNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectDoFNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "activeInput",
+        "apertureInput",
+        "focalInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "aperture",
+        "focalLength",
+        "bone",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectGrainNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectGrainNode",
+      "possiblyIncomplete": true,
+      "valueIn": 7,
+      "valueInFields": [
+        "activeInput",
+        "coloredInput",
+        "intensityInput",
+        "sizeInput",
+        "luminanceInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "grain",
+        "luminance",
+        "colored",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectLensNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectLensNode",
+      "possiblyIncomplete": true,
+      "valueIn": 9,
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "xmultInput",
+        "ymultInput",
+        "centerxInput",
+        "centeryInput",
+        "scaleInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "xmultiplier",
+        "ymultiplier",
+        "centerx",
+        "centery",
+        "scale",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectMotionBlurNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectMotionBlurNode",
+      "possiblyIncomplete": true,
+      "valueIn": 5,
+      "valueInFields": [
+        "activeInput",
+        "angleInput",
+        "sampleInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "angle",
+        "sample",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectNegativeNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectNegativeNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectPixelationNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectPixelationNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "activeInput",
+        "densityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "density",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectRainbowNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectRainbowNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "activeInput",
+        "speedInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "speed",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectVHSNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectVHSNode",
+      "possiblyIncomplete": true,
+      "valueIn": 9,
+      "valueInFields": [
+        "activeInput",
+        "grainInput",
+        "lineInput",
+        "tapeInput",
+        "intInput",
+        "horInput",
+        "vertInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "filmgrain",
+        "linenoise",
+        "tapenoise",
+        "interlacing",
+        "TwitchH",
+        "TwitchV",
+        "active",
+        "toggle"
+      ]
+    },
+    "EffectVignetteNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EffectVignetteNode",
+      "possiblyIncomplete": true,
+      "valueIn": 5,
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "smoothInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "smoothness",
+        "active",
+        "toggle"
+      ]
+    },
+    "EnqueueArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EnqueueArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "arrayValue"
+      ]
+    },
+    "EnqueueTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EnqueueTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "arrayValue"
+      ]
+    },
+    "EnqueueTriggerNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/EnqueueTriggerNode",
+      "possiblyIncomplete": true,
+      "valueIn": 9,
+      "valueInFields": [
+        "nameInput",
+        "queueInput",
+        "timeInput",
+        "value1Input",
+        "value2Input",
+        "value3Input",
+        "text1Input",
+        "text2Input",
+        "text3Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "triggerName",
+        "queueName",
+        "time"
+      ]
+    },
+    "FOVNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FOVNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "fov"
+      ]
+    },
+    "FanslyChatNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/FanslyChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "thumbnails"
+      ]
+    },
+    "FanslyTipsNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/FanslyTipsNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputTokens",
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "minValue",
+        "maxValue"
+      ]
+    },
+    "FileToParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FileToParamNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "fileInput",
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "Disconnect"
+      ]
+    },
+    "FileToTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FileToTArrayNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "fileInput",
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "position"
+      ]
+    },
+    "FilterBSNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterBSNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "bsname",
+        "bsvalue"
+      ]
+    },
+    "FilterBoolLogicNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterBoolLogicNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "value1Input",
+        "value2Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "A"
+      ]
+    },
+    "FilterBoolNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterBoolNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "value1Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "FilterGamepadNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterGamepadNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "pvalue"
+      ]
+    },
+    "FilterGestureNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterGestureNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "srcname"
+      ]
+    },
+    "FilterHeartNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterHeartNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "Bearer"
+      ]
+    },
+    "FilterHotkeyNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterHotkeyNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "GET"
+      ]
+    },
+    "FilterLogicNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterLogicNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "value1Input",
+        "value2Input",
+        "comparisonInput",
+        "caseInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "p1",
+        "p2",
+        "c",
+        "o",
+        "case"
+      ]
+    },
+    "FilterParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "pname",
+        "pvalue"
+      ]
+    },
+    "FilterSteamVRNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterSteamVRNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "buttonaright",
+        "buttonaleft",
+        "buttonbright",
+        "buttonbleft",
+        "triggerright",
+        "triggerleft",
+        "touchpadright",
+        "touchpadleft"
+      ]
+    },
+    "FilterVolumeNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FilterVolumeNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "mic",
+        "volume",
+        "filter"
+      ]
+    },
+    "FindTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FindTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "nameInput",
+        "valueInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "findValue",
+        "paramName"
+      ]
+    },
+    "FlinchNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FlinchNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "duration"
+      ]
+    },
+    "FollowNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/FollowNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUsername",
+        "outputLogin"
+      ],
+      "values": []
+    },
+    "FoodNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/FoodNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "tagInput",
+        "scaleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "items",
+        "tag",
+        "scale"
+      ]
+    },
+    "ForLoopNode": {
+      "execIn": 1,
+      "execOut": 1,
+      "path": "Nodes/ForLoopNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "startInput",
+        "endInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputIndex"
+      ],
+      "values": [
+        "start",
+        "end"
+      ]
+    },
+    "ForceNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ForceNode",
+      "possiblyIncomplete": false,
+      "valueIn": 7,
+      "valueInFields": [
+        "fxInput",
+        "fyInput",
+        "fzInput",
+        "txInput",
+        "tyInput",
+        "tzInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "yeetX",
+        "yeetY",
+        "yeetZ",
+        "torqueX",
+        "torqueY",
+        "torqueZ",
+        "respawnTime"
+      ]
+    },
+    "GestureNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/GestureNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "selected"
+      ]
+    },
+    "GetCObjectTransformNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/GetCObjectTransformNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "idInput"
+      ],
+      "valueOut": 3,
+      "valueOutFields": [
+        "positionOutput",
+        "rotationOutput",
+        "scaleOutput"
+      ],
+      "values": [
+        "inpname"
+      ]
+    },
+    "GetDictionaryValueNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/GetDictionaryValueNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "nameInput",
+        "keyInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dictionary",
+        "keyName",
+        "param"
+      ]
+    },
+    "GetTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/GetTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "nameInput",
+        "indexInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "index",
+        "paramName"
+      ]
+    },
+    "HeadpatNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/HeadpatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "HotkeyNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/HotkeyNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "Connecting"
+      ]
+    },
+    "HypeTrainNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/HypeTrainNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "CEILING"
+      ]
+    },
+    "InvertBooleanNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/InvertBooleanNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "boolInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "boolOutput"
+      ],
+      "values": []
+    },
+    "JsonDictionaryNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/JsonDictionaryNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "jsonInput",
+        "targetInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dictionary",
+        "paramName"
+      ]
+    },
+    "KickChannelPointNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/KickChannelPointNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage",
+        "outputRedeem"
+      ],
+      "values": [
+        "redeemValue"
+      ]
+    },
+    "KickChatNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/KickChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage"
+      ],
+      "values": [
+        "s"
+      ]
+    },
+    "KickCommandNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/KickCommandNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage",
+        "outputValue"
+      ],
+      "values": [
+        "commandName",
+        "userFilter"
+      ]
+    },
+    "KickSubNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/KickSubNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "LeapTrackingStatusNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/LeapTrackingStatusNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "hand",
+        "status"
+      ]
+    },
+    "LoadAvatarNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/LoadAvatarNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "fileInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "maxValue"
+      ]
+    },
+    "LoadTwitchProfileNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/LoadTwitchProfileNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "in"
+      ]
+    },
+    "LoadWorldNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/LoadWorldNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "fileInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "platform"
+      ]
+    },
+    "LovenseActionNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/LovenseActionNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "valueInput",
+        "timeInput",
+        "stopInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "time",
+        "power",
+        "action",
+        "stop"
+      ]
+    },
+    "LovensePresetNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/LovensePresetNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "presetInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "time",
+        "preset"
+      ]
+    },
+    "MMDNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/MMDNode",
+      "possiblyIncomplete": true,
+      "valueIn": 8,
+      "valueInFields": [
+        "vmdInput",
+        "camInput",
+        "musicInput",
+        "volumeInput",
+        "lipsyncInput",
+        "stifnessInput",
+        "camyInput",
+        "distanceInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "volume",
+        "lipsync",
+        "stiffness",
+        "cameraY",
+        "distance"
+      ]
+    },
+    "MathExpNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/MathExpNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "expInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": [
+        "key"
+      ]
+    },
+    "MessageBoxNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/MessageBoxNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "lerpType"
+      ]
+    },
+    "MusicNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/MusicNode",
+      "possiblyIncomplete": true,
+      "valueIn": 3,
+      "valueInFields": [
+        "fileInput",
+        "volumeInput",
+        "loopInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "volume",
+        "loop"
+      ]
+    },
+    "NumberToDecimalNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/NumberToDecimalNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "numberInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": []
+    },
+    "NumberToTextNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/NumberToTextNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "numberInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": []
+    },
+    "ObjectMaterialColorNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectMaterialColorNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "materialInput",
+        "propertyInput",
+        "valueInput",
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "object",
+        "materialId",
+        "propId"
+      ]
+    },
+    "ObjectMaterialFloatNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectMaterialFloatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "materialInput",
+        "propertyInput",
+        "valueInput",
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "object",
+        "materialId",
+        "propId",
+        "value"
+      ]
+    },
+    "ObjectPosNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectPosNode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "nameInput",
+        "posxInput",
+        "posyInput",
+        "poszInput",
+        "timeInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "posx",
+        "posy",
+        "posz",
+        "name",
+        "seconds",
+        "toggle"
+      ]
+    },
+    "ObjectResetNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectResetNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "nameInput",
+        "posInput",
+        "rotInput",
+        "scaInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "name",
+        "pos",
+        "rot",
+        "scale"
+      ]
+    },
+    "ObjectRotNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectRotNode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "nameInput",
+        "xInput",
+        "yInput",
+        "zInput",
+        "timeInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "rotx",
+        "roty",
+        "rotz",
+        "name",
+        "seconds",
+        "toggle"
+      ]
+    },
+    "ObjectScaleNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectScaleNode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "nameInput",
+        "xInput",
+        "yInput",
+        "zInput",
+        "timeInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "scalex",
+        "scaley",
+        "scalez",
+        "name",
+        "seconds",
+        "toggle"
+      ]
+    },
+    "ObjectTextureNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectTextureNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "fileInput",
+        "materialInput",
+        "textureInput",
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "object",
+        "materialId",
+        "textureId",
+        "useCache"
+      ]
+    },
+    "ObjectVisNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObjectVisNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "visInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "name",
+        "visibility"
+      ]
+    },
+    "ObsConnectionStateCallbackNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ObsConnectionStateCallbackNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputNewState"
+      ],
+      "values": [
+        "destroy"
+      ]
+    },
+    "ObsFireHotkeyNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsFireHotkeyNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "name"
+      ]
+    },
+    "ObsGetConnectionStateNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetConnectionStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": []
+    },
+    "ObsGetCurrentSceneNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetCurrentSceneNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "sceneOutput"
+      ],
+      "values": []
+    },
+    "ObsGetFilterSettingNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetFilterSettingNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "sourceNameInput",
+        "filterNameInput",
+        "settingNameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "settingValueOutput"
+      ],
+      "values": [
+        "srcname",
+        "fltname",
+        "setname"
+      ]
+    },
+    "ObsGetFilterStateNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetFilterStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "sourceNameInput",
+        "filterNameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": [
+        "TestType",
+        "reloadContinuationData"
+      ]
+    },
+    "ObsGetInputMuteNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetInputMuteNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "inputNameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": [
+        "SHA1"
+      ]
+    },
+    "ObsGetInputSettingNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetInputSettingNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "inputNameInput",
+        "settingNameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "settingValueOutput"
+      ],
+      "values": [
+        "inpname",
+        "setname"
+      ]
+    },
+    "ObsGetInputVolumeNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetInputVolumeNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "inputNameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "volumeValueOutput"
+      ],
+      "values": [
+        "inpname"
+      ]
+    },
+    "ObsGetRecordingStateNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetRecordingStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": []
+    },
+    "ObsGetSceneItemStateNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetSceneItemStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "sceneNameInput",
+        "itemNameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": [
+        "scnname",
+        "itmname"
+      ]
+    },
+    "ObsGetStreamingStateNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetStreamingStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": []
+    },
+    "ObsGetVCamStateNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ObsGetVCamStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "stateOutput"
+      ],
+      "values": []
+    },
+    "ObsRecordingStateCallbackNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ObsRecordingStateCallbackNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputNewState"
+      ],
+      "values": [
+        "sourceName"
+      ]
+    },
+    "ObsSceneChangeCallbackNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ObsSceneChangeCallbackNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputNewScene"
+      ],
+      "values": [
+        "targetScene"
+      ]
+    },
+    "ObsSetFilterSettingNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetFilterSettingNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "sourceNameInput",
+        "filterNameInput",
+        "settingNameInput",
+        "settingValueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "srcname",
+        "fltname",
+        "setname",
+        "setval"
+      ]
+    },
+    "ObsSetFilterStateNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetFilterStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "sourceNameInput",
+        "filterNameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "srcname",
+        "fltname",
+        "status"
+      ]
+    },
+    "ObsSetInputMuteNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetInputMuteNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "inputNameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "inpname",
+        "status"
+      ]
+    },
+    "ObsSetInputSettingNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetInputSettingNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "inputNameInput",
+        "settingNameInput",
+        "settingValueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "inpname",
+        "setname",
+        "setval"
+      ]
+    },
+    "ObsSetInputVolumeNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetInputVolumeNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "inputNameInput",
+        "volumeValueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "inpname",
+        "setval"
+      ]
+    },
+    "ObsSetRecordingStateNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetRecordingStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "status"
+      ]
+    },
+    "ObsSetSceneItemStateNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetSceneItemStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "sceneNameInput",
+        "itemNameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "scnname",
+        "itmname",
+        "status"
+      ]
+    },
+    "ObsSetSceneNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetSceneNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "eyelookdownleft"
+      ]
+    },
+    "ObsSetStreamStateNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetStreamStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "status"
+      ]
+    },
+    "ObsSetVCamStateNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ObsSetVCamStateNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "breathe"
+      ]
+    },
+    "ObsStreamingStateCallbackNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ObsStreamingStateCallbackNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputNewState"
+      ],
+      "values": [
+        "targetState"
+      ]
+    },
+    "ObsVCamStateCallbackNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/ObsVCamStateCallbackNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputNewState"
+      ],
+      "values": [
+        "targetState"
+      ]
+    },
+    "OnBlendshapeListNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/OnBlendshapeListNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "listOutput"
+      ],
+      "values": [
+        "LeftLeg"
+      ]
+    },
+    "OrderedFlexNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/OrderedFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "eyeLookInLeft"
+      ]
+    },
+    "OrderedNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/OrderedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "PackDictionaryNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/PackDictionaryNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dictionary",
+        "paramName"
+      ]
+    },
+    "ParamBSNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ParamBSNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "paramInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "bs",
+        "param"
+      ]
+    },
+    "ParamLerpNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ParamLerpNode",
+      "possiblyIncomplete": false,
+      "valueIn": 10,
+      "valueInFields": [
+        "pxInput",
+        "pyInput",
+        "pzInput",
+        "fxInput",
+        "fyInput",
+        "fzInput",
+        "txInput",
+        "tyInput",
+        "tzInput",
+        "lerpInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "lerpType",
+        "x1",
+        "x2",
+        "y1",
+        "y2",
+        "z1",
+        "z2",
+        "xname",
+        "yname",
+        "zname",
+        "value"
+      ]
+    },
+    "ParamMathNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ParamMathNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "value1",
+        "operation"
+      ]
+    },
+    "ParamOpNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ParamOpNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "nameInput",
+        "value1Input",
+        "value2Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "value1",
+        "value2",
+        "operation"
+      ]
+    },
+    "ParamToDecimalNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/ParamToDecimalNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": [
+        "editor"
+      ]
+    },
+    "ParamToFileNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ParamToFileNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "fileInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "isChatSponsor"
+      ]
+    },
+    "ParamVolumeNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ParamVolumeNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "mic",
+        "param",
+        "filter"
+      ]
+    },
+    "PlayAnimNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/PlayAnimNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "blendInput",
+        "timeInput",
+        "eyeInput",
+        "leapInput",
+        "effectInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "leapOverride",
+        "blendHead",
+        "blendNeck",
+        "blendSpine",
+        "blendHipRot",
+        "blendHipPos",
+        "blendRoot",
+        "blendLeftLeg",
+        "blendRightLeg",
+        "blendRightArm",
+        "blendRightHand",
+        "blendRightFingers",
+        "blendLeftArm",
+        "blendLeftHand",
+        "blendLeftFingers",
+        "seconds",
+        "eyes",
+        "teffects"
+      ]
+    },
+    "PropNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/PropNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "selected",
+        "status"
+      ]
+    },
+    "RPCNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/RPCNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 8,
+      "valueOutFields": [
+        "nameOutput",
+        "rpcOutput",
+        "text1Output",
+        "text2Output",
+        "text3Output",
+        "value1Output",
+        "value2Output",
+        "value3Output"
+      ],
+      "values": [
+        "eyelookinleft"
+      ]
+    },
+    "RaidNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/RaidNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputRaiders",
+        "outputUsername"
+      ],
+      "values": [
+        "toggle",
+        "display"
+      ]
+    },
+    "RainNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/RainNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "fileInput",
+        "densityInput",
+        "speedInput",
+        "sizeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "type",
+        "slot",
+        "density",
+        "speed",
+        "size"
+      ]
+    },
+    "RandomFlexNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/RandomFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts"
+      ]
+    },
+    "RandomNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/RandomNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "RandomParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/RandomParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "paramInput",
+        "minInput",
+        "maxInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "min",
+        "max"
+      ]
+    },
+    "RecordAnimNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/RecordAnimNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "fileInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "anim",
+        "sec"
+      ]
+    },
+    "RemoveAtTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/RemoveAtTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "indexInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "index"
+      ]
+    },
+    "ResetARKitNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ResetARKitNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "ResetArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ResetArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "arrayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName"
+      ]
+    },
+    "ResetBSNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ResetBSNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "ResetTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ResetTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "arrayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "id"
+      ]
+    },
+    "ResetTriggerQueueNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ResetTriggerQueueNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "arrayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "queueName"
+      ]
+    },
+    "ResolutionNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ResolutionNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "wInput",
+        "hInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "width",
+        "height"
+      ]
+    },
+    "SaveCameraNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SaveCameraNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "cameraInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "posx"
+      ]
+    },
+    "SavePoseNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SavePoseNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "fileInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "maxValue"
+      ]
+    },
+    "ScreenshotNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ScreenshotNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "SendKeysNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SendKeysNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dropdown",
+        "state"
+      ]
+    },
+    "SendRPCNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SendRPCNode",
+      "possiblyIncomplete": false,
+      "valueIn": 7,
+      "valueInFields": [
+        "nameInput",
+        "value1Input",
+        "value2Input",
+        "value3Input",
+        "text1Input",
+        "text2Input",
+        "text3Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "rpcName",
+        "val1",
+        "val2",
+        "val3",
+        "val4",
+        "val5",
+        "val6",
+        "bounce"
+      ]
+    },
+    "SendTwitchChatNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SendTwitchChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "messageInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "fuga"
+      ]
+    },
+    "SendVRCAvatarParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SendVRCAvatarParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "nameInput",
+        "intInput",
+        "floatInput",
+        "boolInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "intValue",
+        "floatValue",
+        "boolValue"
+      ]
+    },
+    "SetAnimSpeedNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetAnimSpeedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "speedInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "WalkController"
+      ]
+    },
+    "SetDictionaryValueNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetDictionaryValueNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "nameInput",
+        "keyInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dictionary",
+        "paramName",
+        "value"
+      ]
+    },
+    "SetParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "value"
+      ]
+    },
+    "SetPoseNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetPoseNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "fileInput",
+        "blendInput",
+        "timeInput",
+        "leapInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "leapOverride",
+        "blendHead",
+        "blendNeck",
+        "blendSpine",
+        "blendHipRot",
+        "blendHipPos",
+        "blendRoot",
+        "blendLeftLeg",
+        "blendRightLeg",
+        "blendRightArm",
+        "blendRightHand",
+        "blendRightFingers",
+        "blendLeftArm",
+        "blendLeftHand",
+        "blendLeftFingers",
+        "seconds"
+      ]
+    },
+    "SetTArrayNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetTArrayNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "nameInput",
+        "indexInput",
+        "valueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arrayName",
+        "index",
+        "paramValue"
+      ]
+    },
+    "SetTextParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetTextParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "paramNameInput",
+        "paramValueInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramName",
+        "value"
+      ]
+    },
+    "SetTimerNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SetTimerNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "nameInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "timerName",
+        "seconds"
+      ]
+    },
+    "ShoutoutNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ShoutoutNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "SceneItemLockStateChanged"
+      ]
+    },
+    "SkyNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SkyNode",
+      "possiblyIncomplete": true,
+      "valueIn": 5,
+      "valueInFields": [
+        "activeInput",
+        "skyInput",
+        "depthInput",
+        "multiInput",
+        "capInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "multiplier",
+        "maxcap",
+        "active"
+      ]
+    },
+    "SlimeNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SlimeNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "activeInput",
+        "colorInput",
+        "absInput",
+        "scatInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "water_r",
+        "water_g",
+        "water_b",
+        "abs",
+        "sca",
+        "active",
+        "toggle"
+      ]
+    },
+    "SoundNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SoundNode",
+      "possiblyIncomplete": true,
+      "valueIn": 4,
+      "valueInFields": [
+        "fileInput",
+        "volumeInput",
+        "durationInput",
+        "fadeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "volume",
+        "duration",
+        "fadeout"
+      ]
+    },
+    "SpawnObjectNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SpawnObjectNode",
+      "possiblyIncomplete": false,
+      "valueIn": 9,
+      "valueInFields": [
+        "pxInput",
+        "pyInput",
+        "pzInput",
+        "rxInput",
+        "ryInput",
+        "rzInput",
+        "idInput",
+        "timeInput",
+        "scaleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "items",
+        "destroy",
+        "posx",
+        "posy",
+        "posz",
+        "rotx",
+        "roty",
+        "rotz",
+        "id",
+        "scale"
+      ]
+    },
+    "SpeechResultNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/SpeechResultNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "SpeechWordNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/SpeechWordNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "word"
+      ]
+    },
+    "SpinnerNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SpinnerNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "speedInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "Timed"
+      ]
+    },
+    "SplitTParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SplitTParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "textInput",
+        "delimInput",
+        "arrayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "input",
+        "delimeter",
+        "array"
+      ]
+    },
+    "SteamVRCalibrationNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SteamVRCalibrationNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "modeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "UNCONNECTED"
+      ]
+    },
+    "StopAnimationNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/StopAnimationNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "StopBSNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/StopBSNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "trackInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "status"
+      ]
+    },
+    "StopMMDNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/StopMMDNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "StopMusicNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/StopMusicNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "SubsNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/SubsNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "outputUsername",
+        "outputAmount",
+        "outputTotal",
+        "outputTier"
+      ],
+      "values": [
+        "dropdown"
+      ]
+    },
+    "SunLightNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/SunLightNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "activeInput",
+        "intInput",
+        "colorInput",
+        "smoothInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "intensity",
+        "color_r",
+        "color_g",
+        "color_b",
+        "seconds",
+        "toggle",
+        "active"
+      ]
+    },
+    "TArrayToFileNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TArrayToFileNode",
+      "possiblyIncomplete": true,
+      "valueIn": 2,
+      "valueInFields": [
+        "fileInput",
+        "arrayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dataFile"
+      ]
+    },
+    "TArrayValueNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TArrayValueNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayInput",
+        "indexInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "array",
+        "index"
+      ]
+    },
+    "TTSHelperNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TTSHelperNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "textInput",
+        "userInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "message",
+        "user",
+        "charlimit",
+        "platform"
+      ]
+    },
+    "TextArrayGetFlexNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextArrayGetFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "arrayNameInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts",
+        "name"
+      ]
+    },
+    "TextArraySetFlexNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TextArraySetFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "arrayNameInput",
+        "appendInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "opts",
+        "name"
+      ]
+    },
+    "TextComparisonNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextComparisonNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "textInput",
+        "text2Input"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "boolOutput"
+      ],
+      "values": [
+        "text",
+        "text2",
+        "type"
+      ]
+    },
+    "TextConcatNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextConcatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "textInput",
+        "concatInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "result",
+        "eyelookinright"
+      ]
+    },
+    "TextLengthNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextLengthNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "numberOutput"
+      ],
+      "values": [
+        "inputs"
+      ]
+    },
+    "TextReplaceNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextReplaceNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "textInput",
+        "oldInput",
+        "newInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "text",
+        "old",
+        "new"
+      ]
+    },
+    "TextSubstringNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextSubstringNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "textInput",
+        "indexInput",
+        "lengthInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "textOutput"
+      ],
+      "values": [
+        "text",
+        "index",
+        "length"
+      ]
+    },
+    "TextSwitchFlexNode": {
+      "execIn": 1,
+      "execOut": 1,
+      "path": "Nodes/TextSwitchFlexNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "TestName",
+        "_ScreenJumpLevel"
+      ]
+    },
+    "TextSwitchNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TextSwitchNode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "textInput",
+        "value1Input",
+        "value2Input",
+        "value3Input",
+        "value4Input",
+        "value5Input"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "text",
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ]
+    },
+    "TextToBoolNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextToBoolNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "boolOutput"
+      ],
+      "values": [
+        "VNyan"
+      ]
+    },
+    "TextToColorNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextToColorNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "colorOutput"
+      ],
+      "values": [
+        "name"
+      ]
+    },
+    "TextToDateTimeNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextToDateTimeNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "dateTimeOutput"
+      ],
+      "values": []
+    },
+    "TextToDecimalNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextToDecimalNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": [
+        "mouthfrownright"
+      ]
+    },
+    "TextToNumberNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/TextToNumberNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "textInput"
+      ],
+      "valueOut": 1,
+      "valueOutFields": [
+        "numberOutput"
+      ],
+      "values": [
+        "bsName"
+      ]
+    },
+    "ThrowItemNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/ThrowItemNode",
+      "possiblyIncomplete": false,
+      "valueIn": 10,
+      "valueInFields": [
+        "amountInput",
+        "timeInput",
+        "flinchInput",
+        "delayInput",
+        "volumeInput",
+        "tagInput",
+        "scaleInput",
+        "heightInput",
+        "forceInput",
+        "stickInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "items",
+        "flinch",
+        "destroy",
+        "cooldown",
+        "volume",
+        "tag",
+        "scale",
+        "dir",
+        "bone",
+        "altitude",
+        "force",
+        "sticky",
+        "sticktime"
+      ]
+    },
+    "TiltifyDonationNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/TiltifyDonationNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage",
+        "outputAmount",
+        "outputCurrency"
+      ],
+      "values": []
+    },
+    "TimeScaleNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TimeScaleNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "scaleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "blendNeck"
+      ]
+    },
+    "TimerNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/TimerNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "eyelookoutleft"
+      ]
+    },
+    "TrackEffectNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TrackEffectNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "tiltInput",
+        "breatheInput",
+        "swayInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "breathe",
+        "tilt",
+        "arm"
+      ]
+    },
+    "TrackerMapSlotNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TrackerMapSlotNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "slotInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "slot"
+      ]
+    },
+    "TrackerParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TrackerParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "xInput",
+        "yInput",
+        "zInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramx",
+        "paramy",
+        "paramz",
+        "tracker",
+        "transform"
+      ]
+    },
+    "TrackingLayerStatusNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TrackingLayerStatusNode",
+      "possiblyIncomplete": false,
+      "valueIn": 9,
+      "valueInFields": [
+        "arkitInput",
+        "mediapipeInput",
+        "leapInput",
+        "vmc1Input",
+        "vmc2Input",
+        "vmc3Input",
+        "vmc4Input",
+        "steamVRInput",
+        "lipsyncInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "arkit",
+        "mediapipe",
+        "leap",
+        "vmc1",
+        "vmc2",
+        "vmc3",
+        "vmc4",
+        "steam",
+        "lip"
+      ]
+    },
+    "TransformParamNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TransformParamNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "xInput",
+        "yInput",
+        "zInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "paramx",
+        "paramy",
+        "paramz",
+        "bone",
+        "transform"
+      ]
+    },
+    "TriggerNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/TriggerNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 6,
+      "valueOutFields": [
+        "value1Output",
+        "value2Output",
+        "value3Output",
+        "text1Output",
+        "text2Output",
+        "text3Output"
+      ],
+      "values": [
+        "triggerName"
+      ]
+    },
+    "TwitchCharityNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/TwitchCharityNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 5,
+      "valueOutFields": [
+        "outputUsername",
+        "outputAmount",
+        "outputCurrency",
+        "outputCharity",
+        "outputAmountText"
+      ],
+      "values": []
+    },
+    "TwitchDropperNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/TwitchDropperNode",
+      "possiblyIncomplete": false,
+      "valueIn": 6,
+      "valueInFields": [
+        "amountInput",
+        "radiusInput",
+        "sizeInput",
+        "gravityInput",
+        "timeInput",
+        "lookInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "emotes",
+        "radius",
+        "facecam",
+        "emoteSize",
+        "emoteDespawn",
+        "gravity"
+      ]
+    },
+    "TwitchPowerUpNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/TwitchPowerUpNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 5,
+      "valueOutFields": [
+        "outputUsername",
+        "outputValue",
+        "outputMessage",
+        "outputRedeem",
+        "outputCost"
+      ],
+      "values": [
+        "arrayName"
+      ]
+    },
+    "TwitchProfileLoadedNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/TwitchProfileLoadedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "nameSocket",
+        "urlSocket",
+        "descSocket"
+      ],
+      "values": []
+    },
+    "UnpackDictionaryNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/UnpackDictionaryNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "dataInput",
+        "targetInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dictionary",
+        "paramName"
+      ]
+    },
+    "VMCStatusNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/VMCStatusNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "layer",
+        "status"
+      ]
+    },
+    "VTSAnimationEventNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/VTSAnimationEventNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "eventTypeSocket",
+        "eventDataSocket",
+        "animNameSocket",
+        "animLengthSocket"
+      ],
+      "values": []
+    },
+    "VTSAvatarLoadedNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/VTSAvatarLoadedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "avatarSocket"
+      ],
+      "values": []
+    },
+    "VTSHotkeyEventNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/VTSHotkeyEventNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "nameSocket",
+        "actionSocket",
+        "byAPISocket"
+      ],
+      "values": []
+    },
+    "VTSItemEventNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/VTSItemEventNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "typeSocket",
+        "fileSocket"
+      ],
+      "values": []
+    },
+    "VTSModelStatusNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/VTSModelStatusNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "posXOutput",
+        "posYOutput",
+        "sizeOutput",
+        "rotationOutput"
+      ],
+      "values": []
+    },
+    "VTSMoveModelNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/VTSMoveModelNode",
+      "possiblyIncomplete": false,
+      "valueIn": 5,
+      "valueInFields": [
+        "posXInput",
+        "posYInput",
+        "rotationInput",
+        "sizeInput",
+        "smoothTimeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "posx",
+        "posy",
+        "rotation",
+        "size",
+        "smoothTime"
+      ]
+    },
+    "VTSPogNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/VTSPogNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "textInput",
+        "userInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "message",
+        "dropdown",
+        "user"
+      ]
+    },
+    "VTSSendHotkeyNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/VTSSendHotkeyNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "fileInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "hotkey"
+      ]
+    },
+    "VTSSetExpressionNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/VTSSetExpressionNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "fileInput",
+        "fadeInput",
+        "activeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "file",
+        "fadeTime",
+        "activeToggle"
+      ]
+    },
+    "Vector3ToDecimalNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/Vector3ToDecimalNode",
+      "possiblyIncomplete": true,
+      "valueIn": 1,
+      "valueInFields": [
+        "vectorInput"
+      ],
+      "valueOut": 3,
+      "valueOutFields": [
+        "xOutput",
+        "yOutput",
+        "zOutput"
+      ],
+      "values": []
+    },
+    "VolumeToDecimalNode": {
+      "execIn": 0,
+      "execOut": 0,
+      "path": "Nodes/VolumeToDecimalNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "values": [
+        "mic",
+        "filter"
+      ]
+    },
+    "WSMessageNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/WSMessageNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "addressInput",
+        "messageInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "address",
+        "message"
+      ]
+    },
+    "WaitNode": {
+      "execIn": 1,
+      "execOut": 1,
+      "path": "Nodes/WaitNode",
+      "possiblyIncomplete": false,
+      "valueIn": 1,
+      "valueInFields": [
+        "waitInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "wait"
+      ]
+    },
+    "WaterNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/WaterNode",
+      "possiblyIncomplete": false,
+      "valueIn": 4,
+      "valueInFields": [
+        "activeInput",
+        "colorInput",
+        "opacityInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dir",
+        "water_r",
+        "water_g",
+        "water_b",
+        "opacity",
+        "active",
+        "toggle"
+      ]
+    },
+    "WebSocketNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/WebSocketNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "valueOutput",
+        "messageOutput",
+        "dataOutput"
+      ],
+      "values": [
+        "_GamepadLeftX",
+        "parameterValue"
+      ]
+    },
+    "WindNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/WindNode",
+      "possiblyIncomplete": false,
+      "valueIn": 3,
+      "valueInFields": [
+        "vectorInput",
+        "powerInput",
+        "toggleInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "dir",
+        "power",
+        "toggle"
+      ]
+    },
+    "WorldLoadedNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/WorldLoadedNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 1,
+      "valueOutFields": [
+        "outputWorld"
+      ],
+      "values": []
+    },
+    "YTChatNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/YTChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 3,
+      "valueOutFields": [
+        "outputUser",
+        "outputLevel",
+        "outputMessage"
+      ],
+      "values": [
+        "userFilter",
+        "userLevel"
+      ]
+    },
+    "YTCommandNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/YTCommandNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 4,
+      "valueOutFields": [
+        "outputUser",
+        "outputLevel",
+        "outputMessage",
+        "outputValue"
+      ],
+      "values": [
+        "commandName",
+        "userFilter",
+        "userLevel"
+      ]
+    },
+    "YTMembershipNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/YTMembershipNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUser",
+        "outputMessage"
+      ],
+      "values": []
+    },
+    "YTStickerNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/YTStickerNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUser",
+        "outputAmount"
+      ],
+      "values": []
+    },
+    "YTSubNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/YTSubNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": []
+    },
+    "YTSuperChatNode": {
+      "execIn": 0,
+      "execOut": 1,
+      "path": "Nodes/YTSuperChatNode",
+      "possiblyIncomplete": false,
+      "valueIn": 0,
+      "valueInFields": [],
+      "valueOut": 2,
+      "valueOutFields": [
+        "outputUser",
+        "outputAmount"
+      ],
+      "values": []
+    },
+    "YeetNode": {
+      "execIn": 1,
+      "execOut": 0,
+      "path": "Nodes/YeetNode",
+      "possiblyIncomplete": false,
+      "valueIn": 2,
+      "valueInFields": [
+        "powerInput",
+        "timeInput"
+      ],
+      "valueOut": 0,
+      "valueOutFields": [],
+      "values": [
+        "yeetPower",
+        "respawnTime",
+        "dir"
+      ]
+    }
+  }
+}

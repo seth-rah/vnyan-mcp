@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>VNyanMcp</AssemblyName>
+    <LangVersion>7.3</LangVersion>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>disable</Nullable>
+    <!-- No source paths embedded in the shipped DLL. -->
+    <DebugType>none</DebugType>
+    <VNyanManaged>$(VNyanPath)\VNyan_Data\Managed</VNyanManaged>
+  </PropertyGroup>
+
+  <!-- Build with: dotnet build -c Release -p:VNyanPath="<your VNyan install folder>"
+       (or set the VNyanPath environment variable - MSBuild picks it up automatically). -->
+  <Target Name="CheckVNyanPath" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(VNyanPath)'==''"
+           Text="VNyanPath is not set. Build with: dotnet build -c Release -p:VNyanPath=&quot;&lt;your VNyan folder&gt;&quot;" />
+    <Error Condition="'$(VNyanPath)'!='' And !Exists('$(VNyanManaged)\VNyanInterface.dll')"
+           Text="No VNyan install found at '$(VNyanPath)' (expected '$(VNyanManaged)\VNyanInterface.dll')." />
+  </Target>
+
+  <ItemGroup>
+    <!-- All reference assemblies come straight from VNyan's own Managed folder:
+         VNyan runs on the Mono scripting backend (not IL2CPP), so these are
+         real, referenceable .NET assemblies - no Unity Editor install needed. -->
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(VNyanManaged)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(VNyanManaged)\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(VNyanManaged)\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>$(VNyanManaged)\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VNyanInterface">
+      <HintPath>$(VNyanManaged)\VNyanInterface.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(VNyanManaged)\Newtonsoft.Json.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Assembly-CSharp is VNyan's own (obfuscated) game assembly. Referenced
+         only so Reflect.cs can call the small set of methods/fields that
+         survive obfuscation with real names (PropSystem, AvatarColliderSystem,
+         Spout2CameraSystem, StretchBoneSystem) - see Reflect.cs for the exact
+         verified members. Never call anything here by a guessed/decompiled
+         obfuscated name. -->
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(VNyanManaged)\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
