@@ -4,9 +4,10 @@
     "generatedFrom": "Assembly-CSharp.dll (decompiled; node classes retain real socket field names despite obfuscation elsewhere)",
     "generatedBy": "tools/extract-node-schema.py",
     "typeCount": 304,
-    "valuesConfirmedFromGraphs": 68,
-    "graphFilesScanned": 21,
-    "note": "Socket counts and valueInFields/valueOutFields are read from declared fields and are reliable. 'dynamicSockets' lists socket kinds whose real count comes from the Unity prefab or is created at runtime - for those the count here is a FLOOR, not a ceiling; confirm against a real graph with vnyan_graph_read. 'valuesUncertain' marks types whose values[] keys came from an unreliable source heuristic rather than an observed VNyan graph - verify those before relying on them. VNyan exposes no app version string, so the Unity engine version above identifies the build this came from."
+    "valuesConfirmed": 71,
+    "graphFilesScanned": 22,
+    "valuesCountMismatched": 66,
+    "note": "Socket counts and valueInFields/valueOutFields are read from declared fields and are reliable. 'dynamicSockets' lists socket kinds whose real count comes from the Unity prefab or is created at runtime - for those the count here is a FLOOR, not a ceiling; confirm against a real graph with vnyan_graph_read. 'valuesUncertain' marks types whose values[] keys came from an unreliable source heuristic rather than an observed VNyan graph - verify those before relying on them. VNyan exposes no app version string, so the Unity engine version above identifies the build this came from. valuesCountMismatch marks an uncertain entry whose field count disagrees with VNyan's own help file - treat those keys as probably wrong."
   },
   "types": {
     "APIMessageNode": {
@@ -40,7 +41,11 @@
         "secondsSocket"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "AddBoneRotNode": {
       "path": "Nodes/AddBoneRotNode",
@@ -597,7 +602,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 9,
+        "helpFile": 10
+      }
     },
     "CBateChatNode": {
       "path": "Nodes/CBateChatNode",
@@ -628,7 +637,11 @@
         "outputUsername"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "CBateFollowNode": {
       "path": "Nodes/CBateFollowNode",
@@ -642,7 +655,11 @@
         "outputUsername"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "CBateTipsNode": {
       "path": "Nodes/CBateTipsNode",
@@ -680,7 +697,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 1
+      }
     },
     "CMTiltNode": {
       "path": "Nodes/CMTiltNode",
@@ -700,7 +721,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 2
+      }
     },
     "CObjectForceNode": {
       "path": "Nodes/CObjectForceNode",
@@ -823,7 +848,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 4,
+        "helpFile": 2
+      }
     },
     "CameraMoveNode": {
       "path": "Nodes/CameraMoveNode",
@@ -933,7 +962,11 @@
         "outputMessage"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 5
+      }
     },
     "ClearDictionaryNode": {
       "path": "Nodes/ClearDictionaryNode",
@@ -1061,7 +1094,11 @@
         "outputMessage"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 4,
+        "helpFile": 8
+      }
     },
     "CompareDecimalNode": {
       "path": "Nodes/CompareDecimalNode",
@@ -1243,7 +1280,11 @@
         "valueOut"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 6
+      }
     },
     "CrowdControlInstantNode": {
       "path": "Nodes/CrowdControlInstantNode",
@@ -1281,7 +1322,11 @@
         "outputIsInternal"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 5
+      }
     },
     "CrowdControlSetSessionNode": {
       "path": "Nodes/CrowdControlSetSessionNode",
@@ -1336,7 +1381,11 @@
         "outputColId"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 4
+      }
     },
     "CyclerFlexNode": {
       "path": "Nodes/CyclerFlexNode",
@@ -1749,7 +1798,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 7,
+        "helpFile": 4
+      }
     },
     "EffectAnalogGlitchNode": {
       "path": "Nodes/EffectAnalogGlitchNode",
@@ -1803,7 +1856,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 8,
+        "helpFile": 5
+      }
     },
     "EffectBloomNode": {
       "path": "Nodes/EffectBloomNode",
@@ -1884,7 +1941,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 8,
+        "helpFile": 7
+      }
     },
     "EffectDigitalGlitchNode": {
       "path": "Nodes/EffectDigitalGlitchNode",
@@ -1905,7 +1966,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 2
+      }
     },
     "EffectDirtNode": {
       "path": "Nodes/EffectDirtNode",
@@ -1930,7 +1995,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 5,
+        "helpFile": 4
+      }
     },
     "EffectDoFNode": {
       "path": "Nodes/EffectDoFNode",
@@ -1981,7 +2050,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 6,
+        "helpFile": 2
+      }
     },
     "EffectLensNode": {
       "path": "Nodes/EffectLensNode",
@@ -2012,7 +2085,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 8,
+        "helpFile": 7
+      }
     },
     "EffectMotionBlurNode": {
       "path": "Nodes/EffectMotionBlurNode",
@@ -2035,7 +2112,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 4,
+        "helpFile": 3
+      }
     },
     "EffectNegativeNode": {
       "path": "Nodes/EffectNegativeNode",
@@ -2056,7 +2137,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 2
+      }
     },
     "EffectPixelationNode": {
       "path": "Nodes/EffectPixelationNode",
@@ -2096,7 +2181,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 2
+      }
     },
     "EffectVHSNode": {
       "path": "Nodes/EffectVHSNode",
@@ -2127,7 +2216,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 8,
+        "helpFile": 2
+      }
     },
     "EffectVignetteNode": {
       "path": "Nodes/EffectVignetteNode",
@@ -2243,7 +2336,11 @@
         "outputMessage"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 3
+      }
     },
     "FanslyTipsNode": {
       "path": "Nodes/FanslyTipsNode",
@@ -2279,7 +2376,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 2
+      }
     },
     "FileToTArrayNode": {
       "path": "Nodes/FileToTArrayNode",
@@ -2296,7 +2397,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 2
+      }
     },
     "FilterBSNode": {
       "path": "Nodes/FilterBSNode",
@@ -2629,7 +2734,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 7,
+        "helpFile": 3
+      }
     },
     "GestureNode": {
       "path": "Nodes/GestureNode",
@@ -2775,7 +2884,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 3
+      }
     },
     "KickChannelPointNode": {
       "path": "Nodes/KickChannelPointNode",
@@ -2810,7 +2923,11 @@
         "outputMessage"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 3
+      }
     },
     "KickCommandNode": {
       "path": "Nodes/KickCommandNode",
@@ -2829,7 +2946,11 @@
         "outputValue"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 6
+      }
     },
     "KickSubNode": {
       "path": "Nodes/KickSubNode",
@@ -2967,7 +3088,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 5,
+        "helpFile": 8
+      }
     },
     "MathExpNode": {
       "path": "Nodes/MathExpNode",
@@ -3019,7 +3144,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": true
+      "possiblyIncomplete": true,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 3
+      }
     },
     "NumberToDecimalNode": {
       "path": "Nodes/NumberToDecimalNode",
@@ -3119,7 +3248,6 @@
         "toggleInput"
       ],
       "valueOutFields": [],
-      "valuesUncertain": true,
       "possiblyIncomplete": false
     },
     "ObjectResetNode": {
@@ -3192,7 +3320,6 @@
         "toggleInput"
       ],
       "valueOutFields": [],
-      "valuesUncertain": true,
       "possiblyIncomplete": false
     },
     "ObjectTextureNode": {
@@ -3278,7 +3405,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "ObsGetCurrentSceneNode": {
       "path": "Nodes/ObsGetCurrentSceneNode",
@@ -3292,7 +3423,11 @@
         "sceneOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "ObsGetFilterSettingNode": {
       "path": "Nodes/ObsGetFilterSettingNode",
@@ -3314,7 +3449,11 @@
         "settingValueOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 4
+      }
     },
     "ObsGetFilterStateNode": {
       "path": "Nodes/ObsGetFilterStateNode",
@@ -3334,7 +3473,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 3
+      }
     },
     "ObsGetInputMuteNode": {
       "path": "Nodes/ObsGetInputMuteNode",
@@ -3352,7 +3495,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 2
+      }
     },
     "ObsGetInputSettingNode": {
       "path": "Nodes/ObsGetInputSettingNode",
@@ -3372,7 +3519,11 @@
         "settingValueOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 3
+      }
     },
     "ObsGetInputVolumeNode": {
       "path": "Nodes/ObsGetInputVolumeNode",
@@ -3390,7 +3541,11 @@
         "volumeValueOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 2
+      }
     },
     "ObsGetRecordingStateNode": {
       "path": "Nodes/ObsGetRecordingStateNode",
@@ -3404,7 +3559,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "ObsGetSceneItemStateNode": {
       "path": "Nodes/ObsGetSceneItemStateNode",
@@ -3424,7 +3583,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 3
+      }
     },
     "ObsGetStreamingStateNode": {
       "path": "Nodes/ObsGetStreamingStateNode",
@@ -3438,7 +3601,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "ObsGetVCamStateNode": {
       "path": "Nodes/ObsGetVCamStateNode",
@@ -3452,7 +3619,11 @@
         "stateOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "ObsRecordingStateCallbackNode": {
       "path": "Nodes/ObsRecordingStateCallbackNode",
@@ -3486,7 +3657,11 @@
         "outputNewScene"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 2
+      }
     },
     "ObsSetFilterSettingNode": {
       "path": "Nodes/ObsSetFilterSettingNode",
@@ -3645,7 +3820,11 @@
       "valueInFields": [],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 2
+      }
     },
     "ObsSetVCamStateNode": {
       "path": "Nodes/ObsSetVCamStateNode",
@@ -3707,7 +3886,11 @@
         "listOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 3
+      }
     },
     "OrderedFlexNode": {
       "path": "Nodes/OrderedFlexNode",
@@ -3740,7 +3923,6 @@
       "dynamicSockets": [
         "execOut"
       ],
-      "valuesUncertain": true,
       "possiblyIncomplete": false
     },
     "PackDictionaryNode": {
@@ -3939,7 +4121,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 18,
+        "helpFile": 4
+      }
     },
     "PropNode": {
       "path": "Nodes/PropNode",
@@ -4016,7 +4202,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 5,
+        "helpFile": 6
+      }
     },
     "RandomFlexNode": {
       "path": "Nodes/RandomFlexNode",
@@ -4407,7 +4597,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 16,
+        "helpFile": 3
+      }
     },
     "SetTArrayNode": {
       "path": "Nodes/SetTArrayNode",
@@ -4579,7 +4773,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 10,
+        "helpFile": 6
+      }
     },
     "SpeechResultNode": {
       "path": "Nodes/SpeechResultNode",
@@ -4591,7 +4789,11 @@
       "valueInFields": [],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "SpeechWordNode": {
       "path": "Nodes/SpeechWordNode",
@@ -4806,7 +5008,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 4,
+        "helpFile": 1
+      }
     },
     "TextArrayGetFlexNode": {
       "path": "Nodes/TextArrayGetFlexNode",
@@ -5235,7 +5441,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 5,
+        "helpFile": 3
+      }
     },
     "TrackingLayerStatusNode": {
       "path": "Nodes/TrackingLayerStatusNode",
@@ -5289,7 +5499,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 5,
+        "helpFile": 3
+      }
     },
     "TriggerNode": {
       "path": "Nodes/TriggerNode",
@@ -5353,7 +5567,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 6,
+        "helpFile": 5
+      }
     },
     "TwitchPowerUpNode": {
       "path": "Nodes/TwitchPowerUpNode",
@@ -5373,7 +5591,11 @@
         "outputCost"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 1,
+        "helpFile": 5
+      }
     },
     "TwitchProfileLoadedNode": {
       "path": "Nodes/TwitchProfileLoadedNode",
@@ -5453,7 +5675,11 @@
         "avatarSocket"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 1
+      }
     },
     "VTSHotkeyEventNode": {
       "path": "Nodes/VTSHotkeyEventNode",
@@ -5544,7 +5770,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 1
+      }
     },
     "VTSSendHotkeyNode": {
       "path": "Nodes/VTSSendHotkeyNode",
@@ -5673,7 +5903,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 7,
+        "helpFile": 3
+      }
     },
     "WebSocketNode": {
       "path": "Nodes/WebSocketNode",
@@ -5692,7 +5926,11 @@
         "dataOutput"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 3
+      }
     },
     "WindNode": {
       "path": "Nodes/WindNode",
@@ -5712,7 +5950,11 @@
       ],
       "valueOutFields": [],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 2
+      }
     },
     "WorldLoadedNode": {
       "path": "Nodes/WorldLoadedNode",
@@ -5745,7 +5987,11 @@
         "outputMessage"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 2,
+        "helpFile": 5
+      }
     },
     "YTCommandNode": {
       "path": "Nodes/YTCommandNode",
@@ -5766,7 +6012,11 @@
         "outputValue"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 3,
+        "helpFile": 8
+      }
     },
     "YTMembershipNode": {
       "path": "Nodes/YTMembershipNode",
@@ -5781,7 +6031,11 @@
         "outputMessage"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 3
+      }
     },
     "YTStickerNode": {
       "path": "Nodes/YTStickerNode",
@@ -5796,7 +6050,11 @@
         "outputAmount"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 3
+      }
     },
     "YTSubNode": {
       "path": "Nodes/YTSubNode",
@@ -5823,7 +6081,11 @@
         "outputAmount"
       ],
       "valuesUncertain": true,
-      "possiblyIncomplete": false
+      "possiblyIncomplete": false,
+      "valuesCountMismatch": {
+        "heuristic": 0,
+        "helpFile": 4
+      }
     },
     "YeetNode": {
       "path": "Nodes/YeetNode",

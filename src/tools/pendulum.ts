@@ -9,6 +9,7 @@ interface ChainOutput {
   blendshape?: string;
   negative?: string;
   param?: string;
+  transform?: number;
 }
 interface Chain {
   name?: string;
@@ -17,64 +18,122 @@ interface Chain {
 
 export interface SharedOutputTarget {
   target: string;
-  kind: "gameObject" | "blendshape";
-  chains: string[];
+  kind: "gameObject" | "blendshape" | "param";
+  /** Only meaningful for gameObject targets - the rotation axis that collides. */
+  axis?: "X" | "Y" | "Z";
+  /** Chain names, or "<chain> (xN)" where one chain writes the target more than once. */
+  writers: string[];
   severity: "conflict";
   note: string;
 }
 
+const AXES = ["X", "Y", "Z"] as const;
+
 /**
- * Finds output targets written by more than one pendulum chain.
+ * Finds output targets written more than once, at the granularity VNyan
+ * actually keys each output kind by (all verified against decompiled source):
  *
- * Any target written twice is a conflict, whatever its kind: only one pendulum
- * may write a target directly, and stacking them makes the motion cancel out.
- * Blendshapes are no exception - and note a blendshape counts as written
- * whether it appears as an output's `blendshape` (positive direction) or its
- * `negative`, which is an easy way to collide without noticing.
+ *   blendshape  -> BlendShapeSystem.AddOverrideBlendshape, keyed by name.
+ *                  Counts whether the name appears as `blendshape` (positive
+ *                  direction) or `negative` - both write it.
+ *   gameObject  -> PosRotSystem.SetAddChainRotation, keyed by
+ *                  (name.ToLower(), transform). Separate axes write separate
+ *                  xValue/yValue/zValue fields, so the SAME object on
+ *                  DIFFERENT axes is not a conflict.
+ *   param       -> ParamSystem set, keyed by name.
+ *
+ * All three assign rather than accumulate, despite two of them being named
+ * "Add…", so a second writer overwrites the first every frame.
+ *
+ * Duplicate writes from within a single chain count: one chain driving one
+ * blendshape from two different bones self-clashes exactly the same way.
  */
 export function findSharedOutputTargets(chains: Chain[]): SharedOutputTarget[] {
-  const byTarget = new Map<string, { kind: "gameObject" | "blendshape"; chains: Set<string> }>();
+  interface Group {
+    kind: SharedOutputTarget["kind"];
+    target: string;
+    axis?: "X" | "Y" | "Z";
+    writers: Map<string, number>;
+  }
+  const groups = new Map<string, Group>();
+
+  const add = (key: string, group: Omit<Group, "writers">, writer: string) => {
+    let g = groups.get(key);
+    if (!g) {
+      g = { ...group, writers: new Map() };
+      groups.set(key, g);
+    }
+    g.writers.set(writer, (g.writers.get(writer) ?? 0) + 1);
+  };
 
   chains.forEach((chain, i) => {
-    const chainName = chain?.name?.trim() || `(unnamed chain #${i})`;
+    const writer = chain?.name?.trim() || `(unnamed chain #${i})`;
     for (const out of chain?.outputs ?? []) {
-      const targets: [string | undefined, "gameObject" | "blendshape"][] = [
-        [out.gameObject, "gameObject"],
-        [out.blendshape, "blendshape"],
-        [out.negative, "blendshape"],
-      ];
-      for (const [raw, kind] of targets) {
-        // Blendshape names have been observed with stray leading whitespace in
-        // real configs, so normalize before grouping or the same target reads
-        // as two different ones.
-        const target = raw?.trim();
-        if (!target) continue;
-        const key = `${kind}:${target}`;
-        if (!byTarget.has(key)) byTarget.set(key, { kind, chains: new Set() });
-        byTarget.get(key)!.chains.add(chainName);
+      // Real configs have been seen with stray leading whitespace/tabs in
+      // blendshape names, so normalize before grouping or one target reads as
+      // two.
+      const bs = out.blendshape?.trim();
+      const neg = out.negative?.trim();
+      const obj = out.gameObject?.trim();
+      const param = out.param?.trim();
+
+      if (bs) add(`bs:${bs}`, { kind: "blendshape", target: bs }, writer);
+      // A chain using the same name for both directions (absolute-value
+      // semantics) is one writer, not two - don't count it twice.
+      if (neg && neg !== bs) add(`bs:${neg}`, { kind: "blendshape", target: neg }, writer);
+
+      if (obj) {
+        const t = out.transform ?? 0;
+        const axis = AXES[t] ?? undefined;
+        add(`go:${obj.toLowerCase()}:${t}`, { kind: "gameObject", target: obj, axis }, writer);
       }
+
+      if (param) add(`p:${param}`, { kind: "param", target: param }, writer);
     }
   });
 
+  const noteFor = (g: Group, writerCount: number): string => {
+    const where =
+      g.kind === "gameObject"
+        ? `this GameObject's ${g.axis ?? "selected"} rotation axis`
+        : g.kind === "blendshape"
+          ? "this blendshape"
+          : "this parameter";
+    const terminal =
+      g.kind === "gameObject"
+        ? "a single ObjectRotNode (set all three axes together - it zeroes any axis you omit)"
+        : g.kind === "blendshape"
+          ? "a single BlendshapeNode per shape (a signed pair needs a FilterParamNode sign split - see the guide)"
+          : "whatever single node consumes it";
+    return (
+      `CONFLICT: ${writerCount} writer(s) drive ${where} directly, so they overwrite each other ` +
+      `every frame and the motion cancels out. Only one pendulum may write a target directly. Fix by ` +
+      `clearing the direct output field on each, giving each output its OWN unique 'param', summing ` +
+      `those params in a node graph, and applying the total with ${terminal}. ` +
+      `See vnyan_guide topic:'pendulum-composition'.`
+    );
+  };
+
   const shared: SharedOutputTarget[] = [];
-  for (const [key, { kind, chains: names }] of byTarget) {
-    if (names.size < 2) continue;
-    const target = key.slice(key.indexOf(":") + 1);
+  for (const g of groups.values()) {
+    const total = [...g.writers.values()].reduce((a, b) => a + b, 0);
+    if (total < 2) continue;
     shared.push({
-      target,
-      kind,
-      chains: [...names].sort(),
+      target: g.target,
+      kind: g.kind,
+      ...(g.axis ? { axis: g.axis } : {}),
+      writers: [...g.writers.entries()]
+        .map(([name, n]) => (n > 1 ? `${name} (x${n})` : name))
+        .sort(),
       severity: "conflict",
-      note:
-        `CONFLICT: ${names.size} chains write this ${kind} directly, so they will cancel each other out. ` +
-        `Only one pendulum may write a target directly. Fix by clearing the '${kind}' field on each of ` +
-        "these chains, giving each output a unique 'param' instead, then summing those params in a node " +
-        "graph and applying the total with a single " +
-        (kind === "gameObject" ? "ObjectRotNode" : "BlendshapeNode") +
-        ". See vnyan_guide topic:'pendulum-composition'.",
+      note: noteFor(g, total),
     });
   }
-  return shared.sort((a, b) => (a.kind === b.kind ? a.target.localeCompare(b.target) : a.kind === "gameObject" ? -1 : 1));
+
+  const kindOrder = { gameObject: 0, blendshape: 1, param: 2 } as const;
+  return shared.sort(
+    (a, b) => kindOrder[a.kind] - kindOrder[b.kind] || a.target.localeCompare(b.target)
+  );
 }
 
 export function register(server: McpServer) {
@@ -84,21 +143,23 @@ export function register(server: McpServer) {
       title: "VNyan pendulum chains",
       description:
         "'list' (disk, always readable) reads the pendulum chains configured in VNyan's UI (settings.json " +
-        "'Chains' - spring-physics bone chains like ear/tail wiggle, each with input/output bindings), and " +
-        "also reports any output target driven by more than one chain in 'sharedOutputTargets'. " +
+        "'Chains') and reports every output target written more than once in 'sharedOutputTargets'. " +
         "'create'/'delete'/'setPosition'/'setRotation'/'chains' (plugin, live) manage a SEPARATE set of " +
         "chains created at runtime via this API, addressed by the numeric handle 'create' returns - they " +
         "are not the same chains as 'list' and don't persist across a VNyan restart. " +
-        "CRITICAL CONSTRAINT: only ONE pendulum may write a given output target directly - this applies to " +
-        "GameObjects AND blendshapes equally. Two pendulums on the same target clash and their motion " +
-        "cancels out; it is a routing problem that no amount of damping/elasticity tuning will fix. The " +
-        "only supported way to layer several pendulums onto one target is: clear the direct output field " +
-        "on each, give each output a unique 'param' instead, sum those params in a node graph, and apply " +
-        "the total with a SINGLE node (ObjectRotNode for transforms - it zeroes any axis you omit, so set " +
-        "all three together; BlendshapeNode for blendshapes). Note a blendshape counts as written whether " +
-        "it appears as an output's 'blendshape' or its 'negative'. Read vnyan_guide " +
-        "topic:'pendulum-composition' for the full working recipe BEFORE adding a pendulum to a target " +
-        "that already has one. See vnyan_guide topic:'pendulum-tuning' for the physics parameters.",
+        "CRITICAL CONSTRAINT: only ONE pendulum may write a given output target directly. VNyan assigns " +
+        "rather than accumulates on all three output paths, so a second writer overwrites the first every " +
+        "frame and the motion cancels out - a routing problem no damping/elasticity tuning will fix. The " +
+        "granularity differs per kind: blendshapes key on NAME (and a name counts as written whether it " +
+        "appears as an output's 'blendshape' or its 'negative'); GameObjects key on (name, transform axis), " +
+        "so the same object on DIFFERENT axes does NOT clash; parameters key on name, so two outputs must " +
+        "never share a 'param'. To layer several pendulums on one target: clear the direct output field on " +
+        "each, give each output its own unique 'param', sum those in a node graph, and apply the total with " +
+        "a single node - ObjectRotNode for transforms (set all three axes together, it zeroes omitted " +
+        "ones), or for a SIGNED blendshape pair a FilterParamNode sign split into two BlendshapeNodes, " +
+        "since one BlendshapeNode cannot drive two different shapes. Read vnyan_guide " +
+        "topic:'pendulum-composition' for the verified recipe and the full field-by-field data model " +
+        "BEFORE changing a chain's outputs. See vnyan_guide topic:'pendulum-tuning' for the spring params.",
       inputSchema: {
         action: z.enum(["list", "create", "delete", "setPosition", "setRotation", "chains"])
           .describe("Which pendulum operation to perform"),

@@ -92,6 +92,17 @@ EXEC_OUT_OBSERVED = {
 VALUES_VERIFIED_FROM_HELP = {
     # "GameObject Name / Rotation X / Rotation Y / Rotation Z / Smooth time / Is Toggle"
     "ObjectRotNode": ["rotx", "roty", "rotz", "name", "seconds", "toggle"],
+    # "GameObject Name / Position X / Position Y / Position Z / Smooth time / Is Toggle"
+    "ObjectPosNode": ["posx", "posy", "posz", "name", "seconds", "toggle"],
+    # "GameObject Name / Scale X / Scale Y / Scale Z / Smooth time / Is Toggle"
+    "ObjectScaleNode": ["scalex", "scaley", "scalez", "name", "seconds", "toggle"],
+}
+
+# Node types that genuinely have NO configurable fields, so an empty values[]
+# is the correct answer rather than an unknown. Verified by inspecting the
+# class: only socket fields declared, no InputField/Dropdown/Toggle/Slider.
+VALUES_KNOWN_EMPTY = {
+    "OrderedNode",   # only SocketOutput[] outputSocket + SocketInput callbackInput
 }
 
 
@@ -209,6 +220,32 @@ def scan_graphs(globs):
     return best_values, dict(exec_out_seen), len(files)
 
 
+# VNyan's help files label each configurable field with <strong>Label</strong>
+# followed by its description.
+HELP_FIELD_RE = re.compile(r"<strong>(.*?)</strong>", re.I | re.S)
+
+
+def help_field_counts(help_dir):
+    """
+    Count the configurable fields VNyan's own help file lists for each node.
+
+    Used only as a CROSS-CHECK on the heuristic's values[] length - never as a
+    source of key names, because the labels do not map reliably to keys
+    (SetTimerNode's help says "Milliseconds to trigger" while the key is
+    `seconds`). A count mismatch flags an entry as probably wrong; it cannot
+    tell us the right answer.
+    """
+    counts = {}
+    if not help_dir:
+        return counts
+    for path in Path(help_dir).glob("*.html"):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        fields = HELP_FIELD_RE.findall(text)
+        if fields:
+            counts[path.stem] = len(fields)
+    return counts
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("decompiled_dir", help="Directory produced by `ilspycmd -p -o <dir> Assembly-CSharp.dll`")
@@ -219,6 +256,10 @@ def main():
                     help="Glob of real VNyan graph .json files to ground-truth values[] keys against. "
                          "Repeatable. Strongly recommended - without it every values[] list falls back "
                          "to an unreliable source heuristic and is flagged valuesUncertain.")
+    ap.add_argument("--help-dir", metavar="DIR",
+                    help="VNyan's StreamingAssets/HelpFiles/en directory. Used only to cross-check the "
+                         "heuristic's field COUNT (never key names) and flag likely-wrong entries with "
+                         "valuesCountMismatch.")
     args = ap.parse_args()
 
     src = Path(args.decompiled_dir)
@@ -245,6 +286,9 @@ def main():
             uncertain = False
         elif name in VALUES_VERIFIED_FROM_HELP:
             values = VALUES_VERIFIED_FROM_HELP[name]
+            uncertain = False
+        elif name in VALUES_KNOWN_EMPTY:
+            values = []
             uncertain = False
         else:
             values = parsed["values"]
@@ -278,6 +322,21 @@ def main():
     for entry in types.values():
         entry["possiblyIncomplete"] = len(entry["values"]) < entry["valueIn"]
 
+    # Cross-check uncertain entries against the help file's field count. A
+    # mismatch does not tell us the right keys, but it does mark the entry as
+    # probably wrong so nobody trusts it.
+    help_counts = help_field_counts(args.help_dir)
+    mismatched = []
+    for name, entry in types.items():
+        if not entry.get("valuesUncertain"):
+            continue
+        expected = help_counts.get(name)
+        if expected is None:
+            continue
+        if len(entry["values"]) != expected:
+            entry["valuesCountMismatch"] = {"heuristic": len(entry["values"]), "helpFile": expected}
+            mismatched.append(name)
+
     confirmed = sum(1 for e in types.values() if not e.get("valuesUncertain"))
     out = {
         "_meta": {
@@ -285,8 +344,9 @@ def main():
             "generatedFrom": "Assembly-CSharp.dll (decompiled; node classes retain real socket field names despite obfuscation elsewhere)",
             "generatedBy": "tools/extract-node-schema.py",
             "typeCount": len(types),
-            "valuesConfirmedFromGraphs": confirmed,
+            "valuesConfirmed": confirmed,
             "graphFilesScanned": graph_file_count,
+            "valuesCountMismatched": len(mismatched),
             "note": (
                 "Socket counts and valueInFields/valueOutFields are read from declared fields and are "
                 "reliable. 'dynamicSockets' lists socket kinds whose real count comes from the Unity "
@@ -294,7 +354,7 @@ def main():
                 "confirm against a real graph with vnyan_graph_read. 'valuesUncertain' marks types whose "
                 "values[] keys came from an unreliable source heuristic rather than an observed VNyan "
                 "graph - verify those before relying on them. VNyan exposes no app version string, so "
-                "the Unity engine version above identifies the build this came from."
+                "the Unity engine version above identifies the build this came from. valuesCountMismatch marks an uncertain entry whose field count disagrees with VNyan's own help file - treat those keys as probably wrong."
             ),
         },
         "types": dict(sorted(types.items())),

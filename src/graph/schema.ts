@@ -26,6 +26,12 @@ export interface NodeTypeSchema {
   /** `values` came from an unreliable source heuristic rather than an observed
    * VNyan-written graph - verify the key names before relying on them. */
   valuesUncertain?: boolean;
+  /** Set when an uncertain entry's field count disagrees with VNyan's own help
+   * file. The help file cannot supply the right key *names* (its labels don't
+   * map reliably - "Milliseconds to trigger" is the key `seconds`), but a count
+   * mismatch means these keys are probably wrong. Verify with
+   * vnyan_graph_read before use. */
+  valuesCountMismatch?: { heuristic: number; helpFile: number };
 }
 
 interface SchemaMeta {
@@ -33,8 +39,9 @@ interface SchemaMeta {
   generatedFrom: string;
   generatedBy: string;
   typeCount: number;
-  valuesConfirmedFromGraphs: number;
+  valuesConfirmed: number;
   graphFilesScanned: number;
+  valuesCountMismatched: number;
   note: string;
 }
 

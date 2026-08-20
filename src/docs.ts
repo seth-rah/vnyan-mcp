@@ -176,196 +176,270 @@ actions manage a SEPARATE, runtime-only set of chains from the persisted
 ones \`vnyan_pendulum action:'list'\` reads - they don't share state and the
 runtime ones don't survive a VNyan restart.
 
-**Before adding a second pendulum to a bone or GameObject that already has
-one, read \`vnyan_guide topic:'pendulum-composition'\`.** Only one pendulum
-may drive a target directly; stacking them makes their motion cancel out,
-and tuning these four parameters will not fix it.
+**Before pointing a second pendulum at any target that already has one - a
+GameObject axis, a blendshape, or a parameter - read
+\`vnyan_guide topic:'pendulum-composition'\`.** Only one pendulum may write a
+target directly; stacking them makes their motion cancel out, and tuning
+these four parameters will not fix it, because it is a routing problem rather
+than a physics one.
 `;
 
 const PENDULUM_COMPOSITION = `# Combining multiple pendulums on one target
 
+Every claim here is tagged with how it was established: \`[source]\` decompiled
+VNyan code, \`[dev-doc]\` VNyan's shipped \`VNyanInterface.xml\`, \`[help]\`
+VNyan's shipped help files, \`[observed]\` a real VNyan-written config or graph,
+\`[repro]\` reproduced live against a running VNyan.
+
 ## The rule
 
-**Only ONE pendulum may write a given output target directly.** This applies
-to every output kind - GameObjects *and* blendshapes alike. From VNyan's
-developer:
+**Only ONE pendulum may write a given output target directly.** Two pendulums
+on the same target clash - the second overwrites the first each frame, so
+their motion cancels rather than layering. This is a routing problem; no
+amount of damping/elasticity tuning fixes it. \`[source]\`
+
+VNyan's developer:
 
 > "You cannot have more than one pendulum directly linked to one gameobject.
 > If you need to combine values then you should likely pass the value to
 > parameters and make a node graph to combine the values before passing them
 > to a object rotation node."
 
-Point two pendulums at the same target and they clash - the result is motion
-that cancels itself out rather than layering. No amount of damping/elasticity
-tuning fixes this; it is a routing problem, not a physics one.
+The **granularity** differs per output kind:
 
-**There is exactly one supported way to layer several pendulums onto one
-target:** each pendulum writes to its own parameter, a node graph sums those
-parameters, and a single node applies the total. Anything else is two
-pendulums fighting.
+| Output kind | Keyed by | One writer per |
+|---|---|---|
+| \`blendshape\` / \`negative\` | blendshape name | the name |
+| \`gameObject\` | \`(name.ToLower(), transform)\` | object **and axis** |
+| \`param\` | parameter name | the name |
 
-## Why partial writes cancel
+\`[source]\` Blendshapes go through \`BlendShapeSystem.AddOverrideBlendshape\`,
+GameObjects through \`PosRotSystem.SetAddChainRotation\`, parameters through
+\`ParamSystem\`. **All three assign rather than accumulate** - see the naming
+trap below.
 
-\`ObjectRotNode\`'s own help text is explicit: *"Rotation X / Rotation Y /
-Rotation Z - **Will set to 0 if not specified**"*. So a node that sets only
-X actively **zeroes Y and Z**. That is why the developer stresses applying
-every axis together:
+Two consequences people get wrong:
 
-> "You should apply all of them at the same time … then use the parameter
-> operation nodes to calculate each axis together."
+- Two pendulums on the **same GameObject but different \`transform\` axes do
+  NOT clash** - they write separate \`xValue\`/\`yValue\`/\`zValue\` fields.
+- Two outputs sharing a **\`param\` name DO clash**. That is why the fix pattern
+  insists every output gets its *own* parameter.
 
-One \`ObjectRotNode\` per target, receiving all three axes. Never one node
-per axis.
+## Naming trap - do not trust these method names
 
-## The pattern
+\`AddOverrideBlendshape\` and \`SetAddChainRotation\` both sound additive. Neither
+is. \`[source]\`
 
-**Step 1 - stop linking pendulums directly.** For each pendulum output
-(\`settings.json\` \`Chains[].outputs[]\`, which \`vnyan_pendulum action:'list'\`
-returns), leave \`gameObject\` **empty** and set \`param\` to a unique name
-instead. Each pendulum now publishes its value to its own parameter rather
-than fighting for the target:
+\`\`\`csharp
+// AddOverrideBlendshape - "Add" means add a DICTIONARY ENTRY
+previous = entry.Value;
+entry.Value = value;         // replaces
+entry.StartValue = previous; // old value survives only as a tween origin
 
-    pendulum "EarBounce"  -> param "_pend_ear_x"
-    pendulum "HeadBob"    -> param "_pend_bob_x"
+// SetAddChainRotation - assigns per axis, no +=
+switch (transform) { case 0: value.xValue = amount; ... }
+\`\`\`
 
-No new machinery - both fields already exist on every output entry.
+## The complete data model
 
-**Step 2 - sum them in a node graph on a fast timer loop.** Nodes involved,
-with every value key verified:
+### Chain level
+
+| Field | Meaning | Evidence |
+|---|---|---|
+| \`name\` | display name | \`[observed]\` |
+| \`bones\` | number of simulated bones in the chain | \`[observed]\` |
+| \`damping\` \`elasticity\` \`stiffness\` \`inert\` | DynamicBone spring params, all \`Mathf.Clamp01\` | \`[source: DynamicBone.cs]\` |
+
+See \`vnyan_guide topic:'pendulum-tuning'\` for what each spring param does.
+
+### inputs[] - what drives the chain
+
+| Field | Meaning | Evidence |
+|---|---|---|
+| \`valueName\` | a blendshape name or a parameter name | \`[source]\` |
+| \`isBlendshape\` | \`true\` reads a blendshape via \`BlendShapeSystem.GetAccumulatedValue\`; \`false\` reads a numeric parameter from \`ParamSystem\` | \`[source: ValueChainRoot.cs]\` |
+| \`multiplier\` | scales the driving value (stored internally as \`efficiency\`) | \`[source]\` |
+| \`isRotation\` | selects **which property of the chain root** the input drives - see below | \`[source]\` + \`[dev-doc]\` |
+
+**\`isRotation\` in full**, because it is the least obvious field:
+
+- \`false\` -> accumulates into the root's **\`localPosition\`** (X). The root is
+  *translated*, the bones lag behind, so the chain **swings back and forth as
+  the value changes and settles when it stops.** Impulse-like.
+- \`true\` -> accumulates into the root's **\`localRotation\`**
+  (\`Quaternion.Euler\`, Z). The root is *tilted*, so the chain **swings to an
+  angle proportional to the value and stays there.** Absolute-like.
+
+\`[source: ValueChainRoot.cs]\` - the two accumulators end in
+\`transform.localPosition = zero;\` and
+\`transform.localRotation = Quaternion.Euler(zero2);\`, consistent across every
+obfuscated duplicate. \`[dev-doc]\` corroborates: the plugin API exposes the same
+two modes, documented as \`setPositionValue\` = *"changes of this value will make
+the pendulum swing back and forth"* and \`setRotationValue\` = *"makes pendulum
+swing to a certain angle and remain there"*.
+
+### outputs[] - what the chain drives
+
+| Field | Meaning | Evidence |
+|---|---|---|
+| \`bone\` | index into the chain's bones; higher = further from root = more lag and accumulated motion | \`[source]\` |
+| \`multiplier\`, \`offset\` | every path computes \`num * multiplier + offset\`, where \`num\` is that bone's X displacement from the chain root | \`[source]\` |
+| \`blendshape\` | written **only when \`num > 0\`**, as \`num * multiplier + offset\` | \`[source]\` |
+| \`negative\` | written **only when \`num < 0\`**, as \`(-num) * multiplier + offset\` | \`[source]\` |
+| \`param\` | written **always**, as \`num * multiplier + offset\` - the **raw signed** value, with no positive/negative split | \`[source]\` |
+| \`gameObject\` | \`SetAddChainRotation(name.ToLower(), transform, num * multiplier + offset)\` - matching is **case-insensitive** | \`[source]\` |
+| \`transform\` | axis selector for \`gameObject\`: **0 = X, 1 = Y, 2 = Z** rotation | \`[source]\` |
+
+**Offset asymmetry:** the negative path negates \`num\` *before* applying
+multiplier and offset, so with a non-zero \`offset\` the two directions are
+**not** mirror images. \`[source]\`
+
+**The key asymmetry to internalise:** VNyan splits positive/negative *only*
+when writing blendshapes directly. A \`param\` output gets the signed value. So
+when you reroute through parameters, **you** own the split.
+
+## The fix pattern
+
+**Step 1** - for each pendulum output, clear the direct target field
+(\`gameObject\`, or \`blendshape\`/\`negative\`) and set \`param\` to a name unique to
+that output. Both fields already exist on every output entry, so this is
+configuration, not new machinery.
+
+**Step 2** - a node graph sums the parameters on a fast timer loop and applies
+the total with a single node.
+
+Nodes used, all with \`values[]\` keys confirmed against real VNyan-written
+graphs \`[observed]\`:
 
 | Node | values | Role |
 |---|---|---|
-| \`TimerNode\` | \`{timerName: "PendulumCombine"}\` | Event source. execIn 0, execOut 1. Fires when a matching timer elapses. |
-| \`ParamOpNode\` | \`{paramName, value1, value2, operation}\` | One per axis. Math on two values, result stored to a parameter. |
-| \`ObjectRotNode\` | \`{name, rotx, roty, rotz}\` | Applies all three axes at once. |
-| \`SetTimerNode\` | \`{timerName, seconds}\` | Re-arms the timer, closing the loop. |
+| \`TimerNode\` | \`{timerName}\` | event source, execIn 0 / execOut 1 |
+| \`ParamOpNode\` | \`{paramName, value1, value2, operation}\` | two-input math, result to a parameter |
+| \`FilterParamNode\` | \`{pname, pvalue}\` | 3-way branch on a comparison |
+| \`BlendshapeNode\` | \`{bsName, bsValue, smoothTime, isToggle, const}\` | sets one blendshape |
+| \`ObjectRotNode\` | \`{name, rotx, roty, rotz, seconds, toggle}\` | sets a GameObject's rotation |
+| \`SetTimerNode\` | \`{timerName, seconds}\` | re-arms the timer |
 
-Three details that will bite otherwise:
+Three details that silently break things:
 
-1. **\`ParamOpNode.operation\` is a dropdown index, as a string:**
-   \`"0"\` = add, \`"1"\` = subtract, \`"2"\` = multiply, \`"3"\` = divide,
-   \`"4"\` = modulo. Use \`"0"\`.
-2. **\`SetTimerNode\`'s \`seconds\` key is actually MILLISECONDS** despite the
-   name - VNyan's help says "Milliseconds to trigger". Use \`"10"\` for the
-   ~10 ms tick the developer suggests, not \`"0.01"\`.
-3. **\`ParamOpNode\` has no value output.** It writes to a parameter, and the
-   next node reads it back by name in brackets. That is the seam between the
-   two steps.
+1. **\`ParamOpNode.operation\` is a dropdown index as a string:** \`"0"\` add,
+   \`"1"\` subtract, \`"2"\` multiply, \`"3"\` divide, \`"4"\` modulo. \`[source]\`
+2. **\`SetTimerNode\`'s \`seconds\` is MILLISECONDS** despite the name - the help
+   text reads "Milliseconds to trigger". Use \`"10"\`, not \`"0.01"\`. \`[help]\`
+   \`[observed]\`
+3. **\`ParamOpNode\` has no value output.** It writes to a parameter which the
+   next node reads back as \`[paramName]\` in brackets. That bracket convention
+   is how any node value marked "or parameter in brackets" pulls a live value.
+   \`[help]\`
 
-## The \`[brackets]\` convention
+\`ParamOpNode\` takes exactly two inputs, so fold three or more contributors:
 
-Any node value documented as "or parameter in brackets" reads that parameter
-at evaluation time. So \`ObjectRotNode\` with \`rotx: "[_pend_sum_x]"\` picks up
-whatever \`ParamOpNode\` last stored there - no wire needed. This is what lets
-the sums flow from step 2's math into step 2's output node.
+    _sum = [a] + [b]
+    _sum = [_sum] + [c]
 
-\`ParamOpNode\` takes exactly **two** inputs, so for three or more pendulums
-on one axis, chain them - each op folding the running total:
+## Case A - transforms (GameObject outputs)
 
-    _pend_sum_x = [_pend_ear_x] + [_pend_bob_x]
-    _pend_sum_x = [_pend_sum_x] + [_pend_third_x]
-
-## Worked example
-
-Two pendulums (\`_pend_ear_x/y/z\`, \`_pend_bob_x/y/z\`) summed onto one
-GameObject, in \`vnyan_graph_write\` spec form:
+\`ObjectRotNode\` **zeroes any axis you don't specify** \`[help]\`, so all three
+axes must be set in one node. Same for \`ObjectPosNode\` and \`ObjectScaleNode\` -
+and on scale an omitted axis collapses the object to zero size, so it is the
+least forgiving of the three.
 
 \`\`\`json
 {
   "graphName": "Pendulum Combine",
   "nodes": [
     { "id": "tick",  "type": "TimerNode",     "values": { "timerName": "PendulumCombine" } },
-    { "id": "sumX",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_x", "value1": "[_pend_ear_x]", "value2": "[_pend_bob_x]", "operation": "0" } },
-    { "id": "sumY",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_y", "value1": "[_pend_ear_y]", "value2": "[_pend_bob_y]", "operation": "0" } },
-    { "id": "sumZ",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_z", "value1": "[_pend_ear_z]", "value2": "[_pend_bob_z]", "operation": "0" } },
-    { "id": "apply", "type": "ObjectRotNode", "values": { "name": "YourGameObjectName", "rotx": "[_pend_sum_x]", "roty": "[_pend_sum_y]", "rotz": "[_pend_sum_z]" } },
+    { "id": "sumX",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_x", "value1": "[_pend_a_x]", "value2": "[_pend_b_x]", "operation": "0" } },
+    { "id": "sumY",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_y", "value1": "[_pend_a_y]", "value2": "[_pend_b_y]", "operation": "0" } },
+    { "id": "sumZ",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_z", "value1": "[_pend_a_z]", "value2": "[_pend_b_z]", "operation": "0" } },
+    { "id": "apply", "type": "ObjectRotNode", "values": { "name": "YourGameObject", "rotx": "[_pend_sum_x]", "roty": "[_pend_sum_y]", "rotz": "[_pend_sum_z]" } },
     { "id": "loop",  "type": "SetTimerNode",  "values": { "timerName": "PendulumCombine", "seconds": "10" } }
   ],
   "connections": [
-    { "from": "tick", "to": "sumX" },
-    { "from": "tick", "to": "sumY" },
-    { "from": "tick", "to": "sumZ" },
-    { "from": "tick", "to": "apply" },
+    { "from": "tick", "to": "sumX" }, { "from": "tick", "to": "sumY" },
+    { "from": "tick", "to": "sumZ" }, { "from": "tick", "to": "apply" },
     { "from": "tick", "to": "loop" }
   ]
 }
 \`\`\`
 
-Every wire comes off \`tick\`'s single execOut, because \`ParamOpNode\`,
+Every wire comes off \`tick\`'s single execOut because \`ParamOpNode\`,
 \`ObjectRotNode\` and \`SetTimerNode\` are all terminal (zero execOut) - see
-\`vnyan_guide topic:'node-authoring'\` for why chaining them instead would
-silently run only the first.
+\`vnyan_guide topic:'node-authoring'\`.
 
-Kick the loop off once (fire a \`SetTimerNode\` for \`PendulumCombine\` from any
-graph, or add an \`AppStartNode\` -> \`SetTimerNode\` pair) and it self-sustains.
+## Case B - blendshapes
 
-## On execution order
+Two sub-cases needing different handling.
 
-The developer suggests an Ordered Execution node:
+**B1 - absolute output**: a chain using the *same* blendshape in both
+\`blendshape\` and \`negative\`. VNyan's net behaviour is \`|value|\`. Summing params
+directly reproduces it, but **only if every contributor to that name is also
+absolute**.
 
-> "You could use for example Ordered Execution node and then use the
-> parameter operation nodes to calculate each axis together."
+**B2 - signed pair**: \`blendshape\` differs from \`negative\`. These are two
+*different* shapes, so a single \`BlendshapeNode\` cannot express the pair -
+driving \`Shape_Squash\` by a negative number does **not** raise
+\`Shape_Stretch\`. You must split the sign. Splitting is **not** a clash: a
+clash is two writers on the same name, not one writer each on two names.
 
-That is a **refinement, not a correctness requirement** here. Because the
-sums travel through parameters rather than wires, the worst case without
-ordering is that \`ObjectRotNode\` reads the previous tick's values - a ~10 ms
-lag, normally imperceptible. If you do want strict ordering, insert an
-\`OrderedNode\` (or \`OrderedFlexNode\`) between \`tick\` and the rest and wire
-each step to a separate exec output in the intended order. Both types size
-their exec outputs from the Unity prefab, so \`vnyan_node_schema\` reports a
-floor - \`vnyan_graph_write\` lets you wire past it and creates sockets as
-needed.
-
-## Applying to something other than rotation
-
-Same shape, different terminal node: \`ObjectPosNode\` (\`posx/posy/posz\`) and
-\`ObjectScaleNode\` (\`scalex/scaley/scalez\`). Both carry the identical
-zero-what-you-omit behavior, confirmed in their own help text - so both need
-all three axes in one call.
-
-**\`ObjectScaleNode\` is the dangerous one:** an omitted axis is set to 0, so
-a partial write collapses the object to zero size on that axis rather than
-merely mispositioning it. Always send all three.
-
-## Blendshape outputs clash exactly the same way
-
-Two pendulum chains writing the **same blendshape** clash just as two chains
-on one GameObject do. This is the most common way a rig ends up with
-pendulums quietly cancelling each other, because a blendshape name is easy to
-reuse across several chains without noticing - and unlike a GameObject, the
-same blendshape often legitimately appears as the \`blendshape\` field of one
-output and the \`negative\` field of another. Both count as writing it.
-
-The fix is the same param-and-sum pattern, and it is **simpler than the
-rotation case** - blendshapes have no
-"zeroes-the-axes-you-omit" behavior, so there is nothing to bundle. One
-\`BlendshapeNode\` per blendshape, fed the summed parameter:
+There is **no \`max\`/\`min\`/\`abs\`/\`clamp\`/\`sign\` node in VNyan** - verified
+across all 304 node types - so a branch is the only mechanism.
+\`FilterParamNode\`'s exec outputs are ordered **\`[0]\` greater, \`[1]\` equal,
+\`[2]\` less** than \`pvalue\`. \`[source: FilterParamNode.cs]\`
 
 \`\`\`json
 {
   "graphName": "Blendshape Combine",
   "nodes": [
-    { "id": "tick", "type": "TimerNode",      "values": { "timerName": "BsCombine" } },
-    { "id": "sum",  "type": "ParamOpNode",    "values": { "paramName": "_bs_sum_short_l", "value1": "[_pend_squint_short_l]", "value2": "[_pend_blink_short_l]", "operation": "0" } },
-    { "id": "app",  "type": "BlendshapeNode", "values": { "bsName": "Highlight_Short_L", "bsValue": "[_bs_sum_short_l]", "smoothTime": "0", "isToggle": "0" } },
-    { "id": "loop", "type": "SetTimerNode",   "values": { "timerName": "BsCombine", "seconds": "10" } }
+    { "id": "tick", "type": "TimerNode",       "values": { "timerName": "BsCombine" } },
+    { "id": "sum",  "type": "ParamOpNode",     "values": { "paramName": "_bs_sum", "value1": "[_pend_a]", "value2": "[_pend_b]", "operation": "0" } },
+    { "id": "neg",  "type": "ParamOpNode",     "values": { "paramName": "_bs_neg", "value1": "0", "value2": "[_bs_sum]", "operation": "1" } },
+    { "id": "br",   "type": "FilterParamNode", "values": { "pname": "_bs_sum", "pvalue": "0" } },
+    { "id": "posP", "type": "BlendshapeNode",  "values": { "bsName": "Shape_Squash", "bsValue": "[_bs_sum]", "smoothTime": "0", "isToggle": "0" } },
+    { "id": "negZ", "type": "BlendshapeNode",  "values": { "bsName": "Shape_Stretch",  "bsValue": "0",         "smoothTime": "0", "isToggle": "0" } },
+    { "id": "posZ", "type": "BlendshapeNode",  "values": { "bsName": "Shape_Squash", "bsValue": "0",         "smoothTime": "0", "isToggle": "0" } },
+    { "id": "negP", "type": "BlendshapeNode",  "values": { "bsName": "Shape_Stretch",  "bsValue": "[_bs_neg]", "smoothTime": "0", "isToggle": "0" } },
+    { "id": "loop", "type": "SetTimerNode",    "values": { "timerName": "BsCombine", "seconds": "10" } }
   ],
   "connections": [
     { "from": "tick", "to": "sum" },
-    { "from": "tick", "to": "app" },
-    { "from": "tick", "to": "loop" }
+    { "from": "tick", "to": "neg" },
+    { "from": "tick", "to": "br" },
+    { "from": "tick", "to": "loop" },
+    { "from": "br", "fromIndex": 0, "to": "posP" },
+    { "from": "br", "fromIndex": 0, "to": "negZ" },
+    { "from": "br", "fromIndex": 2, "to": "posZ" },
+    { "from": "br", "fromIndex": 2, "to": "negP" }
   ]
 }
 \`\`\`
 
-Scale it by adding one \`ParamOpNode\` + one \`BlendshapeNode\` pair per
-blendshape, all hanging off the same \`tick\`. For a signed pair (a chain using
-\`blendshape\` for the positive direction and \`negative\` for the other), sum
-into one parameter and let the single \`BlendshapeNode\` take the signed total -
-don't split it back into two nodes, or you have recreated the clash.
+**Why the zero-writes are mandatory:** \`BlendshapeNode\` does **not**
+self-reset. Unlike \`Object*Node\` (which zeroes axes you omit), a blendshape
+left undriven **latches at its last value**. So on the \`> 0\` branch you must
+explicitly write the negative shape to \`0\`, and vice versa. Skip that and the
+shape sticks.
 
-\`vnyan_pendulum action:'list'\` reports every shared target - GameObject or
-blendshape - as a \`conflict\`, so you can see the full set before you start.
+The \`[1]\` (equal) branch is omitted above for brevity; wiring it to two
+zero-writes is tidier if you want an exact rest state.
+
+## Scaling this up
+
+One \`ParamOpNode\` + \`FilterParamNode\` + two \`BlendshapeNode\`s per signed pair,
+all hanging off one shared \`tick\`. Add pairs by repeating the block with new
+parameter names - the timer, and the loop that re-arms it, stay single. Keep it
+in its own graph tab so it can be reloaded without touching your event graphs.
+
+## On execution order
+
+The developer suggests an Ordered Execution node. That is a **refinement, not a
+correctness requirement**: because the sums travel through parameters rather
+than wires, the worst case without ordering is that the apply nodes read the
+previous tick's values - a ~10 ms lag. If you want strict ordering, put an
+\`OrderedNode\` between \`tick\` and the rest and wire each step to its own exec
+output. Both \`OrderedNode\` and \`OrderedFlexNode\` size their exec outputs from
+the Unity prefab, so \`vnyan_node_schema\` reports a floor - \`vnyan_graph_write\`
+lets you wire past it and creates sockets as needed.
 `;
 
 const RESTART_POLICY = `# When VNyan needs to be closed

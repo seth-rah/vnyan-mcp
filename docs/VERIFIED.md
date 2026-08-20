@@ -74,48 +74,143 @@ obfuscated with no recoverable names) rather than guessed.
 | VNyanNet | `vnyan_vnyannet` | plugin (live) | ✅ degrades to empty results (not an error) when VNyanNet isn't configured |
 | Spout2 / cameras | `vnyan_spout` | plugin (live) | ✅ both tested — `addCamera` with explicit position/rotation/focalLength, confirmed via `listCameras` |
 
-## Pendulum composition and node socket counts
+## Pendulum data model — every field, source-verified
 
-- **Only one pendulum may write a given output target directly** - GameObjects
-  and blendshapes alike. Two pendulums on the same target clash and the
-  motion cancels out; it is a routing problem, not a physics-tuning one. The
-  only supported way to layer them is to clear the direct output field on
-  each, give each output a unique `param`, sum those parameters in a node
-  graph, and apply the total with a single node (`ObjectRotNode` for
-  transforms, `BlendshapeNode` for blendshapes). A blendshape counts as
-  written whether it appears as an output's `blendshape` or its `negative`,
-  which makes accidental collisions easy. Full recipe:
-  `vnyan_guide topic:'pendulum-composition'`.
-- **`ObjectRotNode`, `ObjectPosNode` and `ObjectScaleNode` zero any axis you
-  don't specify** - stated in each node's own help text. So every axis must
-  be set in a single call. `ObjectScaleNode` is the dangerous one: a partial
-  write collapses the object to zero size on the omitted axes.
-- **`ParamOpNode.operation` is a dropdown index serialized as a string**:
-  `"0"` add, `"1"` subtract, `"2"` multiply, `"3"` divide, `"4"` modulo
-  (read from the decompiled switch).
-- **`SetTimerNode`'s `seconds` value is in milliseconds** despite the key
-  name - VNyan's help text says "Milliseconds to trigger", and a real graph
-  uses `5000` for a 5-second delay.
-- **23 node types declare their sockets as an array or `List<>`, or build
-  them at runtime ("Flex" nodes).** Their real counts come from the Unity
-  prefab, so a static source scan reports 0 and previously made every
-  branching node (`OrderedNode`, all `Filter*Node`, `CompareTextNode`,
-  `RandomNode`, `CyclerNode`, `TextSwitchNode`, ...) unauthorable -
-  `vnyan_graph_write` rejected any wire out of them. These are now marked
-  `dynamicSockets` and the builder grows sockets on demand; 7 exact counts
-  were recovered from real graph files (e.g. `FilterParamNode` has 3 exec
-  outputs).
-- **`values[]` key names cannot be read reliably from decompiled source.**
-  Method bodies are salted with decoy string literals, and re-running the
-  extraction with a different tie-break produced different wrong answers for
-  6 types. The schema now prefers keys observed in real VNyan-written graph
-  files (68 of 304 types) and flags everything else `valuesUncertain`.
-  Regenerate with `tools/extract-node-schema.py`.
+Evidence tags used throughout this file: `[source]` decompiled VNyan code,
+`[dev-doc]` VNyan's shipped `VNyanInterface.xml`, `[help]` VNyan's shipped
+help files, `[observed]` a real VNyan-written config or graph, `[repro]`
+reproduced live against a running VNyan.
+
+### Methodology: obfuscation emits contradictory duplicates
+
+VNyan's assembly is obfuscated by emitting **multiple plausible duplicates**
+of each method, salted with decoy string and float literals. Reading a
+**setter** is therefore unreliable. Concretely: `AddInput`'s call sites
+(`ChainSystem.cs` lines 224 / 275 / 365 / 461 / 689) pass mutually *inverted*
+flags, and its constructor blocks (389 / 604 / 759) compare differently. Only
+one path is live and static reading cannot tell which.
+
+**Read the consumer instead.** `ValueChainRoot.cs` uses both input flags
+identically across every duplicate and ends in two unambiguous assignments,
+which settles their meaning. Rule: **when duplicates disagree, trust the
+consumer over the setter — and never trust a method name over its body.**
+
+### Naming traps — both of these assign, neither accumulates
+
+```csharp
+// BlendShapeSystem.AddOverrideBlendshape — "Add" means add a DICTIONARY ENTRY
+previous = entry.Value;
+entry.Value = value;          // replaces
+entry.StartValue = previous;  // old value survives only as a tween origin
+
+// PosRotSystem.SetAddChainRotation — assigns per axis, no +=
+switch (transform) { case 0: value.xValue = amount; case 1: yValue; case 2: zValue; }
+```
+
+`[source]` This is why two pendulums on one target cancel out rather than
+layering: the second writer overwrites the first every frame.
+
+### Inputs `[source: ValueChainRoot.cs]`
+
+- `isBlendshape` — `true` reads a blendshape via
+  `BlendShapeSystem.GetAccumulatedValue`; `false` reads a numeric parameter
+  from `ParamSystem`.
+- `multiplier` — scales the driving value (stored internally as `efficiency`).
+- `isRotation` — selects which property of the chain root the input drives:
+  `false` accumulates into `localPosition` (X), so the root is *translated*
+  and the chain **swings back and forth as the value changes, settling when
+  it stops**; `true` accumulates into `localRotation`
+  (`Quaternion.Euler`, Z), so the root is *tilted* and the chain **swings to
+  an angle and stays there**. The two accumulators end in
+  `transform.localPosition = zero;` and
+  `transform.localRotation = Quaternion.Euler(zero2);`. `[dev-doc]`
+  corroborates — the plugin API exposes the same two modes as
+  `setPositionValue` ("swing back and forth") and `setRotationValue` ("swing
+  to a certain angle and remain there").
+
+### Outputs `[source: ValueChainBone.cs, PosRotSystem.cs]`
+
+`num` is the bone's X displacement from the chain root. Every path computes
+`num * multiplier + offset`, but they are **not** otherwise equivalent:
+
+| Field | Written | When |
+|---|---|---|
+| `blendshape` | `num * multiplier + offset` | only `num > 0` |
+| `negative` | `(-num) * multiplier + offset` | only `num < 0` |
+| `param` | `num * multiplier + offset` | **always — raw signed, no split** |
+| `gameObject` | `num * multiplier + offset` | always, via `SetAddChainRotation(name.ToLower(), transform, …)` |
+
+- `bone` — index into the chain's bones; higher = further from root = more lag.
+- `transform` — axis selector for `gameObject`: **0 = X, 1 = Y, 2 = Z**.
+- `gameObject` matching is **case-insensitive** (`.ToLower()`).
+- **Offset asymmetry:** the negative path negates `num` *before* applying
+  multiplier and offset, so with a non-zero `offset` the directions are not
+  mirror images.
+- **The consequential asymmetry:** VNyan splits positive/negative *only* when
+  writing blendshapes directly. A `param` output receives the signed value, so
+  rerouting through parameters means you own the split.
+
+### Clash granularity — differs per output kind
+
+| Output kind | Keyed by | One writer per |
+|---|---|---|
+| `blendshape` / `negative` | blendshape name | the name |
+| `gameObject` | `(name.ToLower(), transform)` | object **and axis** |
+| `param` | parameter name | the name |
+
+Two pendulums on the **same GameObject but different axes do not clash** —
+separate `xValue`/`yValue`/`zValue` fields. Two outputs sharing a **`param`
+name do clash**, which is why the fix pattern gives every output its own
+parameter. `vnyan_pendulum action:'list'` reports all three kinds at this
+granularity, including a chain that clashes with itself.
+
+### Combining pendulums — mechanics
+
+- **No `max`/`min`/`abs`/`clamp`/`sign` node exists in VNyan** — verified
+  across all 304 node types. A sign split therefore requires a branch.
+- `FilterParamNode`'s exec outputs are ordered **`[0]` greater, `[1]` equal,
+  `[2]` less** than `pvalue` `[source: FilterParamNode.cs]`. Authorable only
+  because its prefab-sized `SocketOutput[]` is now handled as a dynamic socket.
+- **`BlendshapeNode` does not self-reset.** Unlike `Object*Node` (which zeroes
+  any axis you omit `[help]`), a blendshape left undriven latches at its last
+  value — so each branch must explicitly write the opposite shape to `0`.
+- `ParamOpNode.operation` is a dropdown index as a string: `"0"` add, `"1"`
+  subtract, `"2"` multiply, `"3"` divide, `"4"` modulo `[source]`.
+- `SetTimerNode`'s `seconds` value is **milliseconds** `[help]` `[observed]`.
+
+Full recipe with worked graphs: `vnyan_guide topic:'pendulum-composition'`.
+
+## Node schema quality
+
+`src/graph/schema.json` is regenerated by `tools/extract-node-schema.py`.
+
+- Socket counts and `valueInFields`/`valueOutFields` come from declared C#
+  fields — **reliable**.
+- `dynamicSockets` marks the 30 types whose socket count comes from the Unity
+  prefab or is built at runtime (array/`List<>` socket fields, and every
+  "Flex" node). For those the count is a **floor**; `vnyan_graph_write` grows
+  sockets on demand. Without this, every branching node — `OrderedNode`, all
+  `Filter*Node`, `CompareTextNode`, `RandomNode`, `CyclerNode`,
+  `TextSwitchNode` — was unauthorable, because the builder sized its arrays to
+  a reported 0.
+- **`values[]` keys cannot be read reliably from source.** Method bodies are
+  decoy-salted; re-running the extraction with a different tie-break produced
+  *different wrong answers* for 6 types. So keys are taken from real
+  VNyan-written graphs where possible (71 of 304), from a hand-checked help
+  file for a few more, and otherwise flagged `valuesUncertain`.
+- `valuesCountMismatch` is a stronger warning on 66 of those uncertain
+  entries: their field count disagrees with VNyan's own help file, so the keys
+  are probably wrong. The help file can flag a mismatch but **cannot supply
+  the right names** — its labels don't map to keys (`SetTimerNode`'s
+  "Milliseconds to trigger" is the key `seconds`). Confirm with
+  `vnyan_graph_read` against a graph already using the node.
 
 ## Known limits (state these plainly, don't imply otherwise)
 
-- **Post-FX and lights are write-only at every tier.** The MCP tracks the
-  value it just sent; it cannot read back the actual applied state.
+- **Post-FX and lights are write-only at every tier.** No getter exists in the
+  plugin API or in any reflected system — this is an argument from absence, not
+  a positive test. The MCP tracks the value it last sent; it cannot read back
+  the actual applied state, and must not present the tracked value as observed.
 - **`SunLightNode` has an unexplained runtime bug:** any wired value-socket
   throws `InvalidCastException` inside VNyan's own trigger processing, even
   through the same converter-node pattern that works cleanly for
@@ -133,11 +228,11 @@ obfuscated with no recoverable names) rather than guessed.
   declared count for display purposes, but a slot beyond the count still
   won't execute until the count covers it.
 - **VNyan's live "Load Graph" import updates the running graph but not the
-  on-disk `redeemsN.json` file** until VNyan's own save happens (confirmed:
-  the file is unchanged immediately after a live import that demonstrably
-  took effect, and updated once VNyan quits). `vnyan_graph_read`/
-  `vnyan_graph_list` reflect disk state, which can lag behind what's
-  actually loaded live.
+  on-disk `redeemsN.json` file** until VNyan saves. `[observed]` once: the file
+  was unchanged immediately after a live import that demonstrably took effect,
+  and correct after VNyan quit. Quit is therefore *a* save trigger; whether
+  others exist was not tested. `vnyan_graph_read`/`vnyan_graph_list` reflect
+  disk state, which can lag behind what is actually loaded live.
 - **Reflection-backed areas** (props, colliders, Spout2, stretch bones) use
   method/field names verified to survive obfuscation in the
   `Assembly-CSharp.dll` build this was tested against. A VNyan update can

@@ -139,7 +139,10 @@ export function register(server: McpServer) {
         "FLOOR, not a ceiling, and vnyan_graph_write will let you wire past it; confirm the true count " +
         "with vnyan_graph_read on a graph that already uses the node. `valuesUncertain: true` means the " +
         "values[] key names came from a source heuristic rather than an observed VNyan-written graph - " +
-        "verify them before relying on them. `possiblyIncomplete: true` means values[] is shorter than " +
+        "verify them before relying on them. `valuesCountMismatch` is a stronger warning: that entry's " +
+        "field count disagrees with VNyan's own help file, so its keys are probably WRONG - confirm with " +
+        "vnyan_graph_read against a graph already using the node before authoring with it. " +
+        "`possiblyIncomplete: true` means values[] is shorter than " +
         "the valueIn count, usually because a value socket was wired in the sampled graph (VNyan drops " +
         "a wired socket's key from values[]).",
       inputSchema: {
