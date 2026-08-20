@@ -26,8 +26,11 @@ export function register(server: McpServer) {
           .describe("Which blendshape operation to perform"),
         name: z.string().optional().describe("Blendshape name (required except for 'list')"),
         value: z.number().optional().describe(
-          "0-100 (VNyan's Blendshape-node convention, not 0-1). Setting 0 removes the override entirely. " +
-          "Required for set actions."
+          "RAW value, on the same scale 'get'/'list' report and pendulum outputs write - roughly 0-1 for " +
+          "full deflection, and NOT clamped (set 250 and it stores 250). This is deliberately NOT the " +
+          "0-100 convention BlendshapeNode uses in a node graph: only BlendshapeNode divides by 100, so " +
+          "an int 37 there lands here as 0.37. Passing 50 expecting half deflection would give you 50x. " +
+          "Setting 0 removes the override entirely. Required for set actions."
         ),
         mode: z.enum(["instant", "lastFrame"]).optional().describe("For 'get': instant value or accumulated last-frame value"),
       },

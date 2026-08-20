@@ -11,6 +11,7 @@ import { areaOf, SETTINGS_AREAS, type SettingsArea } from "./settings/schema.js"
 
 export const GUIDE_TOPICS = [
   "node-authoring",
+  "graph-performance",
   "bone-names",
   "settings-keys",
   "pendulum-tuning",
@@ -23,8 +24,14 @@ export type GuideTopic = (typeof GUIDE_TOPICS)[number];
 export const TOPIC_SUMMARIES: Record<GuideTopic, string> = {
   "node-authoring":
     "How to author VNyan node graphs with vnyan_graph_write: socket model, the runtime type-safety rule " +
-    "and converter nodes, terminal-node fan-out, encrypted file paths, NodeGraphCount gating, Load Graph " +
-    "persistence timing, and a worked example.",
+    "and converter nodes, terminal-node fan-out AND the fact that fan-out executes in connection order, " +
+    "BlendshapeNode's int-cast / semicolon / zero-removes-override edges, encrypted file paths, " +
+    "NodeGraphCount gating, Load Graph persistence timing, and a worked example.",
+  "graph-performance":
+    "REQUIRED READING before putting any graph on a fast timer. MathExpNode re-parses and rebuilds a " +
+    "closure tree on EVERY evaluation and will destroy your frame rate; the parameter-math nodes are " +
+    "orders of magnitude cheaper. Includes measured numbers and a cookbook for abs/min/max/clamp without " +
+    "MathExpNode.",
   "bone-names": "The full UnityEngine.HumanBodyBones name list accepted by vnyan_bone.",
   "settings-keys": "Which settings.json keys fall under each of the six vnyan_settings_get areas, generated from the live file.",
   "pendulum-tuning": "What damping/elasticity/stiffness/inert actually do in VNyan's pendulum chains.",
@@ -71,6 +78,33 @@ the count it reports is a **floor**, not a ceiling - wiring past it is
 allowed and the sockets get created. If you need the exact real count, run
 \`vnyan_graph_read\` on a graph that already uses the node.
 
+### Fan-out runs in CONNECTION ORDER, within the same tick
+
+Terminal nodes cannot be chained, but that does **not** mean they are
+unordered. \`SocketOutput.SetValue\` invokes a **multicast delegate**, and .NET
+invokes handlers in the order they were added, so the order you wire the
+connections **is** the order they execute - and they all run inside one tick.
+
+That makes read-after-write across terminal nodes safe. A chain of
+\`ParamOpNode\`s where each reads the parameter the previous one wrote resolves
+completely in a single tick, with no lag and no \`OrderedNode\` needed:
+
+\`\`\`
+tick --> ParamOpNode  sum = a + b        (wire this one first)
+     \\-> ParamOpNode  sum = sum + c      (then this one)
+     \\-> ParamOpNode  out = sum * gain   (then this)
+\`\`\`
+
+Verified empirically: a 60-node \`ParamOpNode\` chain, each node adding 1 to the
+previous node's parameter, went from seed to seed+60 **within one tick**.
+
+Two consequences worth internalising:
+- **You do not need \`MathExpNode\` to avoid ordering problems.** Reaching for it
+  for that reason is a costly mistake - see \`vnyan_guide topic:'graph-performance'\`.
+- **Connection order is load-bearing.** Re-wiring a generated graph by hand can
+  silently change the arithmetic. Say so in a \`MessageBoxNode\` if a human will
+  ever open the graph.
+
 ## Rule 2 - value sockets are strongly typed at runtime
 
 \`values[]\` in the saved JSON is always strings, even for numbers and
@@ -108,13 +142,53 @@ error** and simply never runs - reproduced directly (fixed by bumping the
 count and confirming the same file then executed correctly). Check
 \`vnyan_settings_get area:'misc'\` before writing to a new slot number.
 
-## Rule 5 - Load Graph persists on VNyan quit, not immediately
+## Rule 5 - VNyan's in-memory graph wins over the file on disk
 
 If you use the default export-and-import workflow (write a file, then use
 VNyan's own "Load Graph" menu to import it into a tab), the running graph
 updates immediately but \`redeemsN.json\` on disk does **not** change until
 VNyan quits. \`vnyan_graph_read\`/\`vnyan_graph_list\` reflect disk, so they can
 lag behind what's actually live. This was confirmed by direct observation.
+
+**The same precedence makes a closed-VNyan \`slot\` write unreliable.** A
+176-node graph was written directly to \`redeems5.json\` with VNyan closed and
+verified on disk - and was then silently replaced by VNyan persisting its own
+older in-memory copy of that tab. The written graph survived only in the
+\`as<name>.json\` mirror (\`asredeems5.json\`), which is where to look if a slot
+write appears to have vanished.
+
+So: **prefer \`Load Graph\` even when VNyan happens to be closed.** Reopen it
+and import, rather than writing to the slot. The \`slot\` parameter is for when
+you also need the graph present before VNyan next starts, and it should be
+re-verified afterwards rather than assumed.
+
+## Rule 6 - BlendshapeNode has four sharp edges
+
+- **The wired value socket is cast to \`int\`** (\`num = (int)obj\`, then
+  \`num / 100f\`). A float source throws \`InvalidCastException\` and the write is
+  silently dropped, so put a \`DecimalToNumberNode\` in between. Two knock-ons:
+  graph-driven blendshape writes **quantise to 1% steps** (unlike a pendulum's
+  direct float write), and any value below 1 truncates to **zero** - which
+  looks exactly like "the graph isn't running".
+- **\`bsName\` is split on \`;\`**, so one node can drive several shapes from a
+  single evaluation (\`"Shape_L;Shape_R"\`). Worth using wherever shapes share a
+  value - it cuts both node count and per-tick cost.
+- **\`bsValue: "0"\` REMOVES the override**, it does not write a zero. That resets
+  the smoothing origin, so **never write \`0\` and then a value to the same shape
+  in the same tick** - the value gets suppressed and the shape stays dark. Give
+  each shape exactly one write per tick, and zero it on the branches that do
+  not drive it.
+- It affects blendshape **clips** only, not mesh shape keys (its help text is
+  explicit). Unknown names are accepted and simply create a registry entry, so
+  a typo is silent.
+
+## Rule 7 - a missing parameter reads as 0, not an error
+
+\`[someParam]\` that no node or chain writes substitutes to \`0\`. Nothing warns.
+A typo, a rename, or a chain that hasn't published yet all look identical to a
+legitimate zero, so verify parameter names rather than trusting silence -
+\`vnyan_param action:'fillString'\` expands a bracketed string on demand and is
+the quickest way to check.
 
 ## Worked example
 
@@ -141,6 +215,89 @@ fires \`ExampleTrigger\`, both from the one API event - because both wires
 come directly off \`api\`'s single execOut, not chained through \`setp\`.
 `;
 
+const GRAPH_PERFORMANCE = `# Node graph performance
+
+Graph node cost varies by **orders of magnitude**, and the difference only
+shows up once a graph runs on a timer. A graph that is instant as a one-shot
+redeem can halve your frame rate at 100 Hz.
+
+## The one rule
+
+**Never put \`MathExpNode\` on a fast timer.** Use the parameter-math nodes.
+
+## Why - the two cost tiers
+
+\`MathExpNode\` does all of this on **every single evaluation, with no caching**:
+
+1. \`ParamSystem.PNGNHMHMOBK(text)\` - a \`Regex.Matches\` over the whole
+   expression, then per \`[param]\`: a dictionary lookup, a **formatted**
+   \`ToString("0.#######")\`, and a \`Replace\` that allocates a brand-new copy of
+   the entire string. It also rebuilds \`[heartrate]\`/\`[heartpercent]\`
+   unconditionally. That is ~14 string allocations per call.
+2. \`COFMPGPGHHJ(text, ...)()\` - **tokenises the expression and builds a fresh
+   closure tree, then invokes it.** Cost scales with expression length and
+   operator count.
+
+The cheap nodes - \`ParamOpNode\`, \`ParamMathNode\`, \`FilterParamNode\`,
+\`SetParamNode\`, and \`BlendshapeNode\` reading a literal \`[param]\` - all bottom
+out in \`ParamSystem.ODJGKNOHHLO\` -> \`PINHGCLDDOH\`: a couple of \`Contains\`
+checks and **one dictionary lookup**. No regex, no allocation storm, no
+delegate construction.
+
+## Measured, on a real rig
+
+| graph | tick | result |
+|---|---|---|
+| 20 \`MathExpNode\`, ~370-420 char expressions | 33 ms | **120 fps -> 30 fps** |
+| 60 \`ParamOpNode\` | 10 ms | **no measurable cost** |
+
+One tick of the \`MathExpNode\` version consumed roughly a whole frame (~25 ms
+for 20 evaluations). The same rig rebuilt with ~112 cheap node executions per
+tick at 10 ms ran at the frame cap.
+
+\`MathExpNode\` is still the right tool for a one-shot or event-driven
+calculation, where a millisecond is free and one readable expression beats
+fifteen nodes.
+
+## Cookbook - doing maths without MathExpNode
+
+\`ParamOpNode\` is binary: \`operation\` is a dropdown index as a string -
+\`"0"\` add, \`"1"\` subtract, \`"2"\` multiply, \`"3"\` divide, \`"4"\` modulo.
+\`ParamMathNode\` is unary: \`"0"\` sin, \`"1"\` cos, \`"2"\` tan, **\`"3"\` abs**.
+
+- **Sum a list** - a chain of \`ParamOpNode\`s accumulating into one parameter.
+  Safe in a single tick because fan-out executes in connection order (see
+  \`vnyan_guide topic:'node-authoring'\`, Rule 1).
+- **abs(x)** - \`ParamMathNode operation:"3"\`. Exact and cheap.
+- **negate** - \`ParamOpNode operation:"1"\` with \`value1: "0"\`.
+- **min / max / clamp** - there is no min or max node. Branch with
+  \`FilterParamNode\` (execOut \`0\` = greater, \`1\` = equal, \`2\` = less) and write
+  the ceiling on the \`>\` branch, the value on the others. Only the taken branch
+  executes, so a branch is cheaper than it looks.
+- **Sign split** (drive two opposing shapes from one signed value) -
+  \`FilterParamNode\` against \`0\`, then write the positive shape on \`>\` and the
+  negated value to the other shape on \`<\`.
+- **x squared / integer powers** - repeated \`ParamOpNode\` multiply. **There is
+  no power operator among the cheap nodes**; \`^\` (\`Mathf.Pow\`) exists only
+  inside \`MathExpNode\`, so a fractional exponent is the one case that genuinely
+  needs it. Prefer restructuring to integer powers over reintroducing
+  \`MathExpNode\` into a hot loop.
+
+## Other things that cost you
+
+- **Tick faster than the frame rate is wasted work.** A 10 ms timer on a 60 fps
+  render evaluates everything roughly twice per displayed frame. Make the
+  interval a parameter (\`SetTimerNode.seconds\` accepts \`[bracketed]\` values) so
+  it can be tuned live instead of re-authored.
+- **Prefer smoothing over a faster tick.** \`BlendshapeNode.smoothTime\`
+  interpolates inside VNyan's blendshape system, per frame, outside your graph.
+  A slow tick plus smoothing is smoother *and* cheaper than a fast tick.
+- **Collapse duplicate writes.** \`BlendshapeNode.bsName\` splits on \`;\`, so
+  shapes sharing a value cost one evaluation instead of several.
+- **Count evaluations, not nodes.** With \`FilterParamNode\` branching, only the
+  taken path runs, so a 176-node graph can be ~112 executions per tick.
+`;
+
 const PENDULUM_TUNING = `# Pendulum chain tuning
 
 VNyan's pendulum chains are a DynamicBone-style spring physics
@@ -154,7 +311,18 @@ directly). All four parameters are hard-clamped to **0-1**
 | damping | How fast motion decays | 0.1 | Higher = settles sooner |
 | elasticity | Restoring force pulling the bone back to rest | 0.1 | **Lower = floppier / more swing-bounce**, higher = snaps back fast |
 | stiffness | Resistance to being rotated away from rest orientation | 0.1 | Higher = resists deformation more |
-| inert | How much the avatar's own movement transfers into the chain | 0 | Higher = chain follows body movement more |
+| inert | How rigidly the chain travels WITH the avatar | 0 | Higher = follows the body, so body motion induces **less** swing |
+
+**On inert specifically - the name reads backwards.** The integration line is
+\`m_Position += velocity * (1 - damping) + gravity + objectMove * inert\`, so the
+avatar's movement is *added to the particle*: the chain is dragged along with
+the body in proportion to \`inert\`. At **1** the chain moves rigidly with the
+avatar and turning or walking induces **no** swing at all; at **0** the chain
+ignores the avatar entirely and body motion produces the **maximum** swing.
+
+The practical consequence: if a chain is being shaken by head movement when it
+should only respond to its own input value, **raise** inert. Lowering it - the
+intuitive reading of "less inertia transferred" - makes it worse.
 
 **On elasticity specifically:** it is a *return-strength*, not a
 *bounce-amount* - the source line is literally
@@ -170,6 +338,12 @@ differently per bone in the chain - but **VNyan never sets these curves**
 parameters apply **uniformly across the whole chain** in VNyan. The
 stronger motion visible on lower/tip bones is inherent pendulum
 accumulation down the chain, not a per-bone parameter difference.
+
+**Chain amplitude depends on frame rate.** DynamicBone integrates per frame, so
+the same chain produces noticeably larger displacements at 30 fps than at 120.
+Anything calibrated against a chain's output - a gain in a combine graph, a
+multiplier chosen by eye - is calibrated against the frame rate it was tuned
+at, and wants rechecking if the frame cap changes or the scene gets heavier.
 
 Note: \`vnyan_pendulum\`'s create/delete/setPosition/setRotation/chains
 actions manage a SEPARATE, runtime-only set of chains from the persisted
@@ -297,6 +471,22 @@ multiplier and offset, so with a non-zero \`offset\` the two directions are
 **The key asymmetry to internalise:** VNyan splits positive/negative *only*
 when writing blendshapes directly. A \`param\` output gets the signed value. So
 when you reroute through parameters, **you** own the split.
+
+### Units change when you reroute, and the mismatch is silent
+
+A pendulum writes blendshapes in **raw** units - roughly 0-1 for full
+deflection, though it is not clamped and can exceed 1. \`BlendshapeNode\` takes
+**0-100** and divides by 100. So a \`param\` output handed straight to a
+\`BlendshapeNode\` arrives ~100x too small, and because that socket is cast to
+\`int\`, anything under 1 truncates to **zero**: the shape simply never moves,
+which looks exactly like a graph that isn't running.
+
+Multiply on the way through, and make the factor a parameter rather than a
+literal so it can be tuned live. Expect the factor to be large - on a real rig
+the pendulum sums were ~0.004 and needed ~3000x to reach a useful range, not
+the 100x the unit conversion alone implies. Read the actual parameter values
+with \`vnyan_param action:'getFloat'\` while the rig moves rather than guessing:
+at rest almost everything reads near zero, so sample during real motion.
 
 ## The fix pattern
 
@@ -456,9 +646,14 @@ reload path for it.
   create/delete/drive, props set/toggle, colliders get/set, Spout2 list/add,
   stretch bone add, VNyanNet, UI theme/dialogs) work while VNyan runs.
 - Node graph authoring defaults to **export + VNyan's own "Load Graph"
-  menu** specifically so it does NOT need a restart - direct-to-slot writing
-  (the \`slot\` parameter) is a fallback for when VNyan happens to already be
-  closed, and that fallback path does still need it closed.
+  menu** specifically so it does NOT need a restart. Direct-to-slot writing
+  (the \`slot\` parameter) needs VNyan closed - **and is not merely
+  inconvenient, it is unreliable.** VNyan persists its own in-memory copy of a
+  tab over the file, so a verified slot write has been observed being silently
+  replaced by an older graph, surviving only in the \`as<name>.json\` mirror.
+  **Prefer Load Graph even when VNyan is already closed** - reopen and import.
+  If you do write to a slot, re-verify it after VNyan next starts rather than
+  assuming it stuck.
 - Reading anything from disk (settings, graphs, colliders, pendulums,
   expressions, gestures) works regardless of whether VNyan is running.
 
@@ -500,6 +695,7 @@ const KNOWN_LIMITS = `# Known limits
 
 const STATIC_DOCS: Record<Exclude<GuideTopic, "settings-keys">, string> = {
   "node-authoring": NODE_AUTHORING,
+  "graph-performance": GRAPH_PERFORMANCE,
   "bone-names": buildBoneNamesDoc(),
   "pendulum-tuning": PENDULUM_TUNING,
   "pendulum-composition": PENDULUM_COMPOSITION,

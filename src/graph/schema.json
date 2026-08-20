@@ -4,8 +4,8 @@
     "generatedFrom": "Assembly-CSharp.dll (decompiled; node classes retain real socket field names despite obfuscation elsewhere)",
     "generatedBy": "tools/extract-node-schema.py",
     "typeCount": 304,
-    "valuesConfirmed": 71,
-    "graphFilesScanned": 22,
+    "valuesConfirmed": 73,
+    "graphFilesScanned": 23,
     "valuesCountMismatched": 66,
     "note": "Socket counts and valueInFields/valueOutFields are read from declared fields and are reliable. 'dynamicSockets' lists socket kinds whose real count comes from the Unity prefab or is created at runtime - for those the count here is a FLOOR, not a ceiling; confirm against a real graph with vnyan_graph_read. 'valuesUncertain' marks types whose values[] keys came from an unreliable source heuristic rather than an observed VNyan graph - verify those before relying on them. VNyan exposes no app version string, so the Unity engine version above identifies the build this came from. valuesCountMismatch marks an uncertain entry whose field count disagrees with VNyan's own help file - treat those keys as probably wrong."
   },
@@ -3101,7 +3101,7 @@
       "valueIn": 1,
       "valueOut": 1,
       "values": [
-        "key"
+        "exp"
       ],
       "valueInFields": [
         "expInput"
@@ -3109,7 +3109,6 @@
       "valueOutFields": [
         "decimalOutput"
       ],
-      "valuesUncertain": true,
       "possiblyIncomplete": false
     },
     "MessageBoxNode": {
@@ -4012,7 +4011,6 @@
         "valueInput"
       ],
       "valueOutFields": [],
-      "valuesUncertain": true,
       "possiblyIncomplete": false
     },
     "ParamOpNode": {

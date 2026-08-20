@@ -181,8 +181,13 @@ export function register(server: McpServer) {
           "For 'create', at runtime creation time only."
         ),
         inert: z.number().optional().describe(
-          "How much of the avatar's own movement is transferred into the chain, 0-1 (hard-clamped). " +
-          "Default 0. For 'create', at runtime creation time only."
+          "How rigidly the chain FOLLOWS the avatar's own movement, 0-1 (hard-clamped). Default 0. " +
+          "Reads backwards from the name, so mind the direction: DynamicBone integrates " +
+          "'position += velocity*(1-damping) + gravity + objectMove*inert', i.e. the object's motion is " +
+          "ADDED to each particle in proportion to inert. 1 = the chain travels with the avatar, so moving " +
+          "or turning it induces NO swing; 0 = the chain ignores the avatar, so avatar motion produces " +
+          "MAXIMUM swing. Raise it when head movement shakes a chain that should only react to its own " +
+          "input value. For 'create', at runtime creation time only."
         ),
         value: z.number().optional().describe(
           "Drive value for setPosition/setRotation - setPosition makes the pendulum swing back and forth " +

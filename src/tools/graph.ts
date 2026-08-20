@@ -6,6 +6,7 @@ import { listGraphs } from "../graph/list.js";
 import { readGraphFile, describeGraph } from "../graph/read.js";
 import { redeemsPaths } from "../settings/paths.js";
 import { GraphBuilder, writeGraphToSlot } from "../graph/build.js";
+import { lintGraphSpec, lintDescribedGraph } from "../graph/lint.js";
 import { lookupNodeType, allNodeTypes, schemaMetadata } from "../graph/schema.js";
 import { getGraphExportDir } from "../config.js";
 import { jsonResult, safeHandler } from "../toolHelpers.js";
@@ -112,7 +113,10 @@ export function register(server: McpServer) {
       description:
         "Parses one graph slot and resolves every connection to (node type, socket role, index) pairs, " +
         "decodes MessageBoxNode documentation text, and flags AES-encrypted local-file-path values " +
-        "instead of dumping their ciphertext. Source: disk, always readable.",
+        "instead of dumping their ciphertext. Also returns a 'warnings' array auditing the graph for " +
+        "mistakes VNyan accepts silently: a blendshape written twice on one execution path, a parameter " +
+        "read before the node that writes it (so it reads the previous tick), a float wired into " +
+        "BlendshapeNode's int value socket, and MathExpNode on a fast timer. Source: disk, always readable.",
       inputSchema: {
         slot: z.number().describe("0 = redeems.json, 1 = redeems1.json, 2 = redeems2.json, ..."),
       },
@@ -120,7 +124,9 @@ export function register(server: McpServer) {
     safeHandler(async ({ slot }) => {
       const { main } = (await redeemsPaths(slot + 1))[slot];
       const graph = await readGraphFile(main);
-      return jsonResult(describeGraph(graph));
+      const described = describeGraph(graph);
+      const warnings = lintDescribedGraph(described);
+      return jsonResult(warnings.length ? { ...described, warnings } : described);
     })
   );
 
@@ -165,13 +171,27 @@ export function register(server: McpServer) {
         "Builds a node graph from a friendly spec (nodes with caller-chosen ids + literal values, " +
         "exec/value connections referencing those ids). By default (no 'slot') it EXPORTS the graph as " +
         "a plain JSON file - import it into VNyan live via its own 'Load Graph' menu (replaces the " +
-        "currently active tab, VNyan stays running, no restart). Pass 'slot' instead to write directly " +
-        "into that graph slot (redeemsN.json + its asredeemsN.json mirror), REPLACING its contents - " +
-        "this REQUIRES VNyan closed (same guard as vnyan_settings_set) and backs up the slot first; use " +
-        "it only when VNyan is already closed for other reasons. " +
+        "currently active tab, VNyan stays running, no restart). PREFER THAT even when VNyan is closed: " +
+        "the 'slot' path (redeemsN.json + its asredeemsN.json mirror) REQUIRES VNyan closed and is " +
+        "unreliable, because VNyan persists its own in-memory copy of a tab over the file - a verified " +
+        "slot write has been observed silently replaced by an older graph, surviving only in the " +
+        "asredeemsN.json mirror. If you use 'slot', re-verify after VNyan restarts. " +
+        "Returns a 'warnings' array of static-analysis findings when it spots one of the mistakes VNyan " +
+        "itself accepts silently (a blendshape written twice on one execution path, a parameter read " +
+        "before the node that writes it, a float wired into BlendshapeNode's int value socket, or " +
+        "MathExpNode on a fast timer) - the graph is still written, so read them. " +
         "Most action nodes have zero execOut sockets (check vnyan_node_schema) - they are terminal, not " +
         "links in a serial chain. To run several actions off one event/trigger, fan its single execOut " +
-        "out to each action's execIn directly, rather than chaining action-to-action. " +
+        "out to each action's execIn directly, rather than chaining action-to-action. FAN-OUT EXECUTES " +
+        "IN CONNECTION ORDER within a single tick (multicast delegate), so terminal nodes CAN be " +
+        "sequenced by wiring order - a chain of ParamOpNodes each reading the previous one's parameter " +
+        "resolves in one tick, with no OrderedNode and no lag. You therefore do NOT need MathExpNode to " +
+        "avoid ordering problems, and reaching for it on a timer is a frame-rate disaster - see " +
+        "vnyan_guide topic:'graph-performance'. " +
+        "BlendshapeNode specifics: its wired value socket is cast to int (put a DecimalToNumberNode in " +
+        "front of any decimal source, or the write throws and vanishes), 'bsName' splits on ';' so one " +
+        "node can drive several shapes from one evaluation, and bsValue '0' REMOVES the override rather " +
+        "than writing zero - so never zero a shape and then write it in the same tick. " +
         "Branching nodes (OrderedNode, every Filter*Node, CompareTextNode, RandomNode, ...) declare " +
         "their exec outputs as an array sized by the Unity prefab, so vnyan_node_schema reports a floor " +
         "rather than an exact count - wiring past that floor is allowed for those types, and the sockets " +
@@ -205,10 +225,13 @@ export function register(server: McpServer) {
     },
     safeHandler(async ({ graphName, nodes, connections, valueConnections, slot, exportFileName }) => {
       const graph = buildGraphFromSpec(graphName, nodes, connections, valueConnections);
+      // Advisory only - these are all mistakes VNyan accepts silently, so
+      // surfacing them beats refusing to write a graph that may be fine.
+      const lint = lintGraphSpec(nodes, connections ?? [], valueConnections ?? []);
 
       if (slot !== undefined) {
         const result = await writeGraphToSlot(slot, graph);
-        return jsonResult({ mode: "slot", ...result });
+        return jsonResult({ mode: "slot", ...result, ...(lint.length ? { warnings: lint } : {}) });
       }
 
       const exportDir = await getGraphExportDir();
@@ -220,6 +243,7 @@ export function register(server: McpServer) {
         mode: "export",
         file: filePath,
         instructions: `Wrote to ${filePath} - in VNyan, open the graph tab to replace and use its 'Load Graph' action to import this file.`,
+        ...(lint.length ? { warnings: lint } : {}),
       });
     })
   );

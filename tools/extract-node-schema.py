@@ -10,13 +10,19 @@ Usage
 
        ilspycmd -p -o <outdir> "<VNyan>/VNyan_Data/Managed/Assembly-CSharp.dll"
 
-2. Run this script against that directory, ideally pointing it at some real
-   VNyan-written graph files so it can ground-truth the values[] keys:
+2. Run this script against that directory, pointing it at VNyan-AUTHORED graph
+   files so it can ground-truth the values[] keys. VNyan's shipped Examples are
+   the best source; add graphs you built by hand in VNyan's own editor. Do NOT
+   include graphs this MCP generated - their keys are whatever the schema
+   already claimed, so confirming against them is circular and inflates the
+   confirmed count. Use native-style paths; a glob matching nothing silently
+   drops every confirmation, so check the printed file count.
 
        python tools/extract-node-schema.py <outdir> \
            --unity-version 2022.3.62f3 \
+           --help-dir "<VNyan>/VNyan_Data/StreamingAssets/HelpFiles/en" \
            --graphs "<VNyan>/Examples/*.json" \
-           --graphs "%USERPROFILE%/AppData/LocalLow/Suvidriel/VNyan/redeems*.json" \
+           --graphs "<hand-built graphs>/redeems*.json" \
            -o src/graph/schema.json
 
 Where each field comes from, and how much to trust it
@@ -96,6 +102,32 @@ VALUES_VERIFIED_FROM_HELP = {
     "ObjectPosNode": ["posx", "posy", "posz", "name", "seconds", "toggle"],
     # "GameObject Name / Scale X / Scale Y / Scale Z / Smooth time / Is Toggle"
     "ObjectScaleNode": ["scalex", "scaley", "scalez", "name", "seconds", "toggle"],
+}
+
+# values[] keys read straight out of the node's `override OnSerialize` /
+# `OnDeserialize` pair, which is the authoritative source: it is the method
+# VNyan actually calls when writing and reading the graph file.
+#
+# This is a SEPARATE table from the help-file one because the obfuscator emits
+# decoy `virtual` siblings of OnSerialize that use DIFFERENT key strings, and
+# the field name is not always the key either. Both traps are live here:
+#   MathExpNode   - decoy virtuals use "key" / "context" / "1000"; the real
+#                   override uses "exp". The old heuristic picked "key".
+#   ParamMathNode - the InputField is named `paramValue1`, but the key written
+#                   is plain "value1".
+# Only add an entry here after reading the `override` pair, never a `virtual`.
+VALUES_VERIFIED_FROM_SOURCE = {
+    "MathExpNode": ["exp"],
+    "ParamMathNode": ["paramName", "value1", "operation"],
+    # These three were previously "confirmed" only because a graph this MCP had
+    # generated happened to contain them - circular evidence. Read from source
+    # instead so they stand on their own. (The converter keys in particular are
+    # load-bearing: node-authoring tells callers to insert these nodes.)
+    "TextToBoolNode": ["text"],
+    "TextToDecimalNode": ["text"],
+    "EffectBloomNode": ["intensity", "threshold", "diffusion", "color_r",
+                        "color_g", "color_b", "color_i", "active", "toggle"],
+    "EffectVignetteNode": ["intensity", "smoothness", "active", "toggle"],
 }
 
 # Node types that genuinely have NO configurable fields, so an empty values[]
@@ -253,9 +285,14 @@ def main():
     ap.add_argument("--unity-version", required=True,
                     help="Unity engine version of the VNyan build (see Player.log 'Initialize engine version')")
     ap.add_argument("--graphs", action="append", default=[], metavar="GLOB",
-                    help="Glob of real VNyan graph .json files to ground-truth values[] keys against. "
+                    help="Glob of VNyan-AUTHORED graph .json files to ground-truth values[] keys against. "
                          "Repeatable. Strongly recommended - without it every values[] list falls back "
-                         "to an unreliable source heuristic and is flagged valuesUncertain.")
+                         "to an unreliable source heuristic and is flagged valuesUncertain. "
+                         "Use VNyan's own Examples/*.json plus graphs built by hand in VNyan's editor. "
+                         "Do NOT point this at graphs this MCP generated: their keys are whatever the "
+                         "schema already claimed, so confirming against them is circular. Use Windows-style "
+                         "paths - Python's glob does not expand POSIX /c/... paths, and a glob that matches "
+                         "nothing silently drops every confirmation.")
     ap.add_argument("--help-dir", metavar="DIR",
                     help="VNyan's StreamingAssets/HelpFiles/en directory. Used only to cross-check the "
                          "heuristic's field COUNT (never key names) and flag likely-wrong entries with "
@@ -279,9 +316,14 @@ def main():
         name = parsed.pop("type")
         dynamic = parsed["dynamicSockets"]
 
-        # values[]: a real graph wins; otherwise fall back to the source
-        # heuristic and say so.
-        if name in graph_values:
+        # values[]: the node's own OnSerialize override wins - it is both
+        # authoritative and complete. A sampled graph comes next, but note VNyan
+        # omits a wired socket's key from values[], so a graph can be a subset.
+        # Then the help-file table, then the unreliable source heuristic.
+        if name in VALUES_VERIFIED_FROM_SOURCE:
+            values = VALUES_VERIFIED_FROM_SOURCE[name]
+            uncertain = False
+        elif name in graph_values:
             values = graph_values[name]
             uncertain = False
         elif name in VALUES_VERIFIED_FROM_HELP:
@@ -363,7 +405,11 @@ def main():
     Path(args.out).write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
     dyn = sum(1 for e in types.values() if e.get("dynamicSockets"))
     print(f"wrote {args.out}: {len(types)} types, {dyn} with dynamic sockets, "
-          f"{confirmed} values[] confirmed from {graph_file_count} real graph file(s), "
+          f"{confirmed} values[] confirmed "
+          f"({len(VALUES_VERIFIED_FROM_SOURCE)} from OnSerialize, "
+          f"{graph_file_count} real graph file(s), "
+          f"{len(VALUES_VERIFIED_FROM_HELP)} from help files, "
+          f"{len(VALUES_KNOWN_EMPTY)} known-empty), "
           f"{len(types) - confirmed} flagged valuesUncertain")
 
 
