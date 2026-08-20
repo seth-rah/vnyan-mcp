@@ -1,6 +1,6 @@
 {
   "name": "vnyan-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for full-coverage control of VNyan (VTuber avatar software) - parameters, triggers, blendshapes, bones, pendulums, props, colliders, node graphs, and more.",
   "type": "module",
   "license": "MIT",
