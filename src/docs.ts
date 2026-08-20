@@ -29,9 +29,10 @@ export const TOPIC_SUMMARIES: Record<GuideTopic, string> = {
   "settings-keys": "Which settings.json keys fall under each of the six vnyan_settings_get areas, generated from the live file.",
   "pendulum-tuning": "What damping/elasticity/stiffness/inert actually do in VNyan's pendulum chains.",
   "pendulum-composition":
-    "REQUIRED READING before pointing more than one pendulum at the same bone/GameObject - only one " +
-    "pendulum may drive a target directly, so multiple pendulums must be summed through parameters in a " +
-    "node graph. Includes the full working recipe.",
+    "REQUIRED READING before pointing more than one pendulum at the same target - only one pendulum may " +
+    "write a GameObject or blendshape directly, so multiple pendulums must each publish to their own " +
+    "parameter and be summed in a node graph. Includes the full working recipe for both transforms and " +
+    "blendshapes.",
   "restart-policy": "Which VNyan MCP operations require closing VNyan vs. work with it running.",
   "known-limits": "Write-only areas, the SunLightNode bug, and which capabilities depend on reflection that can break on a VNyan update.",
 };
@@ -185,18 +186,23 @@ const PENDULUM_COMPOSITION = `# Combining multiple pendulums on one target
 
 ## The rule
 
-**Only one pendulum may be linked directly to a given GameObject.** From
-VNyan's developer:
+**Only ONE pendulum may write a given output target directly.** This applies
+to every output kind - GameObjects *and* blendshapes alike. From VNyan's
+developer:
 
 > "You cannot have more than one pendulum directly linked to one gameobject.
 > If you need to combine values then you should likely pass the value to
 > parameters and make a node graph to combine the values before passing them
 > to a object rotation node."
 
-Point two pendulums at the same target and they fight each other - the
-result is motion that cancels itself out rather than layering. No amount of
-damping/elasticity tuning fixes this; it is a routing problem, not a physics
-one.
+Point two pendulums at the same target and they clash - the result is motion
+that cancels itself out rather than layering. No amount of damping/elasticity
+tuning fixes this; it is a routing problem, not a physics one.
+
+**There is exactly one supported way to layer several pendulums onto one
+target:** each pendulum writes to its own parameter, a node graph sums those
+parameters, and a single node applies the total. Anything else is two
+pendulums fighting.
 
 ## Why partial writes cancel
 
@@ -321,15 +327,45 @@ all three axes in one call.
 a partial write collapses the object to zero size on that axis rather than
 merely mispositioning it. Always send all three.
 
-## Blendshape outputs
+## Blendshape outputs clash exactly the same way
 
-The developer's statement covers GameObjects specifically. Several pendulum
-chains writing the *same blendshape* is common in real rigs and may well be
-deliberate layering, so \`vnyan_pendulum action:'list'\` reports those as
-\`review\` rather than \`conflict\`. If layered blendshapes do appear to fight,
-the same param-and-sum pattern applies - swap the terminal
-\`ObjectRotNode\` for a \`BlendshapeNode\`, or use
-\`vnyan_blendshape action:'setOverride'\` with a value you compute yourself.
+Two pendulum chains writing the **same blendshape** clash just as two chains
+on one GameObject do. This is the most common way a rig ends up with
+pendulums quietly cancelling each other, because a blendshape name is easy to
+reuse across several chains without noticing - and unlike a GameObject, the
+same blendshape often legitimately appears as the \`blendshape\` field of one
+output and the \`negative\` field of another. Both count as writing it.
+
+The fix is the same param-and-sum pattern, and it is **simpler than the
+rotation case** - blendshapes have no
+"zeroes-the-axes-you-omit" behavior, so there is nothing to bundle. One
+\`BlendshapeNode\` per blendshape, fed the summed parameter:
+
+\`\`\`json
+{
+  "graphName": "Blendshape Combine",
+  "nodes": [
+    { "id": "tick", "type": "TimerNode",      "values": { "timerName": "BsCombine" } },
+    { "id": "sum",  "type": "ParamOpNode",    "values": { "paramName": "_bs_sum_short_l", "value1": "[_pend_squint_short_l]", "value2": "[_pend_blink_short_l]", "operation": "0" } },
+    { "id": "app",  "type": "BlendshapeNode", "values": { "bsName": "Highlight_Short_L", "bsValue": "[_bs_sum_short_l]", "smoothTime": "0", "isToggle": "0" } },
+    { "id": "loop", "type": "SetTimerNode",   "values": { "timerName": "BsCombine", "seconds": "10" } }
+  ],
+  "connections": [
+    { "from": "tick", "to": "sum" },
+    { "from": "tick", "to": "app" },
+    { "from": "tick", "to": "loop" }
+  ]
+}
+\`\`\`
+
+Scale it by adding one \`ParamOpNode\` + one \`BlendshapeNode\` pair per
+blendshape, all hanging off the same \`tick\`. For a signed pair (a chain using
+\`blendshape\` for the positive direction and \`negative\` for the other), sum
+into one parameter and let the single \`BlendshapeNode\` take the signed total -
+don't split it back into two nodes, or you have recreated the clash.
+
+\`vnyan_pendulum action:'list'\` reports every shared target - GameObject or
+blendshape - as a \`conflict\`, so you can see the full set before you start.
 `;
 
 const RESTART_POLICY = `# When VNyan needs to be closed

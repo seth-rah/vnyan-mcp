@@ -76,13 +76,16 @@ obfuscated with no recoverable names) rather than guessed.
 
 ## Pendulum composition and node socket counts
 
-- **Only one pendulum may be linked directly to a given GameObject** -
-  confirmed by VNyan's developer. Two pendulums on the same target fight
-  each other and the motion cancels out; it is a routing problem, not a
-  physics-tuning one. The supported approach is to leave each pendulum's
-  `gameObject` empty, give each a unique `param`, and sum those parameters
-  in a node graph before applying them with a single `ObjectRotNode`. Full
-  recipe: `vnyan_guide topic:'pendulum-composition'`.
+- **Only one pendulum may write a given output target directly** - GameObjects
+  and blendshapes alike. Two pendulums on the same target clash and the
+  motion cancels out; it is a routing problem, not a physics-tuning one. The
+  only supported way to layer them is to clear the direct output field on
+  each, give each output a unique `param`, sum those parameters in a node
+  graph, and apply the total with a single node (`ObjectRotNode` for
+  transforms, `BlendshapeNode` for blendshapes). A blendshape counts as
+  written whether it appears as an output's `blendshape` or its `negative`,
+  which makes accidental collisions easy. Full recipe:
+  `vnyan_guide topic:'pendulum-composition'`.
 - **`ObjectRotNode`, `ObjectPosNode` and `ObjectScaleNode` zero any axis you
   don't specify** - stated in each node's own help text. So every axis must
   be set in a single call. `ObjectScaleNode` is the dangerous one: a partial

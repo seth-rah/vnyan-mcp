@@ -19,19 +19,18 @@ export interface SharedOutputTarget {
   target: string;
   kind: "gameObject" | "blendshape";
   chains: string[];
-  severity: "conflict" | "review";
+  severity: "conflict";
   note: string;
 }
 
 /**
  * Finds output targets written by more than one pendulum chain.
  *
- * gameObject collisions are a confirmed conflict - VNyan's developer states
- * only one pendulum may be linked directly to a GameObject, and stacking them
- * makes the motion cancel out. Blendshape overlap is only flagged for review:
- * the developer's statement covers GameObjects, and real rigs legitimately
- * layer several chains onto one blendshape, so calling those broken would be
- * wrong.
+ * Any target written twice is a conflict, whatever its kind: only one pendulum
+ * may write a target directly, and stacking them makes the motion cancel out.
+ * Blendshapes are no exception - and note a blendshape counts as written
+ * whether it appears as an output's `blendshape` (positive direction) or its
+ * `negative`, which is an easy way to collide without noticing.
  */
 export function findSharedOutputTargets(chains: Chain[]): SharedOutputTarget[] {
   const byTarget = new Map<string, { kind: "gameObject" | "blendshape"; chains: Set<string> }>();
@@ -65,19 +64,17 @@ export function findSharedOutputTargets(chains: Chain[]): SharedOutputTarget[] {
       target,
       kind,
       chains: [...names].sort(),
-      severity: kind === "gameObject" ? "conflict" : "review",
+      severity: "conflict",
       note:
-        kind === "gameObject"
-          ? "CONFLICT: only one pendulum may drive a GameObject directly - these will cancel each other " +
-            "out. Fix by clearing 'gameObject' on each, giving each a unique 'param', and summing those " +
-            "params in a node graph. See vnyan_guide topic:'pendulum-composition'."
-          : "Review: several chains write this blendshape. That is often deliberate layering rather than a " +
-            "bug (VNyan's one-per-target rule is documented for GameObjects), but if the motion looks like " +
-            "it is fighting itself, the same param-and-sum pattern applies - see vnyan_guide " +
-            "topic:'pendulum-composition'.",
+        `CONFLICT: ${names.size} chains write this ${kind} directly, so they will cancel each other out. ` +
+        `Only one pendulum may write a target directly. Fix by clearing the '${kind}' field on each of ` +
+        "these chains, giving each output a unique 'param' instead, then summing those params in a node " +
+        "graph and applying the total with a single " +
+        (kind === "gameObject" ? "ObjectRotNode" : "BlendshapeNode") +
+        ". See vnyan_guide topic:'pendulum-composition'.",
     });
   }
-  return shared.sort((a, b) => (a.severity === b.severity ? a.target.localeCompare(b.target) : a.severity === "conflict" ? -1 : 1));
+  return shared.sort((a, b) => (a.kind === b.kind ? a.target.localeCompare(b.target) : a.kind === "gameObject" ? -1 : 1));
 }
 
 export function register(server: McpServer) {
@@ -92,12 +89,14 @@ export function register(server: McpServer) {
         "'create'/'delete'/'setPosition'/'setRotation'/'chains' (plugin, live) manage a SEPARATE set of " +
         "chains created at runtime via this API, addressed by the numeric handle 'create' returns - they " +
         "are not the same chains as 'list' and don't persist across a VNyan restart. " +
-        "CRITICAL CONSTRAINT: only ONE pendulum may be linked directly to a given GameObject. Two " +
-        "pendulums pointing at the same target fight each other and their motion cancels out - a routing " +
-        "problem that no amount of damping/elasticity tuning will fix. To layer several pendulums onto one " +
-        "target, leave each pendulum's 'gameObject' empty, give each a unique 'param', and sum those " +
-        "parameters in a node graph before applying them with a SINGLE ObjectRotNode (which zeroes any " +
-        "axis you omit, so all three must be set together). Read vnyan_guide " +
+        "CRITICAL CONSTRAINT: only ONE pendulum may write a given output target directly - this applies to " +
+        "GameObjects AND blendshapes equally. Two pendulums on the same target clash and their motion " +
+        "cancels out; it is a routing problem that no amount of damping/elasticity tuning will fix. The " +
+        "only supported way to layer several pendulums onto one target is: clear the direct output field " +
+        "on each, give each output a unique 'param' instead, sum those params in a node graph, and apply " +
+        "the total with a SINGLE node (ObjectRotNode for transforms - it zeroes any axis you omit, so set " +
+        "all three together; BlendshapeNode for blendshapes). Note a blendshape counts as written whether " +
+        "it appears as an output's 'blendshape' or its 'negative'. Read vnyan_guide " +
         "topic:'pendulum-composition' for the full working recipe BEFORE adding a pendulum to a target " +
         "that already has one. See vnyan_guide topic:'pendulum-tuning' for the physics parameters.",
       inputSchema: {
