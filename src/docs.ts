@@ -14,6 +14,7 @@ export const GUIDE_TOPICS = [
   "bone-names",
   "settings-keys",
   "pendulum-tuning",
+  "pendulum-composition",
   "restart-policy",
   "known-limits",
 ] as const;
@@ -26,7 +27,11 @@ export const TOPIC_SUMMARIES: Record<GuideTopic, string> = {
     "persistence timing, and a worked example.",
   "bone-names": "The full UnityEngine.HumanBodyBones name list accepted by vnyan_bone.",
   "settings-keys": "Which settings.json keys fall under each of the six vnyan_settings_get areas, generated from the live file.",
-  "pendulum-tuning": "What damping/elasticity/stiffness/inert actually do in VNyan's pendulum chains, with real tuned values.",
+  "pendulum-tuning": "What damping/elasticity/stiffness/inert actually do in VNyan's pendulum chains.",
+  "pendulum-composition":
+    "REQUIRED READING before pointing more than one pendulum at the same bone/GameObject - only one " +
+    "pendulum may drive a target directly, so multiple pendulums must be summed through parameters in a " +
+    "node graph. Includes the full working recipe.",
   "restart-policy": "Which VNyan MCP operations require closing VNyan vs. work with it running.",
   "known-limits": "Write-only areas, the SunLightNode bug, and which capabilities depend on reflection that can break on a VNyan update.",
 };
@@ -55,6 +60,15 @@ APIMessageNode --execOut--> SetParamNode.execIn
 NOT \`APIMessageNode -> SetParamNode -> CallTriggerNode\` (SetParamNode has no
 execOut to continue the chain with - this was reproduced directly: a 3-node
 chained graph loaded with no error but only the first node ever ran).
+
+**The exception is branching nodes**, which genuinely do have multiple exec
+outputs: \`OrderedNode\`/\`OrderedFlexNode\`, every \`Filter*Node\`,
+\`CompareTextNode\`, \`CompareDecimalNode\`, \`RandomNode\`, \`CyclerNode\`,
+\`TextSwitchNode\` and friends. These declare their outputs as a prefab-sized
+array, so \`vnyan_node_schema\` marks them \`dynamicSockets: ["execOut"]\` and
+the count it reports is a **floor**, not a ceiling - wiring past it is
+allowed and the sockets get created. If you need the exact real count, run
+\`vnyan_graph_read\` on a graph that already uses the node.
 
 ## Rule 2 - value sockets are strongly typed at runtime
 
@@ -160,6 +174,162 @@ Note: \`vnyan_pendulum\`'s create/delete/setPosition/setRotation/chains
 actions manage a SEPARATE, runtime-only set of chains from the persisted
 ones \`vnyan_pendulum action:'list'\` reads - they don't share state and the
 runtime ones don't survive a VNyan restart.
+
+**Before adding a second pendulum to a bone or GameObject that already has
+one, read \`vnyan_guide topic:'pendulum-composition'\`.** Only one pendulum
+may drive a target directly; stacking them makes their motion cancel out,
+and tuning these four parameters will not fix it.
+`;
+
+const PENDULUM_COMPOSITION = `# Combining multiple pendulums on one target
+
+## The rule
+
+**Only one pendulum may be linked directly to a given GameObject.** From
+VNyan's developer:
+
+> "You cannot have more than one pendulum directly linked to one gameobject.
+> If you need to combine values then you should likely pass the value to
+> parameters and make a node graph to combine the values before passing them
+> to a object rotation node."
+
+Point two pendulums at the same target and they fight each other - the
+result is motion that cancels itself out rather than layering. No amount of
+damping/elasticity tuning fixes this; it is a routing problem, not a physics
+one.
+
+## Why partial writes cancel
+
+\`ObjectRotNode\`'s own help text is explicit: *"Rotation X / Rotation Y /
+Rotation Z - **Will set to 0 if not specified**"*. So a node that sets only
+X actively **zeroes Y and Z**. That is why the developer stresses applying
+every axis together:
+
+> "You should apply all of them at the same time … then use the parameter
+> operation nodes to calculate each axis together."
+
+One \`ObjectRotNode\` per target, receiving all three axes. Never one node
+per axis.
+
+## The pattern
+
+**Step 1 - stop linking pendulums directly.** For each pendulum output
+(\`settings.json\` \`Chains[].outputs[]\`, which \`vnyan_pendulum action:'list'\`
+returns), leave \`gameObject\` **empty** and set \`param\` to a unique name
+instead. Each pendulum now publishes its value to its own parameter rather
+than fighting for the target:
+
+    pendulum "EarBounce"  -> param "_pend_ear_x"
+    pendulum "HeadBob"    -> param "_pend_bob_x"
+
+No new machinery - both fields already exist on every output entry.
+
+**Step 2 - sum them in a node graph on a fast timer loop.** Nodes involved,
+with every value key verified:
+
+| Node | values | Role |
+|---|---|---|
+| \`TimerNode\` | \`{timerName: "PendulumCombine"}\` | Event source. execIn 0, execOut 1. Fires when a matching timer elapses. |
+| \`ParamOpNode\` | \`{paramName, value1, value2, operation}\` | One per axis. Math on two values, result stored to a parameter. |
+| \`ObjectRotNode\` | \`{name, rotx, roty, rotz}\` | Applies all three axes at once. |
+| \`SetTimerNode\` | \`{timerName, seconds}\` | Re-arms the timer, closing the loop. |
+
+Three details that will bite otherwise:
+
+1. **\`ParamOpNode.operation\` is a dropdown index, as a string:**
+   \`"0"\` = add, \`"1"\` = subtract, \`"2"\` = multiply, \`"3"\` = divide,
+   \`"4"\` = modulo. Use \`"0"\`.
+2. **\`SetTimerNode\`'s \`seconds\` key is actually MILLISECONDS** despite the
+   name - VNyan's help says "Milliseconds to trigger". Use \`"10"\` for the
+   ~10 ms tick the developer suggests, not \`"0.01"\`.
+3. **\`ParamOpNode\` has no value output.** It writes to a parameter, and the
+   next node reads it back by name in brackets. That is the seam between the
+   two steps.
+
+## The \`[brackets]\` convention
+
+Any node value documented as "or parameter in brackets" reads that parameter
+at evaluation time. So \`ObjectRotNode\` with \`rotx: "[_pend_sum_x]"\` picks up
+whatever \`ParamOpNode\` last stored there - no wire needed. This is what lets
+the sums flow from step 2's math into step 2's output node.
+
+\`ParamOpNode\` takes exactly **two** inputs, so for three or more pendulums
+on one axis, chain them - each op folding the running total:
+
+    _pend_sum_x = [_pend_ear_x] + [_pend_bob_x]
+    _pend_sum_x = [_pend_sum_x] + [_pend_third_x]
+
+## Worked example
+
+Two pendulums (\`_pend_ear_x/y/z\`, \`_pend_bob_x/y/z\`) summed onto one
+GameObject, in \`vnyan_graph_write\` spec form:
+
+\`\`\`json
+{
+  "graphName": "Pendulum Combine",
+  "nodes": [
+    { "id": "tick",  "type": "TimerNode",     "values": { "timerName": "PendulumCombine" } },
+    { "id": "sumX",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_x", "value1": "[_pend_ear_x]", "value2": "[_pend_bob_x]", "operation": "0" } },
+    { "id": "sumY",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_y", "value1": "[_pend_ear_y]", "value2": "[_pend_bob_y]", "operation": "0" } },
+    { "id": "sumZ",  "type": "ParamOpNode",   "values": { "paramName": "_pend_sum_z", "value1": "[_pend_ear_z]", "value2": "[_pend_bob_z]", "operation": "0" } },
+    { "id": "apply", "type": "ObjectRotNode", "values": { "name": "YourGameObjectName", "rotx": "[_pend_sum_x]", "roty": "[_pend_sum_y]", "rotz": "[_pend_sum_z]" } },
+    { "id": "loop",  "type": "SetTimerNode",  "values": { "timerName": "PendulumCombine", "seconds": "10" } }
+  ],
+  "connections": [
+    { "from": "tick", "to": "sumX" },
+    { "from": "tick", "to": "sumY" },
+    { "from": "tick", "to": "sumZ" },
+    { "from": "tick", "to": "apply" },
+    { "from": "tick", "to": "loop" }
+  ]
+}
+\`\`\`
+
+Every wire comes off \`tick\`'s single execOut, because \`ParamOpNode\`,
+\`ObjectRotNode\` and \`SetTimerNode\` are all terminal (zero execOut) - see
+\`vnyan_guide topic:'node-authoring'\` for why chaining them instead would
+silently run only the first.
+
+Kick the loop off once (fire a \`SetTimerNode\` for \`PendulumCombine\` from any
+graph, or add an \`AppStartNode\` -> \`SetTimerNode\` pair) and it self-sustains.
+
+## On execution order
+
+The developer suggests an Ordered Execution node:
+
+> "You could use for example Ordered Execution node and then use the
+> parameter operation nodes to calculate each axis together."
+
+That is a **refinement, not a correctness requirement** here. Because the
+sums travel through parameters rather than wires, the worst case without
+ordering is that \`ObjectRotNode\` reads the previous tick's values - a ~10 ms
+lag, normally imperceptible. If you do want strict ordering, insert an
+\`OrderedNode\` (or \`OrderedFlexNode\`) between \`tick\` and the rest and wire
+each step to a separate exec output in the intended order. Both types size
+their exec outputs from the Unity prefab, so \`vnyan_node_schema\` reports a
+floor - \`vnyan_graph_write\` lets you wire past it and creates sockets as
+needed.
+
+## Applying to something other than rotation
+
+Same shape, different terminal node: \`ObjectPosNode\` (\`posx/posy/posz\`) and
+\`ObjectScaleNode\` (\`scalex/scaley/scalez\`). Both carry the identical
+zero-what-you-omit behavior, confirmed in their own help text - so both need
+all three axes in one call.
+
+**\`ObjectScaleNode\` is the dangerous one:** an omitted axis is set to 0, so
+a partial write collapses the object to zero size on that axis rather than
+merely mispositioning it. Always send all three.
+
+## Blendshape outputs
+
+The developer's statement covers GameObjects specifically. Several pendulum
+chains writing the *same blendshape* is common in real rigs and may well be
+deliberate layering, so \`vnyan_pendulum action:'list'\` reports those as
+\`review\` rather than \`conflict\`. If layered blendshapes do appear to fight,
+the same param-and-sum pattern applies - swap the terminal
+\`ObjectRotNode\` for a \`BlendshapeNode\`, or use
+\`vnyan_blendshape action:'setOverride'\` with a value you compute yourself.
 `;
 
 const RESTART_POLICY = `# When VNyan needs to be closed
@@ -222,6 +392,7 @@ const STATIC_DOCS: Record<Exclude<GuideTopic, "settings-keys">, string> = {
   "node-authoring": NODE_AUTHORING,
   "bone-names": buildBoneNamesDoc(),
   "pendulum-tuning": PENDULUM_TUNING,
+  "pendulum-composition": PENDULUM_COMPOSITION,
   "restart-policy": RESTART_POLICY,
   "known-limits": KNOWN_LIMITS,
 };

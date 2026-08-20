@@ -3,7 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { requireVNyanClosed } from "../settings/processGuard.js";
 import { redeemsPaths, getBackupDir } from "../settings/paths.js";
-import { lookupNodeType, nodePath } from "./schema.js";
+import { lookupNodeType, nodePath, type SocketKind } from "./schema.js";
 import type { GraphNode, GraphConnection, VNyanGraph } from "./model.js";
 
 function newGuid(): string {
@@ -21,10 +21,13 @@ function newSocketId(): string {
 
 export interface NodeHandle {
   id: string;
+  type: string;
   execIn: string[];
   execOut: string[];
   valueIn: string[];
   valueOut: string[];
+  /** Socket kinds this node type may grow beyond its schema count. */
+  dynamicSockets: SocketKind[];
 }
 
 export class GraphBuilder {
@@ -65,7 +68,25 @@ export class GraphBuilder {
       this.nextY += 220;
     }
 
-    return { id, execIn, execOut, valueIn, valueOut };
+    return { id, type: typeName, execIn, execOut, valueIn, valueOut, dynamicSockets: schema.dynamicSockets ?? [] };
+  }
+
+  /**
+   * Resolves one socket id by index, growing the array first if this node type
+   * declares that kind as dynamic. Safe to grow in place: addNode stores the
+   * very same array references on the emitted GraphNode, so pushing here also
+   * extends the node's serialized socket-id list.
+   *
+   * Returns undefined for a non-dynamic type asked for an out-of-range index,
+   * so callers keep producing the same clear error as before.
+   */
+  socketAt(handle: NodeHandle, kind: SocketKind, index: number): string | undefined {
+    const sockets = handle[kind];
+    if (index < sockets.length) return sockets[index];
+    if (!handle.dynamicSockets.includes(kind)) return undefined;
+    if (index < 0 || !Number.isInteger(index)) return undefined;
+    while (sockets.length <= index) sockets.push(newSocketId());
+    return sockets[index];
   }
 
   connectExec(fromOutputSocketId: string, toInputSocketId: string): void {

@@ -61,22 +61,32 @@ function buildGraphFromSpec(
     if (!h) throw new Error(`connection references unknown node id '${id}'`);
     return h;
   };
+  type Handle = ReturnType<GraphBuilder["addNode"]>;
+  const socketError = (id: string, handle: Handle, kind: keyof Pick<Handle, "execIn" | "execOut" | "valueIn" | "valueOut">, index: number) =>
+    new Error(
+      `node '${id}' (${handle.type}) has no ${kind} socket at index ${index} - it has ` +
+        `${handle[kind].length}. See vnyan_node_schema for '${handle.type}'.`
+    );
+
   for (const c of connections ?? []) {
     const from = resolve(c.from);
     const to = resolve(c.to);
-    const fromSocket = from.execOut[c.fromIndex ?? 0];
-    const toSocket = to.execIn[c.toIndex ?? 0];
-    if (!fromSocket) throw new Error(`node '${c.from}' has no execOut socket at index ${c.fromIndex ?? 0}`);
-    if (!toSocket) throw new Error(`node '${c.to}' has no execIn socket at index ${c.toIndex ?? 0}`);
+    const fromIndex = c.fromIndex ?? 0;
+    const toIndex = c.toIndex ?? 0;
+    const fromSocket = builder.socketAt(from, "execOut", fromIndex);
+    const toSocket = builder.socketAt(to, "execIn", toIndex);
+    if (!fromSocket) throw socketError(c.from, from, "execOut", fromIndex);
+    if (!toSocket) throw socketError(c.to, to, "execIn", toIndex);
     builder.connectExec(fromSocket, toSocket);
   }
   for (const c of valueConnections ?? []) {
     const from = resolve(c.from);
     const to = resolve(c.to);
-    const fromSocket = from.valueOut[c.fromIndex ?? 0];
-    const toSocket = to.valueIn[c.toIndex];
-    if (!fromSocket) throw new Error(`node '${c.from}' has no outputValueSocket at index ${c.fromIndex ?? 0}`);
-    if (!toSocket) throw new Error(`node '${c.to}' has no inputValueSocket at index ${c.toIndex}`);
+    const fromIndex = c.fromIndex ?? 0;
+    const fromSocket = builder.socketAt(from, "valueOut", fromIndex);
+    const toSocket = builder.socketAt(to, "valueIn", c.toIndex);
+    if (!fromSocket) throw socketError(c.from, from, "valueOut", fromIndex);
+    if (!toSocket) throw socketError(c.to, to, "valueIn", c.toIndex);
     builder.connectValue(fromSocket, toSocket);
   }
   return builder.toGraph(graphName);
@@ -121,10 +131,17 @@ export function register(server: McpServer) {
       description:
         "Looks up a node type's socket layout (exec-in/out and value-in/out counts, field names in " +
         "socket order, and the `values[]` keys VNyan writes by default) - or lists all known node types " +
-        "when 'type' is omitted. Derived by decompiling Assembly-CSharp and extracting each node class's " +
-        "declared socket fields; `possiblyIncomplete: true` means the values[] key list may be missing " +
-        "one entry (usually an encrypted file-path field). Source: bundled reference data (offline, no " +
-        "VNyan connection needed).",
+        "plus schema provenance when 'type' is omitted. Source: bundled reference data (offline, no " +
+        "VNyan connection needed). How much to trust each field: socket counts and " +
+        "valueInFields/valueOutFields are read from real declared C# fields and are reliable. " +
+        "`dynamicSockets` lists socket kinds whose real count comes from the Unity prefab or is built at " +
+        "runtime (array-typed socket fields, and every 'Flex' node) - for those the count shown is a " +
+        "FLOOR, not a ceiling, and vnyan_graph_write will let you wire past it; confirm the true count " +
+        "with vnyan_graph_read on a graph that already uses the node. `valuesUncertain: true` means the " +
+        "values[] key names came from a source heuristic rather than an observed VNyan-written graph - " +
+        "verify them before relying on them. `possiblyIncomplete: true` means values[] is shorter than " +
+        "the valueIn count, usually because a value socket was wired in the sampled graph (VNyan drops " +
+        "a wired socket's key from values[]).",
       inputSchema: {
         type: z.string().optional().describe("e.g. 'CallTriggerNode' - omit to list all ~300 known types"),
       },
@@ -152,6 +169,10 @@ export function register(server: McpServer) {
         "Most action nodes have zero execOut sockets (check vnyan_node_schema) - they are terminal, not " +
         "links in a serial chain. To run several actions off one event/trigger, fan its single execOut " +
         "out to each action's execIn directly, rather than chaining action-to-action. " +
+        "Branching nodes (OrderedNode, every Filter*Node, CompareTextNode, RandomNode, ...) declare " +
+        "their exec outputs as an array sized by the Unity prefab, so vnyan_node_schema reports a floor " +
+        "rather than an exact count - wiring past that floor is allowed for those types, and the sockets " +
+        "are created as needed. " +
         "Node-value file-path fields (sound/avatar files) can't be set as literals here since VNyan " +
         "encrypts them - wire a SetTextParamNode/TextReplaceNode into that value socket instead, the " +
         "same pattern VNyan's own Crowd Control example graph uses. " +

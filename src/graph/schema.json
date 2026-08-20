@@ -1,56 +1,53 @@
 {
   "_meta": {
     "unityVersion": "2022.3.62f3",
-    "generatedFrom": "Assembly-CSharp.dll (decompiled offline; node classes retain real names despite obfuscation elsewhere)",
+    "generatedFrom": "Assembly-CSharp.dll (decompiled; node classes retain real socket field names despite obfuscation elsewhere)",
+    "generatedBy": "tools/extract-node-schema.py",
     "typeCount": 304,
-    "note": "VNyan itself does not expose a separate app version number in an easily discoverable file - this schema is tied to whichever VNyan build shipped the above Unity engine version. If a node type is missing or a graph misbehaves after a VNyan update, check vnyan_status/rpc.health first."
+    "valuesConfirmedFromGraphs": 68,
+    "graphFilesScanned": 21,
+    "note": "Socket counts and valueInFields/valueOutFields are read from declared fields and are reliable. 'dynamicSockets' lists socket kinds whose real count comes from the Unity prefab or is created at runtime - for those the count here is a FLOOR, not a ceiling; confirm against a real graph with vnyan_graph_read. 'valuesUncertain' marks types whose values[] keys came from an unreliable source heuristic rather than an observed VNyan graph - verify those before relying on them. VNyan exposes no app version string, so the Unity engine version above identifies the build this came from."
   },
   "types": {
     "APIMessageNode": {
+      "path": "Nodes/APIMessageNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/APIMessageNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "action",
+        "dict"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "actionSocket",
         "jsonSocket",
         "dictSocket"
       ],
-      "values": [
-        "action",
-        "dict"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "AdBreakNode": {
+      "path": "Nodes/AdBreakNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/AdBreakNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "secondsSocket"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "AddBoneRotNode": {
+      "path": "Nodes/AddBoneRotNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/AddBoneRotNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
-      "valueInFields": [
-        "rotXInput",
-        "rotYInput",
-        "rotZInput",
-        "smoothInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "rotx",
         "roty",
@@ -58,229 +55,266 @@
         "bone",
         "space",
         "seconds"
-      ]
-    },
-    "AmbientNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/AmbientNode",
-      "possiblyIncomplete": false,
-      "valueIn": 3,
+      ],
       "valueInFields": [
-        "intensityInput",
-        "colorInput",
+        "rotXInput",
+        "rotYInput",
+        "rotZInput",
         "smoothInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "possiblyIncomplete": false
+    },
+    "AmbientNode": {
+      "path": "Nodes/AmbientNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 3,
+      "valueOut": 0,
       "values": [
         "intensity",
         "color_r",
         "color_g",
         "color_b",
         "seconds"
-      ]
+      ],
+      "valueInFields": [
+        "intensityInput",
+        "colorInput",
+        "smoothInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "AppQuitNode": {
+      "path": "Nodes/AppQuitNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/AppQuitNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "AppStartNode": {
+      "path": "Nodes/AppStartNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/AppStartNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "possiblyIncomplete": false
     },
     "ArrayGetFlexNode": {
+      "path": "Nodes/ArrayGetFlexNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ArrayGetFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "arrayNameInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "opts",
         "name"
-      ]
+      ],
+      "valueInFields": [
+        "arrayNameInput"
+      ],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ArraySetFlexNode": {
+      "path": "Nodes/ArraySetFlexNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ArraySetFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "opts",
+        "name"
+      ],
       "valueInFields": [
         "arrayNameInput",
         "appendInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "opts",
-        "name"
-      ]
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ArrayToFileNode": {
+      "path": "Nodes/ArrayToFileNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ArrayToFileNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "near"
+      ],
       "valueInFields": [
         "fileInput",
         "arrayInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "near"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "ArrayValueNode": {
+      "path": "Nodes/ArrayValueNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ArrayValueNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "array",
+        "index"
+      ],
       "valueInFields": [
         "arrayInput",
         "indexInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": [
-        "array",
-        "index"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "AvatarLoadedNode": {
+      "path": "Nodes/AvatarLoadedNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/AvatarLoadedNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "avatarSocket"
       ],
-      "values": []
+      "possiblyIncomplete": false
     },
     "AvatarPosNode": {
+      "path": "Nodes/AvatarPosNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/AvatarPosNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "service"
+      ],
       "valueInFields": [
         "posInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "service"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "BitsNode": {
+      "path": "Nodes/BitsNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/BitsNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "minValue",
+        "maxValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputBits",
         "outputUsername",
         "outputMessage"
       ],
-      "values": [
-        "minValue",
-        "maxValue"
-      ]
+      "possiblyIncomplete": false
     },
     "BlendshapeBinaryNode": {
+      "path": "Nodes/BlendshapeBinaryNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeBinaryNode",
-      "possiblyIncomplete": true,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "bs",
+        "th"
+      ],
       "valueInFields": [
         "listInput",
         "bsInput",
         "thresholdInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "bs",
-        "th"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeConstraintNode": {
+      "path": "Nodes/BlendshapeConstraintNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeConstraintNode",
-      "possiblyIncomplete": true,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "constraint",
+        "constrained"
+      ],
       "valueInFields": [
         "listInput",
         "constraintInput",
         "constrainedInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "constraint",
-        "constrained"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeCurveNode": {
+      "path": "Nodes/BlendshapeCurveNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeCurveNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "PressInputPropertiesButton"
+      ],
       "valueInFields": [
         "listInput",
         "namesInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "PressInputPropertiesButton"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeMapperNode": {
+      "path": "Nodes/BlendshapeMapperNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeMapperNode",
-      "possiblyIncomplete": true,
       "valueIn": 8,
+      "valueOut": 1,
+      "values": [
+        "source",
+        "target",
+        "multiplier",
+        "condition",
+        "min",
+        "max"
+      ],
       "valueInFields": [
         "listInput",
         "sourceInput",
@@ -291,25 +325,25 @@
         "maxInput",
         "activeInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "source",
-        "target",
-        "multiplier",
-        "condition",
-        "min",
-        "max"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeNode": {
+      "path": "Nodes/BlendshapeNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/BlendshapeNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
+      "valueOut": 0,
+      "values": [
+        "bsValue",
+        "bsName",
+        "isToggle",
+        "smoothTime",
+        "const"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput",
@@ -317,40 +351,41 @@
         "toggleInput",
         "constInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "bsValue",
-        "bsName",
-        "isToggle",
-        "smoothTime",
-        "const"
-      ]
+      "possiblyIncomplete": false
     },
     "BlendshapePriorityNode": {
+      "path": "Nodes/BlendshapePriorityNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapePriorityNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "scale"
+      ],
       "valueInFields": [
         "listInput",
         "priorityInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "scale"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeReplacerNode": {
+      "path": "Nodes/BlendshapeReplacerNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeReplacerNode",
-      "possiblyIncomplete": true,
       "valueIn": 6,
+      "valueOut": 1,
+      "values": [
+        "source",
+        "target",
+        "condition",
+        "min",
+        "max"
+      ],
       "valueInFields": [
         "listInput",
         "sourceInput",
@@ -359,88 +394,75 @@
         "minInput",
         "maxInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "source",
-        "target",
-        "condition",
-        "min",
-        "max"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeSmoothNode": {
+      "path": "Nodes/BlendshapeSmoothNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeSmoothNode",
-      "possiblyIncomplete": true,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "bs",
+        "smooth"
+      ],
       "valueInFields": [
         "listInput",
         "bsInput",
         "smoothInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "bs",
-        "smooth"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BlendshapeToMeshNode": {
+      "path": "Nodes/BlendshapeToMeshNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BlendshapeToMeshNode",
-      "possiblyIncomplete": true,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "source",
+        "target"
+      ],
       "valueInFields": [
         "listInput",
         "sourceInput",
         "targetInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "source",
-        "target"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BoneResetNode": {
+      "path": "Nodes/BoneResetNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/BoneResetNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "bone",
         "rot",
         "scale"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "BoneRotNode": {
+      "path": "Nodes/BoneRotNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/BoneRotNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
-      "valueInFields": [
-        "rotXInput",
-        "rotYInput",
-        "rotZInput",
-        "smoothInput",
-        "toggleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "rotx",
         "roty",
@@ -448,23 +470,23 @@
         "bone",
         "seconds",
         "toggle"
-      ]
-    },
-    "BoneScaleNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/BoneScaleNode",
-      "possiblyIncomplete": false,
-      "valueIn": 5,
+      ],
       "valueInFields": [
-        "scaXInput",
-        "scaYInput",
-        "scaZInput",
+        "rotXInput",
+        "rotYInput",
+        "rotZInput",
         "smoothInput",
         "toggleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "possiblyIncomplete": false
+    },
+    "BoneScaleNode": {
+      "path": "Nodes/BoneScaleNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 5,
+      "valueOut": 0,
       "values": [
         "scalex",
         "scaley",
@@ -472,16 +494,27 @@
         "bone",
         "seconds",
         "toggle"
-      ]
+      ],
+      "valueInFields": [
+        "scaXInput",
+        "scaYInput",
+        "scaZInput",
+        "smoothInput",
+        "toggleInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "BoneToVector3Node": {
+      "path": "Nodes/BoneToVector3Node",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BoneToVector3Node",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 5,
+      "values": [
+        "off"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "lPosOutput",
         "lRotOutput",
@@ -489,69 +522,58 @@
         "wPosOutput",
         "wRotOutput"
       ],
-      "values": [
-        "off"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "BonkNode": {
+      "path": "Nodes/BonkNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/BonkNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "possiblyIncomplete": false
     },
     "BoolToNumberNode": {
+      "path": "Nodes/BoolToNumberNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BoolToNumberNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "boolInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "numberOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BoolToTextNode": {
+      "path": "Nodes/BoolToTextNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/BoolToTextNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "boolInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "BubbleNode": {
+      "path": "Nodes/BubbleNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/BubbleNode",
-      "possiblyIncomplete": false,
       "valueIn": 8,
-      "valueInFields": [
-        "amountInput",
-        "flinchInput",
-        "tagInput",
-        "scaleInput",
-        "speedInput",
-        "popInput",
-        "stickyInput",
-        "timeInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "items",
         "flinch",
@@ -562,113 +584,140 @@
         "pop",
         "dir",
         "destroy"
-      ]
+      ],
+      "valueInFields": [
+        "amountInput",
+        "flinchInput",
+        "tagInput",
+        "scaleInput",
+        "speedInput",
+        "popInput",
+        "stickyInput",
+        "timeInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CBateChatNode": {
+      "path": "Nodes/CBateChatNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CBateChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [
+        "userFilter",
+        "userLevel"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputMessage"
       ],
-      "values": [
-        "userFilter",
-        "userLevel"
-      ]
+      "possiblyIncomplete": false
     },
     "CBateFanNode": {
+      "path": "Nodes/CBateFanNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CBateFanNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CBateFollowNode": {
+      "path": "Nodes/CBateFollowNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CBateFollowNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CBateTipsNode": {
+      "path": "Nodes/CBateTipsNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CBateTipsNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "minValue",
+        "maxValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputTokens",
         "outputUsername",
         "outputMessage"
       ],
-      "values": [
-        "minValue",
-        "maxValue"
-      ]
+      "possiblyIncomplete": false
     },
     "CMOrbitNode": {
+      "path": "Nodes/CMOrbitNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CMOrbitNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "active",
+        "speed",
+        "mirror"
+      ],
       "valueInFields": [
         "activeInput",
         "timeInput",
         "mirrorInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "active",
-        "speed",
-        "mirror"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CMTiltNode": {
+      "path": "Nodes/CMTiltNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CMTiltNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "active",
+        "duration",
+        "angle"
+      ],
       "valueInFields": [
         "activeInput",
         "timeInput",
         "angleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "active",
-        "duration",
-        "angle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CObjectForceNode": {
+      "path": "Nodes/CObjectForceNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CObjectForceNode",
-      "possiblyIncomplete": false,
       "valueIn": 8,
+      "valueOut": 0,
+      "values": [
+        "fx",
+        "fy",
+        "fz",
+        "tx",
+        "ty",
+        "tz",
+        "id",
+        "relative"
+      ],
       "valueInFields": [
         "idInput",
         "fxInput",
@@ -679,25 +728,28 @@
         "tzInput",
         "relativeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "fx",
-        "fy",
-        "fz",
-        "tx",
-        "ty",
-        "tz",
-        "id",
-        "relative"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CObjectTransformNode": {
+      "path": "Nodes/CObjectTransformNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CObjectTransformNode",
-      "possiblyIncomplete": false,
       "valueIn": 10,
+      "valueOut": 0,
+      "values": [
+        "posx",
+        "posy",
+        "posz",
+        "rotx",
+        "roty",
+        "rotz",
+        "id",
+        "scalex",
+        "scaley",
+        "scalez"
+      ],
       "valueInFields": [
         "idInput",
         "pxInput",
@@ -710,42 +762,36 @@
         "syInput",
         "szInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "posx",
-        "posy",
-        "posz",
-        "rotx",
-        "roty",
-        "rotz",
-        "id",
-        "scalex",
-        "scaley",
-        "scalez"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CalibrationSlotNode": {
+      "path": "Nodes/CalibrationSlotNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CalibrationSlotNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "slot"
+      ],
       "valueInFields": [
         "slotInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "slot"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CallTriggerNode": {
+      "path": "Nodes/CallTriggerNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CallTriggerNode",
-      "possiblyIncomplete": true,
       "valueIn": 7,
+      "valueOut": 0,
+      "values": [
+        "triggerName",
+        "callTime"
+      ],
       "valueInFields": [
         "nameInput",
         "value1Input",
@@ -755,44 +801,36 @@
         "text2Input",
         "text3Input"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "triggerName",
-        "callTime"
-      ]
+      "possiblyIncomplete": true
     },
     "CameraLookNode": {
+      "path": "Nodes/CameraLookNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CameraLookNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
-      "valueInFields": [
-        "activeInput",
-        "smoothInput",
-        "distanceInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "active",
         "duration",
         "distance",
         "bone"
-      ]
+      ],
+      "valueInFields": [
+        "activeInput",
+        "smoothInput",
+        "distanceInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CameraMoveNode": {
+      "path": "Nodes/CameraMoveNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CameraMoveNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "timeInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "distance",
         "posx",
@@ -801,163 +839,181 @@
         "roty",
         "rotz",
         "duration"
-      ]
+      ],
+      "valueInFields": [
+        "timeInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CameraNode": {
+      "path": "Nodes/CameraNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CameraNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "camera",
+        "duration"
+      ],
       "valueInFields": [
         "cameraInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "camera",
-        "duration"
-      ]
+      "possiblyIncomplete": false
     },
     "CameraSmoothNode": {
+      "path": "Nodes/CameraSmoothNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CameraSmoothNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "duration"
+      ],
       "valueInFields": [
         "smoothInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "duration"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CameraTransformNode": {
+      "path": "Nodes/CameraTransformNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/CameraTransformNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "positionOutput",
         "rotationOutput",
         "fovOutput",
         "focalOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ChannelPointNode": {
+      "path": "Nodes/ChannelPointNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ChannelPointNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [
+        "redeemValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputValue",
         "outputMessage",
         "outputRedeem"
       ],
-      "values": [
-        "redeemValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ChatNode": {
+      "path": "Nodes/ChatNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
-      "valueOutFields": [
-        "outputUsername",
-        "outputMessage"
-      ],
       "values": [
         "userFilter",
         "userLevel",
         "excludeFilter"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [
+        "outputUsername",
+        "outputMessage"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ClearDictionaryNode": {
+      "path": "Nodes/ClearDictionaryNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ClearDictionaryNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "intensity"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "intensity"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ClearPoseNode": {
+      "path": "Nodes/ClearPoseNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ClearPoseNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ClipPlaneNode": {
+      "path": "Nodes/ClipPlaneNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ClipPlaneNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "near",
+        "far"
+      ],
       "valueInFields": [
         "nearInput",
         "farInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "near",
-        "far"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CollisionNode": {
+      "path": "Nodes/CollisionNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CollisionNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "colType",
+        "tag"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputType",
         "outputTag",
         "outputCollider"
       ],
-      "values": [
-        "colType",
-        "tag"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ColorToDecimalNode": {
+      "path": "Nodes/ColorToDecimalNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ColorToDecimalNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 7,
+      "values": [
+        "color_r",
+        "color_g",
+        "color_b"
+      ],
       "valueInFields": [
         "colorInput"
       ],
-      "valueOut": 7,
       "valueOutFields": [
         "rOutput",
         "gOutput",
@@ -967,198 +1023,215 @@
         "vOutput",
         "aOutput"
       ],
-      "values": [
-        "color_r",
-        "color_g",
-        "color_b"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ColorToTextNode": {
+      "path": "Nodes/ColorToTextNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ColorToTextNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "colorInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "CommandNode": {
+      "path": "Nodes/CommandNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CommandNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
-      "valueOutFields": [
-        "outputUsername",
-        "outputValue",
-        "outputMessage"
-      ],
       "values": [
         "commandName",
         "userFilter",
         "userLevel",
         "excludeFilter"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [
+        "outputUsername",
+        "outputValue",
+        "outputMessage"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CompareDecimalNode": {
+      "path": "Nodes/CompareDecimalNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CompareDecimalNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "v1",
+        "v2"
+      ],
       "valueInFields": [
         "value1Input",
         "value2Input"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "v1",
-        "v2"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CompareTextNode": {
-      "execIn": 1,
-      "execOut": 0,
       "path": "Nodes/CompareTextNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 2,
       "valueIn": 2,
-      "valueInFields": [
-        "text1Input",
-        "text2Input"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "value",
         "compare",
         "type"
-      ]
+      ],
+      "valueInFields": [
+        "text1Input",
+        "text2Input"
+      ],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "possiblyIncomplete": false
     },
     "ConfettiNode": {
+      "path": "Nodes/ConfettiNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ConfettiNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "possiblyIncomplete": false
     },
     "ContainsTArrayNode": {
+      "path": "Nodes/ContainsTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ContainsTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "arrayInput",
-        "valueInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "pname",
         "pvalue"
-      ]
+      ],
+      "valueInFields": [
+        "arrayInput",
+        "valueInput"
+      ],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ConvertToTextNode": {
+      "path": "Nodes/ConvertToTextNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ConvertToTextNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "UIComponent"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "UIComponent"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CooldownNode": {
+      "path": "Nodes/CooldownNode",
       "execIn": 1,
       "execOut": 2,
-      "path": "Nodes/CooldownNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "tapeNoiseAmount"
+      ],
       "valueInFields": [
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "tapeNoiseAmount"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CountArrayNode": {
+      "path": "Nodes/CountArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CountArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "paramName"
+      ],
       "valueInFields": [
         "arrayInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "paramName"
-      ]
+      "possiblyIncomplete": false
     },
     "CountTArrayNode": {
+      "path": "Nodes/CountTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CountTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "paramName"
+      ],
       "valueInFields": [
         "arrayInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "paramName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CrowdControlEffectVisibilityNode": {
+      "path": "Nodes/CrowdControlEffectVisibilityNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CrowdControlEffectVisibilityNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "visible",
         "effectID"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "CrowdControlGameEffectNode": {
+      "path": "Nodes/CrowdControlGameEffectNode",
       "execIn": 0,
       "execOut": 3,
-      "path": "Nodes/CrowdControlGameEffectNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 5,
+      "values": [
+        "pID",
+        "eID",
+        "cS"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputRequestID",
         "outputViewerName",
@@ -1166,20 +1239,22 @@
         "outputQuantity",
         "outputDuration"
       ],
-      "values": [
-        "pID",
-        "eID",
-        "cS"
-      ]
+      "dynamicSockets": [
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CrowdControlInstantNode": {
+      "path": "Nodes/CrowdControlInstantNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CrowdControlInstantNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 5,
+      "values": [
+        "effectID"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputRequestID",
         "outputViewerName",
@@ -1187,49 +1262,51 @@
         "outputQuantity",
         "outputParameters"
       ],
-      "values": [
-        "SetInputAudioTracks"
-      ]
+      "possiblyIncomplete": false
     },
     "CrowdControlSessionCallbackNode": {
+      "path": "Nodes/CrowdControlSessionCallbackNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CrowdControlSessionCallbackNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [
+        "transitionName"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputSessionID",
         "outputGamePackID",
         "outputMenuName",
         "outputIsInternal"
       ],
-      "values": [
-        "transitionName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CrowdControlSetSessionNode": {
+      "path": "Nodes/CrowdControlSetSessionNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CrowdControlSetSessionNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "eID"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CrowdControlTimedNode": {
-      "execIn": 0,
-      "execOut": 0,
       "path": "Nodes/CrowdControlTimedNode",
-      "possiblyIncomplete": false,
+      "execIn": 0,
+      "execOut": 2,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 6,
+      "values": [
+        "effectID"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputRequestID",
         "outputViewerName",
@@ -1238,325 +1315,361 @@
         "outputDuration",
         "outputParameters"
       ],
-      "values": [
-        "lip"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "possiblyIncomplete": false
     },
     "CustomObjectCollisionNode": {
+      "path": "Nodes/CustomObjectCollisionNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/CustomObjectCollisionNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "Thrusting"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputCObjId",
         "outputCollision",
         "outputColId"
       ],
-      "values": [
-        "Thrusting"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CyclerFlexNode": {
+      "path": "Nodes/CyclerFlexNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CyclerFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "opts"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "CyclerNode": {
+      "path": "Nodes/CyclerNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/CyclerNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DateTimeDiffNode": {
+      "path": "Nodes/DateTimeDiffNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DateTimeDiffNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 3,
+      "values": [],
       "valueInFields": [
         "dateTime1Input",
         "dateTime2Input"
       ],
-      "valueOut": 3,
       "valueOutFields": [
         "diffMilliseconds",
         "diffSeconds",
         "diffMinutes"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "DateTimeNowNode": {
+      "path": "Nodes/DateTimeNowNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DateTimeNowNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "dateTimeOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DateTimeParamNode": {
+      "path": "Nodes/DateTimeParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/DateTimeParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "paramInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "paramName",
         "datecomponent"
-      ]
+      ],
+      "valueInFields": [
+        "paramInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DateTimeToTextNode": {
+      "path": "Nodes/DateTimeToTextNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DateTimeToTextNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "dateTimeInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "DecimalOperationNode": {
+      "path": "Nodes/DecimalOperationNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DecimalOperationNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "superStickerEvent"
+      ],
       "valueInFields": [
         "value1Input",
         "value2Input"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": [
-        "superStickerEvent"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "DecimalToColorNode": {
+      "path": "Nodes/DecimalToColorNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DecimalToColorNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
+      "valueOut": 1,
+      "values": [
+        "mode"
+      ],
       "valueInFields": [
         "rInput",
         "gInput",
         "bInput",
         "aInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "colorOutput"
       ],
-      "values": [
-        "mode"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "DecimalToNumberNode": {
+      "path": "Nodes/DecimalToNumberNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DecimalToNumberNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "numberInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "DecimalToTextNode": {
+      "path": "Nodes/DecimalToTextNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DecimalToTextNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "tag"
+      ],
       "valueInFields": [
         "decimalInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "tag"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DecimalToVector3Node": {
+      "path": "Nodes/DecimalToVector3Node",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DecimalToVector3Node",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "x",
+        "y",
+        "z"
+      ],
       "valueInFields": [
         "xInput",
         "yInput",
         "zInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "vectorOutput"
       ],
-      "values": [
-        "x",
-        "y",
-        "z"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DequeueArrayNode": {
+      "path": "Nodes/DequeueArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/DequeueArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "paramName"
+      ],
       "valueInFields": [
         "arrayInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "paramName"
-      ]
+      "possiblyIncomplete": false
     },
     "DequeueTArrayNode": {
+      "path": "Nodes/DequeueTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/DequeueTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "paramName"
+      ],
       "valueInFields": [
         "arrayInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "paramName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DestroyCObjectNode": {
+      "path": "Nodes/DestroyCObjectNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/DestroyCObjectNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "clientName"
+      ],
       "valueInFields": [
         "idInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "filterName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "DictionaryGetFlexNode": {
+      "path": "Nodes/DictionaryGetFlexNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DictionaryGetFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "opts",
+        "name",
+        "k0",
+        "k1"
+      ],
       "valueInFields": [
         "dictInput",
         "dictNameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "opts",
-        "name"
-      ]
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "possiblyIncomplete": false
     },
     "DictionarySetFlexNode": {
+      "path": "Nodes/DictionarySetFlexNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/DictionarySetFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "opts",
+        "name",
+        "k0",
+        "v0",
+        "k1",
+        "v1",
+        "k2",
+        "v2",
+        "k3",
+        "v3",
+        "k4",
+        "v4"
+      ],
       "valueInFields": [
         "dictNameInput",
         "appendInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "z1",
-        "xmultiplier"
-      ]
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "possiblyIncomplete": false
     },
     "DictionaryValueNode": {
+      "path": "Nodes/DictionaryValueNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/DictionaryValueNode",
-      "possiblyIncomplete": true,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "array",
+        "key"
+      ],
       "valueInFields": [
         "dictInput",
         "arrayInput",
         "keyInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "intensity",
-        "Images"
-      ]
+      "possiblyIncomplete": true
     },
     "DropItemNode": {
+      "path": "Nodes/DropItemNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/DropItemNode",
-      "possiblyIncomplete": false,
       "valueIn": 8,
-      "valueInFields": [
-        "timeInput",
-        "amountInput",
-        "randomInput",
-        "volumeInput",
-        "massInput",
-        "dragInput",
-        "tagInput",
-        "scaleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "items",
         "amount",
@@ -1567,25 +1680,27 @@
         "drag",
         "tag",
         "scale"
-      ]
+      ],
+      "valueInFields": [
+        "timeInput",
+        "amountInput",
+        "randomInput",
+        "volumeInput",
+        "massInput",
+        "dragInput",
+        "tagInput",
+        "scaleInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "EditTwitchRedeemNode": {
+      "path": "Nodes/EditTwitchRedeemNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EditTwitchRedeemNode",
-      "possiblyIncomplete": false,
       "valueIn": 7,
-      "valueInFields": [
-        "enableInput",
-        "titleInput",
-        "channelInput",
-        "usePromptInput",
-        "promptInput",
-        "useCooldownInput",
-        "cooldownInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "enabled",
         "redeemId",
@@ -1595,24 +1710,26 @@
         "prompt",
         "usecooldown",
         "cooldown"
-      ]
+      ],
+      "valueInFields": [
+        "enableInput",
+        "titleInput",
+        "channelInput",
+        "usePromptInput",
+        "promptInput",
+        "useCooldownInput",
+        "cooldownInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "EffectAONode": {
+      "path": "Nodes/EffectAONode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectAONode",
-      "possiblyIncomplete": false,
       "valueIn": 6,
-      "valueInFields": [
-        "activeInput",
-        "intensityInput",
-        "thicknessInput",
-        "colorInput",
-        "toggleInput",
-        "timeInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "intensity",
         "thickness",
@@ -1621,14 +1738,33 @@
         "color_b",
         "active",
         "toggle"
-      ]
+      ],
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "thicknessInput",
+        "colorInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "EffectAnalogGlitchNode": {
+      "path": "Nodes/EffectAnalogGlitchNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectAnalogGlitchNode",
-      "possiblyIncomplete": true,
       "valueIn": 7,
+      "valueOut": 0,
+      "values": [
+        "scanline",
+        "vertical",
+        "horizontal",
+        "drift",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "scanInput",
@@ -1638,33 +1774,15 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "scanline",
-        "vertical",
-        "horizontal",
-        "drift",
-        "active",
-        "toggle"
-      ]
+      "possiblyIncomplete": true
     },
     "EffectBinaryNode": {
+      "path": "Nodes/EffectBinaryNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectBinaryNode",
-      "possiblyIncomplete": false,
       "valueIn": 6,
-      "valueInFields": [
-        "activeInput",
-        "scaleInput",
-        "colorInput",
-        "opacityInput",
-        "toggleInput",
-        "timeInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "type",
         "scale",
@@ -1674,26 +1792,25 @@
         "color_b",
         "active",
         "toggle"
-      ]
-    },
-    "EffectBloomNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/EffectBloomNode",
-      "possiblyIncomplete": false,
-      "valueIn": 8,
+      ],
       "valueInFields": [
         "activeInput",
-        "intensityInput",
-        "thresholdInput",
-        "diffusionInput",
+        "scaleInput",
         "colorInput",
-        "cintensityInput",
+        "opacityInput",
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
+    },
+    "EffectBloomNode": {
+      "path": "Nodes/EffectBloomNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 8,
+      "valueOut": 0,
       "values": [
         "intensity",
         "threshold",
@@ -1704,34 +1821,56 @@
         "color_i",
         "active",
         "toggle"
-      ]
+      ],
+      "valueInFields": [
+        "activeInput",
+        "intensityInput",
+        "thresholdInput",
+        "diffusionInput",
+        "colorInput",
+        "cintensityInput",
+        "toggleInput",
+        "timeInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "EffectChromaticNode": {
+      "path": "Nodes/EffectChromaticNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectChromaticNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "intensity",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "intensityInput",
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "intensity",
-        "active",
-        "toggle"
-      ]
+      "possiblyIncomplete": true
     },
     "EffectColorNode": {
+      "path": "Nodes/EffectColorNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectColorNode",
-      "possiblyIncomplete": true,
       "valueIn": 9,
+      "valueOut": 0,
+      "values": [
+        "temperature",
+        "tint",
+        "hue",
+        "saturation",
+        "brightness",
+        "contrast",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "tempInput",
@@ -1743,45 +1882,44 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "temperature",
-        "tint",
-        "hue",
-        "saturation",
-        "brightness",
-        "contrast",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectDigitalGlitchNode": {
+      "path": "Nodes/EffectDigitalGlitchNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectDigitalGlitchNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "opacity",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "opacityInput",
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "opacity",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectDirtNode": {
+      "path": "Nodes/EffectDirtNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectDirtNode",
-      "possiblyIncomplete": true,
       "valueIn": 6,
+      "valueOut": 0,
+      "values": [
+        "threshold",
+        "saturation",
+        "intensity",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "thresholdInput",
@@ -1790,22 +1928,23 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "threshold",
-        "saturation",
-        "intensity",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectDoFNode": {
+      "path": "Nodes/EffectDoFNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectDoFNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
+      "valueOut": 0,
+      "values": [
+        "aperture",
+        "focalLength",
+        "bone",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "apertureInput",
@@ -1813,22 +1952,24 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "aperture",
-        "focalLength",
-        "bone",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "EffectGrainNode": {
+      "path": "Nodes/EffectGrainNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectGrainNode",
-      "possiblyIncomplete": true,
       "valueIn": 7,
+      "valueOut": 0,
+      "values": [
+        "intensity",
+        "grain",
+        "luminance",
+        "colored",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "coloredInput",
@@ -1838,23 +1979,26 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "intensity",
-        "grain",
-        "luminance",
-        "colored",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectLensNode": {
+      "path": "Nodes/EffectLensNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectLensNode",
-      "possiblyIncomplete": true,
       "valueIn": 9,
+      "valueOut": 0,
+      "values": [
+        "intensity",
+        "xmultiplier",
+        "ymultiplier",
+        "centerx",
+        "centery",
+        "scale",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "intensityInput",
@@ -1866,25 +2010,22 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "intensity",
-        "xmultiplier",
-        "ymultiplier",
-        "centerx",
-        "centery",
-        "scale",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectMotionBlurNode": {
+      "path": "Nodes/EffectMotionBlurNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectMotionBlurNode",
-      "possiblyIncomplete": true,
       "valueIn": 5,
+      "valueOut": 0,
+      "values": [
+        "angle",
+        "sample",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "angleInput",
@@ -1892,80 +2033,87 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "angle",
-        "sample",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectNegativeNode": {
+      "path": "Nodes/EffectNegativeNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectNegativeNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "intensity",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "intensityInput",
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "intensity",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectPixelationNode": {
+      "path": "Nodes/EffectPixelationNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectPixelationNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "density",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "densityInput",
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "density",
-        "active",
-        "toggle"
-      ]
+      "possiblyIncomplete": true
     },
     "EffectRainbowNode": {
+      "path": "Nodes/EffectRainbowNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectRainbowNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "speed",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "speedInput",
         "toggleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "speed",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "EffectVHSNode": {
+      "path": "Nodes/EffectVHSNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectVHSNode",
-      "possiblyIncomplete": true,
       "valueIn": 9,
+      "valueOut": 0,
+      "values": [
+        "filmgrain",
+        "linenoise",
+        "tapenoise",
+        "interlacing",
+        "TwitchH",
+        "TwitchV",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "grainInput",
@@ -1977,25 +2125,22 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "filmgrain",
-        "linenoise",
-        "tapenoise",
-        "interlacing",
-        "TwitchH",
-        "TwitchV",
-        "active",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "EffectVignetteNode": {
+      "path": "Nodes/EffectVignetteNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EffectVignetteNode",
-      "possiblyIncomplete": true,
       "valueIn": 5,
+      "valueOut": 0,
+      "values": [
+        "intensity",
+        "smoothness",
+        "active",
+        "toggle"
+      ],
       "valueInFields": [
         "activeInput",
         "intensityInput",
@@ -2003,55 +2148,55 @@
         "toggleInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "intensity",
-        "smoothness",
-        "active",
-        "toggle"
-      ]
+      "possiblyIncomplete": true
     },
     "EnqueueArrayNode": {
+      "path": "Nodes/EnqueueArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EnqueueArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "arrayValue"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "arrayValue"
-      ]
+      "possiblyIncomplete": false
     },
     "EnqueueTArrayNode": {
+      "path": "Nodes/EnqueueTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EnqueueTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "arrayValue"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "arrayValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "EnqueueTriggerNode": {
+      "path": "Nodes/EnqueueTriggerNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/EnqueueTriggerNode",
-      "possiblyIncomplete": true,
       "valueIn": 9,
+      "valueOut": 0,
+      "values": [
+        "triggerName",
+        "queueName",
+        "time"
+      ],
       "valueInFields": [
         "nameInput",
         "queueInput",
@@ -2063,243 +2208,274 @@
         "text2Input",
         "text3Input"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "triggerName",
-        "queueName",
-        "time"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "FOVNode": {
+      "path": "Nodes/FOVNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FOVNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "fov"
+      ],
       "valueInFields": [
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "fov"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FanslyChatNode": {
+      "path": "Nodes/FanslyChatNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/FanslyChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [
+        "thumbnails"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputMessage"
       ],
-      "values": [
-        "thumbnails"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FanslyTipsNode": {
+      "path": "Nodes/FanslyTipsNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/FanslyTipsNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "minValue",
+        "maxValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputTokens",
         "outputUsername",
         "outputMessage"
       ],
-      "values": [
-        "minValue",
-        "maxValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FileToParamNode": {
+      "path": "Nodes/FileToParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FileToParamNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "StartWaterTwitch"
+      ],
       "valueInFields": [
         "fileInput",
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "Disconnect"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "FileToTArrayNode": {
+      "path": "Nodes/FileToTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FileToTArrayNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "position"
+      ],
       "valueInFields": [
         "fileInput",
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "position"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "FilterBSNode": {
-      "execIn": 1,
-      "execOut": 0,
       "path": "Nodes/FilterBSNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 2,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "bsname",
+        "bsvalue"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "bsname",
-        "bsvalue"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "possiblyIncomplete": false
     },
     "FilterBoolLogicNode": {
+      "path": "Nodes/FilterBoolLogicNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterBoolLogicNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "A"
+      ],
       "valueInFields": [
         "value1Input",
         "value2Input"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "A"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "FilterBoolNode": {
+      "path": "Nodes/FilterBoolNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterBoolNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [],
       "valueInFields": [
         "value1Input"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": []
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "FilterGamepadNode": {
-      "execIn": 1,
-      "execOut": 0,
       "path": "Nodes/FilterGamepadNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 2,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
-        "pvalue"
-      ]
+        "button"
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "possiblyIncomplete": false
     },
     "FilterGestureNode": {
+      "path": "Nodes/FilterGestureNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterGestureNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "srcname"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FilterHeartNode": {
+      "path": "Nodes/FilterHeartNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterHeartNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "Bearer"
+      ],
       "valueInFields": [
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "Bearer"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FilterHotkeyNode": {
+      "path": "Nodes/FilterHotkeyNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterHotkeyNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "GET"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FilterLogicNode": {
+      "path": "Nodes/FilterLogicNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterLogicNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
-      "valueInFields": [
-        "value1Input",
-        "value2Input",
-        "comparisonInput",
-        "caseInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "p1",
         "p2",
         "c",
         "o",
         "case"
-      ]
+      ],
+      "valueInFields": [
+        "value1Input",
+        "value2Input",
+        "comparisonInput",
+        "caseInput"
+      ],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FilterParamNode": {
-      "execIn": 1,
-      "execOut": 0,
       "path": "Nodes/FilterParamNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 3,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "pname",
+        "pvalue"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "pname",
-        "pvalue"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "possiblyIncomplete": false
     },
     "FilterSteamVRNode": {
+      "path": "Nodes/FilterSteamVRNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FilterSteamVRNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "buttonaright",
         "buttonaleft",
@@ -2309,116 +2485,139 @@
         "triggerleft",
         "touchpadright",
         "touchpadleft"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FilterVolumeNode": {
-      "execIn": 1,
-      "execOut": 0,
       "path": "Nodes/FilterVolumeNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 2,
       "valueIn": 1,
-      "valueInFields": [
-        "valueInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "mic",
         "volume",
         "filter"
-      ]
+      ],
+      "valueInFields": [
+        "valueInput"
+      ],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "possiblyIncomplete": false
     },
     "FindTArrayNode": {
+      "path": "Nodes/FindTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FindTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "findValue",
+        "paramName"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "findValue",
-        "paramName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FlinchNode": {
+      "path": "Nodes/FlinchNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FlinchNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "duration"
+      ],
       "valueInFields": [
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "duration"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "FollowNode": {
+      "path": "Nodes/FollowNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/FollowNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputLogin"
       ],
-      "values": []
+      "possiblyIncomplete": false
     },
     "FoodNode": {
+      "path": "Nodes/FoodNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/FoodNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "tagInput",
-        "scaleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "items",
         "tag",
         "scale"
-      ]
+      ],
+      "valueInFields": [
+        "tagInput",
+        "scaleInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ForLoopNode": {
+      "path": "Nodes/ForLoopNode",
       "execIn": 1,
       "execOut": 1,
-      "path": "Nodes/ForLoopNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "start",
+        "end"
+      ],
       "valueInFields": [
         "startInput",
         "endInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "outputIndex"
       ],
-      "values": [
-        "start",
-        "end"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ForceNode": {
+      "path": "Nodes/ForceNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ForceNode",
-      "possiblyIncomplete": false,
       "valueIn": 7,
+      "valueOut": 0,
+      "values": [
+        "yeetX",
+        "yeetY",
+        "yeetZ",
+        "torqueX",
+        "torqueY",
+        "torqueZ",
+        "respawnTime"
+      ],
       "valueInFields": [
         "fxInput",
         "fyInput",
@@ -2428,321 +2627,334 @@
         "tzInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "yeetX",
-        "yeetY",
-        "yeetZ",
-        "torqueX",
-        "torqueY",
-        "torqueZ",
-        "respawnTime"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "GestureNode": {
+      "path": "Nodes/GestureNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/GestureNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "selected"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "GetCObjectTransformNode": {
+      "path": "Nodes/GetCObjectTransformNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/GetCObjectTransformNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 3,
+      "values": [
+        "inpname"
+      ],
       "valueInFields": [
         "idInput"
       ],
-      "valueOut": 3,
       "valueOutFields": [
         "positionOutput",
         "rotationOutput",
         "scaleOutput"
       ],
-      "values": [
-        "inpname"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "GetDictionaryValueNode": {
+      "path": "Nodes/GetDictionaryValueNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/GetDictionaryValueNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "dictionary",
+        "keyName",
+        "param"
+      ],
       "valueInFields": [
         "nameInput",
         "keyInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "dictionary",
-        "keyName",
-        "param"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "GetTArrayNode": {
+      "path": "Nodes/GetTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/GetTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "index",
+        "paramName"
+      ],
       "valueInFields": [
         "nameInput",
         "indexInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "index",
-        "paramName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "HeadpatNode": {
+      "path": "Nodes/HeadpatNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/HeadpatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "HotkeyNode": {
+      "path": "Nodes/HotkeyNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/HotkeyNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
-        "Connecting"
-      ]
+        "hotkey"
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "HypeTrainNode": {
+      "path": "Nodes/HypeTrainNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/HypeTrainNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
-        "CEILING"
-      ]
+        "status"
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "InvertBooleanNode": {
+      "path": "Nodes/InvertBooleanNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/InvertBooleanNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "boolInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "boolOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "JsonDictionaryNode": {
+      "path": "Nodes/JsonDictionaryNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/JsonDictionaryNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "dictionary",
+        "paramName"
+      ],
       "valueInFields": [
         "jsonInput",
         "targetInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "dictionary",
-        "paramName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "KickChannelPointNode": {
+      "path": "Nodes/KickChannelPointNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/KickChannelPointNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "redeemValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputMessage",
         "outputRedeem"
       ],
-      "values": [
-        "redeemValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "KickChatNode": {
+      "path": "Nodes/KickChatNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/KickChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [
+        "effectID"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputMessage"
       ],
-      "values": [
-        "s"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "KickCommandNode": {
+      "path": "Nodes/KickCommandNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/KickCommandNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "commandName",
+        "userFilter"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputMessage",
         "outputValue"
       ],
-      "values": [
-        "commandName",
-        "userFilter"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "KickSubNode": {
+      "path": "Nodes/KickSubNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/KickSubNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "LeapTrackingStatusNode": {
+      "path": "Nodes/LeapTrackingStatusNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/LeapTrackingStatusNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "hand",
         "status"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "LoadAvatarNode": {
+      "path": "Nodes/LoadAvatarNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/LoadAvatarNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "avatarFile"
+      ],
       "valueInFields": [
         "fileInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "maxValue"
-      ]
+      "possiblyIncomplete": false
     },
     "LoadTwitchProfileNode": {
+      "path": "Nodes/LoadTwitchProfileNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/LoadTwitchProfileNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "in"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "in"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "LoadWorldNode": {
+      "path": "Nodes/LoadWorldNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/LoadWorldNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "platform"
+      ],
       "valueInFields": [
         "fileInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "platform"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "LovenseActionNode": {
+      "path": "Nodes/LovenseActionNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/LovenseActionNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
-      "valueInFields": [
-        "valueInput",
-        "timeInput",
-        "stopInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "time",
         "power",
         "action",
         "stop"
-      ]
+      ],
+      "valueInFields": [
+        "valueInput",
+        "timeInput",
+        "stopInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "LovensePresetNode": {
+      "path": "Nodes/LovensePresetNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/LovensePresetNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "time",
+        "preset"
+      ],
       "valueInFields": [
         "presetInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "time",
-        "preset"
-      ]
+      "possiblyIncomplete": false
     },
     "MMDNode": {
+      "path": "Nodes/MMDNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/MMDNode",
-      "possiblyIncomplete": true,
       "valueIn": 8,
+      "valueOut": 0,
+      "values": [
+        "volume",
+        "lipsync",
+        "stiffness",
+        "cameraY",
+        "distance"
+      ],
       "valueInFields": [
         "vmdInput",
         "camInput",
@@ -2753,141 +2965,151 @@
         "camyInput",
         "distanceInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "volume",
-        "lipsync",
-        "stiffness",
-        "cameraY",
-        "distance"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "MathExpNode": {
+      "path": "Nodes/MathExpNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/MathExpNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "key"
+      ],
       "valueInFields": [
         "expInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": [
-        "key"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "MessageBoxNode": {
+      "path": "Nodes/MessageBoxNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/MessageBoxNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
-        "lerpType"
-      ]
+        "sizeX",
+        "sizeY",
+        "message"
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "MusicNode": {
+      "path": "Nodes/MusicNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/MusicNode",
-      "possiblyIncomplete": true,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "volume",
+        "loop"
+      ],
       "valueInFields": [
         "fileInput",
         "volumeInput",
         "loopInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "volume",
-        "loop"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "NumberToDecimalNode": {
+      "path": "Nodes/NumberToDecimalNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/NumberToDecimalNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "numberInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "NumberToTextNode": {
+      "path": "Nodes/NumberToTextNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/NumberToTextNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "numberInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "ObjectMaterialColorNode": {
+      "path": "Nodes/ObjectMaterialColorNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObjectMaterialColorNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
-      "valueInFields": [
-        "materialInput",
-        "propertyInput",
-        "valueInput",
-        "nameInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "object",
         "materialId",
         "propId"
-      ]
-    },
-    "ObjectMaterialFloatNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/ObjectMaterialFloatNode",
-      "possiblyIncomplete": false,
-      "valueIn": 4,
+      ],
       "valueInFields": [
         "materialInput",
         "propertyInput",
         "valueInput",
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
+    },
+    "ObjectMaterialFloatNode": {
+      "path": "Nodes/ObjectMaterialFloatNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 4,
+      "valueOut": 0,
       "values": [
         "object",
         "materialId",
         "propId",
         "value"
-      ]
+      ],
+      "valueInFields": [
+        "materialInput",
+        "propertyInput",
+        "valueInput",
+        "nameInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObjectPosNode": {
+      "path": "Nodes/ObjectPosNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObjectPosNode",
-      "possiblyIncomplete": false,
       "valueIn": 6,
+      "valueOut": 0,
+      "values": [
+        "posx",
+        "posy",
+        "posz",
+        "name",
+        "seconds",
+        "toggle"
+      ],
       "valueInFields": [
         "nameInput",
         "posxInput",
@@ -2896,54 +3118,38 @@
         "timeInput",
         "toggleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "posx",
-        "posy",
-        "posz",
-        "name",
-        "seconds",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObjectResetNode": {
+      "path": "Nodes/ObjectResetNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObjectResetNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "name",
+        "pos",
+        "rot",
+        "scale"
+      ],
       "valueInFields": [
         "nameInput",
         "posInput",
         "rotInput",
         "scaInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "name",
-        "pos",
-        "rot",
-        "scale"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObjectRotNode": {
+      "path": "Nodes/ObjectRotNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObjectRotNode",
-      "possiblyIncomplete": false,
       "valueIn": 6,
-      "valueInFields": [
-        "nameInput",
-        "xInput",
-        "yInput",
-        "zInput",
-        "timeInput",
-        "toggleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "rotx",
         "roty",
@@ -2951,14 +3157,7 @@
         "name",
         "seconds",
         "toggle"
-      ]
-    },
-    "ObjectScaleNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/ObjectScaleNode",
-      "possiblyIncomplete": false,
-      "valueIn": 6,
+      ],
       "valueInFields": [
         "nameInput",
         "xInput",
@@ -2967,8 +3166,15 @@
         "timeInput",
         "toggleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "possiblyIncomplete": false
+    },
+    "ObjectScaleNode": {
+      "path": "Nodes/ObjectScaleNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 6,
+      "valueOut": 0,
       "values": [
         "scalex",
         "scaley",
@@ -2976,571 +3182,609 @@
         "name",
         "seconds",
         "toggle"
-      ]
+      ],
+      "valueInFields": [
+        "nameInput",
+        "xInput",
+        "yInput",
+        "zInput",
+        "timeInput",
+        "toggleInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObjectTextureNode": {
+      "path": "Nodes/ObjectTextureNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObjectTextureNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "object",
+        "materialId",
+        "textureId",
+        "useCache"
+      ],
       "valueInFields": [
         "fileInput",
         "materialInput",
         "textureInput",
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "object",
-        "materialId",
-        "textureId",
-        "useCache"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObjectVisNode": {
+      "path": "Nodes/ObjectVisNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObjectVisNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "name",
+        "visibility"
+      ],
       "valueInFields": [
         "nameInput",
         "visInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "name",
-        "visibility"
-      ]
+      "possiblyIncomplete": false
     },
     "ObsConnectionStateCallbackNode": {
+      "path": "Nodes/ObsConnectionStateCallbackNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ObsConnectionStateCallbackNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [
+        "destroy"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputNewState"
       ],
-      "values": [
-        "destroy"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsFireHotkeyNode": {
+      "path": "Nodes/ObsFireHotkeyNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsFireHotkeyNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "name"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "name"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetConnectionStateNode": {
+      "path": "Nodes/ObsGetConnectionStateNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetConnectionStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetCurrentSceneNode": {
+      "path": "Nodes/ObsGetCurrentSceneNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetCurrentSceneNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "sceneOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetFilterSettingNode": {
+      "path": "Nodes/ObsGetFilterSettingNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetFilterSettingNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "srcname",
+        "fltname",
+        "setname"
+      ],
       "valueInFields": [
         "sourceNameInput",
         "filterNameInput",
         "settingNameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "settingValueOutput"
       ],
-      "values": [
-        "srcname",
-        "fltname",
-        "setname"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetFilterStateNode": {
+      "path": "Nodes/ObsGetFilterStateNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetFilterStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "TestType",
+        "reloadContinuationData"
+      ],
       "valueInFields": [
         "sourceNameInput",
         "filterNameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": [
-        "TestType",
-        "reloadContinuationData"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetInputMuteNode": {
+      "path": "Nodes/ObsGetInputMuteNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetInputMuteNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "SHA1"
+      ],
       "valueInFields": [
         "inputNameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": [
-        "SHA1"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetInputSettingNode": {
+      "path": "Nodes/ObsGetInputSettingNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetInputSettingNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "inpname",
+        "setname"
+      ],
       "valueInFields": [
         "inputNameInput",
         "settingNameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "settingValueOutput"
       ],
-      "values": [
-        "inpname",
-        "setname"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetInputVolumeNode": {
+      "path": "Nodes/ObsGetInputVolumeNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetInputVolumeNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "inpname"
+      ],
       "valueInFields": [
         "inputNameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "volumeValueOutput"
       ],
-      "values": [
-        "inpname"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetRecordingStateNode": {
+      "path": "Nodes/ObsGetRecordingStateNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetRecordingStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetSceneItemStateNode": {
+      "path": "Nodes/ObsGetSceneItemStateNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetSceneItemStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "scnname",
+        "itmname"
+      ],
       "valueInFields": [
         "sceneNameInput",
         "itemNameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": [
-        "scnname",
-        "itmname"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetStreamingStateNode": {
+      "path": "Nodes/ObsGetStreamingStateNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetStreamingStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsGetVCamStateNode": {
+      "path": "Nodes/ObsGetVCamStateNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ObsGetVCamStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "stateOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsRecordingStateCallbackNode": {
+      "path": "Nodes/ObsRecordingStateCallbackNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ObsRecordingStateCallbackNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [
+        "sourceName"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputNewState"
       ],
-      "values": [
-        "sourceName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSceneChangeCallbackNode": {
+      "path": "Nodes/ObsSceneChangeCallbackNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ObsSceneChangeCallbackNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "stage"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "outputNewScene"
       ],
-      "values": [
-        "targetScene"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetFilterSettingNode": {
+      "path": "Nodes/ObsSetFilterSettingNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetFilterSettingNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "srcname",
+        "fltname",
+        "setname",
+        "setval"
+      ],
       "valueInFields": [
         "sourceNameInput",
         "filterNameInput",
         "settingNameInput",
         "settingValueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
+    },
+    "ObsSetFilterStateNode": {
+      "path": "Nodes/ObsSetFilterStateNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 2,
+      "valueOut": 0,
       "values": [
         "srcname",
         "fltname",
-        "setname",
-        "setval"
-      ]
-    },
-    "ObsSetFilterStateNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/ObsSetFilterStateNode",
-      "possiblyIncomplete": false,
-      "valueIn": 2,
+        "status"
+      ],
       "valueInFields": [
         "sourceNameInput",
         "filterNameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "srcname",
-        "fltname",
-        "status"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetInputMuteNode": {
+      "path": "Nodes/ObsSetInputMuteNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetInputMuteNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "inputNameInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "inpname",
         "status"
-      ]
+      ],
+      "valueInFields": [
+        "inputNameInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetInputSettingNode": {
+      "path": "Nodes/ObsSetInputSettingNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetInputSettingNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "inpname",
+        "setname",
+        "setval"
+      ],
       "valueInFields": [
         "inputNameInput",
         "settingNameInput",
         "settingValueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "inpname",
-        "setname",
-        "setval"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetInputVolumeNode": {
+      "path": "Nodes/ObsSetInputVolumeNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetInputVolumeNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "inpname",
+        "setval"
+      ],
       "valueInFields": [
         "inputNameInput",
         "volumeValueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "inpname",
-        "setval"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetRecordingStateNode": {
+      "path": "Nodes/ObsSetRecordingStateNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetRecordingStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "status"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetSceneItemStateNode": {
+      "path": "Nodes/ObsSetSceneItemStateNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetSceneItemStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "sceneNameInput",
-        "itemNameInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "scnname",
         "itmname",
         "status"
-      ]
+      ],
+      "valueInFields": [
+        "sceneNameInput",
+        "itemNameInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetSceneNode": {
+      "path": "Nodes/ObsSetSceneNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetSceneNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "eyelookdownleft"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "eyelookdownleft"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetStreamStateNode": {
+      "path": "Nodes/ObsSetStreamStateNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetStreamStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "status"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsSetVCamStateNode": {
+      "path": "Nodes/ObsSetVCamStateNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ObsSetVCamStateNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "breathe"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsStreamingStateCallbackNode": {
+      "path": "Nodes/ObsStreamingStateCallbackNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ObsStreamingStateCallbackNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [
+        "targetState"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputNewState"
       ],
-      "values": [
-        "targetState"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ObsVCamStateCallbackNode": {
+      "path": "Nodes/ObsVCamStateCallbackNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/ObsVCamStateCallbackNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [
+        "targetState"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputNewState"
       ],
-      "values": [
-        "targetState"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "OnBlendshapeListNode": {
+      "path": "Nodes/OnBlendshapeListNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/OnBlendshapeListNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [
+        "LeftLeg"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "listOutput"
       ],
-      "values": [
-        "LeftLeg"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "OrderedFlexNode": {
-      "execIn": 1,
-      "execOut": 0,
       "path": "Nodes/OrderedFlexNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 2,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
-        "eyeLookInLeft"
-      ]
+        "opts"
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "possiblyIncomplete": false
     },
     "OrderedNode": {
+      "path": "Nodes/OrderedNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/OrderedNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "PackDictionaryNode": {
+      "path": "Nodes/PackDictionaryNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/PackDictionaryNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "nameInput",
-        "paramInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "dictionary",
         "paramName"
-      ]
-    },
-    "ParamBSNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/ParamBSNode",
-      "possiblyIncomplete": false,
-      "valueIn": 2,
+      ],
       "valueInFields": [
         "nameInput",
         "paramInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
+    },
+    "ParamBSNode": {
+      "path": "Nodes/ParamBSNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 2,
+      "valueOut": 0,
       "values": [
         "bs",
         "param"
-      ]
+      ],
+      "valueInFields": [
+        "nameInput",
+        "paramInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ParamLerpNode": {
+      "path": "Nodes/ParamLerpNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ParamLerpNode",
-      "possiblyIncomplete": false,
       "valueIn": 10,
-      "valueInFields": [
-        "pxInput",
-        "pyInput",
-        "pzInput",
-        "fxInput",
-        "fyInput",
-        "fzInput",
-        "txInput",
-        "tyInput",
-        "tzInput",
-        "lerpInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "lerpType",
         "x1",
@@ -3553,111 +3797,119 @@
         "yname",
         "zname",
         "value"
-      ]
+      ],
+      "valueInFields": [
+        "pxInput",
+        "pyInput",
+        "pzInput",
+        "fxInput",
+        "fyInput",
+        "fzInput",
+        "txInput",
+        "tyInput",
+        "tzInput",
+        "lerpInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ParamMathNode": {
+      "path": "Nodes/ParamMathNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ParamMathNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "nameInput",
-        "valueInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "paramName",
         "value1",
         "operation"
-      ]
-    },
-    "ParamOpNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/ParamOpNode",
-      "possiblyIncomplete": false,
-      "valueIn": 3,
+      ],
       "valueInFields": [
         "nameInput",
-        "value1Input",
-        "value2Input"
+        "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
+    },
+    "ParamOpNode": {
+      "path": "Nodes/ParamOpNode",
+      "execIn": 1,
+      "execOut": 0,
+      "valueIn": 3,
+      "valueOut": 0,
       "values": [
         "paramName",
         "value1",
         "value2",
         "operation"
-      ]
+      ],
+      "valueInFields": [
+        "nameInput",
+        "value1Input",
+        "value2Input"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "ParamToDecimalNode": {
+      "path": "Nodes/ParamToDecimalNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/ParamToDecimalNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "paramName"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": [
-        "editor"
-      ]
+      "possiblyIncomplete": false
     },
     "ParamToFileNode": {
+      "path": "Nodes/ParamToFileNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ParamToFileNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "isChatSponsor"
+      ],
       "valueInFields": [
         "fileInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "isChatSponsor"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "ParamVolumeNode": {
+      "path": "Nodes/ParamVolumeNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ParamVolumeNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "nameInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "mic",
         "param",
         "filter"
-      ]
+      ],
+      "valueInFields": [
+        "nameInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "PlayAnimNode": {
+      "path": "Nodes/PlayAnimNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/PlayAnimNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
-      "valueInFields": [
-        "blendInput",
-        "timeInput",
-        "eyeInput",
-        "leapInput",
-        "effectInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "leapOverride",
         "blendHead",
@@ -3677,30 +3929,42 @@
         "seconds",
         "eyes",
         "teffects"
-      ]
+      ],
+      "valueInFields": [
+        "blendInput",
+        "timeInput",
+        "eyeInput",
+        "leapInput",
+        "effectInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "PropNode": {
+      "path": "Nodes/PropNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/PropNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "selected",
         "status"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "RPCNode": {
+      "path": "Nodes/RPCNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/RPCNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 8,
+      "values": [
+        "eyelookinleft"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "nameOutput",
         "rpcOutput",
@@ -3711,282 +3975,292 @@
         "value2Output",
         "value3Output"
       ],
-      "values": [
-        "eyelookinleft"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "RaidNode": {
+      "path": "Nodes/RaidNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/RaidNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [
+        "minValue",
+        "maxValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputRaiders",
         "outputUsername"
       ],
-      "values": [
-        "toggle",
-        "display"
-      ]
+      "possiblyIncomplete": false
     },
     "RainNode": {
+      "path": "Nodes/RainNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/RainNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
-      "valueInFields": [
-        "fileInput",
-        "densityInput",
-        "speedInput",
-        "sizeInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "type",
         "slot",
         "density",
         "speed",
         "size"
-      ]
+      ],
+      "valueInFields": [
+        "fileInput",
+        "densityInput",
+        "speedInput",
+        "sizeInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "RandomFlexNode": {
+      "path": "Nodes/RandomFlexNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/RandomFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "opts"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "RandomNode": {
+      "path": "Nodes/RandomNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/RandomNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "RandomParamNode": {
+      "path": "Nodes/RandomParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/RandomParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "paramName",
+        "min",
+        "max"
+      ],
       "valueInFields": [
         "paramInput",
         "minInput",
         "maxInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "paramName",
-        "min",
-        "max"
-      ]
+      "possiblyIncomplete": false
     },
     "RecordAnimNode": {
+      "path": "Nodes/RecordAnimNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/RecordAnimNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "anim",
+        "sec"
+      ],
       "valueInFields": [
         "fileInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "anim",
-        "sec"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "RemoveAtTArrayNode": {
+      "path": "Nodes/RemoveAtTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/RemoveAtTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "index"
+      ],
       "valueInFields": [
         "arrayInput",
         "indexInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "index"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ResetARKitNode": {
+      "path": "Nodes/ResetARKitNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ResetARKitNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "possiblyIncomplete": false
     },
     "ResetArrayNode": {
+      "path": "Nodes/ResetArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ResetArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "arrayInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "arrayName"
-      ]
+      ],
+      "valueInFields": [
+        "arrayInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "ResetBSNode": {
+      "path": "Nodes/ResetBSNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ResetBSNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ResetTArrayNode": {
+      "path": "Nodes/ResetTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ResetTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "arrayInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "id"
-      ]
-    },
-    "ResetTriggerQueueNode": {
-      "execIn": 1,
-      "execOut": 0,
-      "path": "Nodes/ResetTriggerQueueNode",
-      "possiblyIncomplete": false,
-      "valueIn": 1,
+      ],
       "valueInFields": [
         "arrayInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "queueName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
-    "ResolutionNode": {
+    "ResetTriggerQueueNode": {
+      "path": "Nodes/ResetTriggerQueueNode",
       "execIn": 1,
       "execOut": 0,
+      "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "queueName"
+      ],
+      "valueInFields": [
+        "arrayInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
+    },
+    "ResolutionNode": {
       "path": "Nodes/ResolutionNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 0,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "width",
+        "height"
+      ],
       "valueInFields": [
         "wInput",
         "hInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "width",
-        "height"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SaveCameraNode": {
+      "path": "Nodes/SaveCameraNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SaveCameraNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "posx"
+      ],
       "valueInFields": [
         "cameraInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "posx"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SavePoseNode": {
+      "path": "Nodes/SavePoseNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SavePoseNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "maxValue"
+      ],
       "valueInFields": [
         "fileInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "maxValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ScreenshotNode": {
+      "path": "Nodes/ScreenshotNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ScreenshotNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SendKeysNode": {
+      "path": "Nodes/SendKeysNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SendKeysNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "dropdown",
         "state"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SendRPCNode": {
+      "path": "Nodes/SendRPCNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SendRPCNode",
-      "possiblyIncomplete": false,
       "valueIn": 7,
-      "valueInFields": [
-        "nameInput",
-        "value1Input",
-        "value2Input",
-        "value3Input",
-        "text1Input",
-        "text2Input",
-        "text3Input"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "rpcName",
         "val1",
@@ -3996,109 +4270,117 @@
         "val5",
         "val6",
         "bounce"
-      ]
+      ],
+      "valueInFields": [
+        "nameInput",
+        "value1Input",
+        "value2Input",
+        "value3Input",
+        "text1Input",
+        "text2Input",
+        "text3Input"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SendTwitchChatNode": {
+      "path": "Nodes/SendTwitchChatNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SendTwitchChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "fuga"
+      ],
       "valueInFields": [
         "messageInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "fuga"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SendVRCAvatarParamNode": {
+      "path": "Nodes/SendVRCAvatarParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SendVRCAvatarParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "paramName",
+        "intValue",
+        "floatValue",
+        "boolValue"
+      ],
       "valueInFields": [
         "nameInput",
         "intInput",
         "floatInput",
         "boolInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "paramName",
-        "intValue",
-        "floatValue",
-        "boolValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SetAnimSpeedNode": {
+      "path": "Nodes/SetAnimSpeedNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetAnimSpeedNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "WalkController"
+      ],
       "valueInFields": [
         "speedInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "WalkController"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SetDictionaryValueNode": {
+      "path": "Nodes/SetDictionaryValueNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetDictionaryValueNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "dictionary",
+        "paramName",
+        "value"
+      ],
       "valueInFields": [
         "nameInput",
         "keyInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "dictionary",
-        "paramName",
-        "value"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SetParamNode": {
+      "path": "Nodes/SetParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "paramName",
+        "value"
+      ],
       "valueInFields": [
         "nameInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "paramName",
-        "value"
-      ]
+      "possiblyIncomplete": false
     },
     "SetPoseNode": {
+      "path": "Nodes/SetPoseNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetPoseNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
-      "valueInFields": [
-        "fileInput",
-        "blendInput",
-        "timeInput",
-        "leapInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "leapOverride",
         "blendHead",
@@ -4116,82 +4398,99 @@
         "blendLeftHand",
         "blendLeftFingers",
         "seconds"
-      ]
+      ],
+      "valueInFields": [
+        "fileInput",
+        "blendInput",
+        "timeInput",
+        "leapInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SetTArrayNode": {
+      "path": "Nodes/SetTArrayNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetTArrayNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "arrayName",
+        "index",
+        "paramValue"
+      ],
       "valueInFields": [
         "nameInput",
         "indexInput",
         "valueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arrayName",
-        "index",
-        "paramValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SetTextParamNode": {
+      "path": "Nodes/SetTextParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetTextParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "paramName",
+        "value"
+      ],
       "valueInFields": [
         "paramNameInput",
         "paramValueInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "paramName",
-        "value"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SetTimerNode": {
+      "path": "Nodes/SetTimerNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SetTimerNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "timerName",
+        "seconds"
+      ],
       "valueInFields": [
         "nameInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "timerName",
-        "seconds"
-      ]
+      "possiblyIncomplete": false
     },
     "ShoutoutNode": {
+      "path": "Nodes/ShoutoutNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ShoutoutNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "SceneItemLockStateChanged"
+      ],
       "valueInFields": [
         "nameInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "SceneItemLockStateChanged"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SkyNode": {
+      "path": "Nodes/SkyNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SkyNode",
-      "possiblyIncomplete": true,
       "valueIn": 5,
+      "valueOut": 0,
+      "values": [
+        "multiplier",
+        "maxcap",
+        "active"
+      ],
       "valueInFields": [
         "activeInput",
         "skyInput",
@@ -4199,29 +4498,16 @@
         "multiInput",
         "capInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "multiplier",
-        "maxcap",
-        "active"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "SlimeNode": {
+      "path": "Nodes/SlimeNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SlimeNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
-      "valueInFields": [
-        "activeInput",
-        "colorInput",
-        "absInput",
-        "scatInput",
-        "toggleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "water_r",
         "water_g",
@@ -4230,47 +4516,44 @@
         "sca",
         "active",
         "toggle"
-      ]
+      ],
+      "valueInFields": [
+        "activeInput",
+        "colorInput",
+        "absInput",
+        "scatInput",
+        "toggleInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "SoundNode": {
+      "path": "Nodes/SoundNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SoundNode",
-      "possiblyIncomplete": true,
       "valueIn": 4,
+      "valueOut": 0,
+      "values": [
+        "soundFile",
+        "volume",
+        "duration",
+        "fadeout"
+      ],
       "valueInFields": [
         "fileInput",
         "volumeInput",
         "durationInput",
         "fadeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "volume",
-        "duration",
-        "fadeout"
-      ]
+      "possiblyIncomplete": false
     },
     "SpawnObjectNode": {
+      "path": "Nodes/SpawnObjectNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SpawnObjectNode",
-      "possiblyIncomplete": false,
       "valueIn": 9,
-      "valueInFields": [
-        "pxInput",
-        "pyInput",
-        "pzInput",
-        "rxInput",
-        "ryInput",
-        "rzInput",
-        "idInput",
-        "timeInput",
-        "scaleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "items",
         "destroy",
@@ -4282,162 +4565,173 @@
         "rotz",
         "id",
         "scale"
-      ]
+      ],
+      "valueInFields": [
+        "pxInput",
+        "pyInput",
+        "pzInput",
+        "rxInput",
+        "ryInput",
+        "rzInput",
+        "idInput",
+        "timeInput",
+        "scaleInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SpeechResultNode": {
+      "path": "Nodes/SpeechResultNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/SpeechResultNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SpeechWordNode": {
+      "path": "Nodes/SpeechWordNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/SpeechWordNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "word"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SpinnerNode": {
+      "path": "Nodes/SpinnerNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SpinnerNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "spinPower"
+      ],
       "valueInFields": [
         "speedInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "Timed"
-      ]
+      "possiblyIncomplete": false
     },
     "SplitTParamNode": {
+      "path": "Nodes/SplitTParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SplitTParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "input",
+        "delimeter",
+        "array"
+      ],
       "valueInFields": [
         "textInput",
         "delimInput",
         "arrayInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "input",
-        "delimeter",
-        "array"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SteamVRCalibrationNode": {
+      "path": "Nodes/SteamVRCalibrationNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SteamVRCalibrationNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "mode"
+      ],
       "valueInFields": [
         "modeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "UNCONNECTED"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "StopAnimationNode": {
+      "path": "Nodes/StopAnimationNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/StopAnimationNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "StopBSNode": {
+      "path": "Nodes/StopBSNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/StopBSNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "status"
+      ],
       "valueInFields": [
         "trackInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "status"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "StopMMDNode": {
+      "path": "Nodes/StopMMDNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/StopMMDNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "StopMusicNode": {
+      "path": "Nodes/StopMusicNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/StopMusicNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "SubsNode": {
+      "path": "Nodes/SubsNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/SubsNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputAmount",
         "outputTotal",
         "outputTier"
       ],
-      "values": [
-        "dropdown"
-      ]
+      "possiblyIncomplete": false
     },
     "SunLightNode": {
+      "path": "Nodes/SunLightNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/SunLightNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
-      "valueInFields": [
-        "activeInput",
-        "intInput",
-        "colorInput",
-        "smoothInput",
-        "toggleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "intensity",
         "color_r",
@@ -4446,215 +4740,262 @@
         "seconds",
         "toggle",
         "active"
-      ]
+      ],
+      "valueInFields": [
+        "activeInput",
+        "intInput",
+        "colorInput",
+        "smoothInput",
+        "toggleInput"
+      ],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "TArrayToFileNode": {
+      "path": "Nodes/TArrayToFileNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TArrayToFileNode",
-      "possiblyIncomplete": true,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "dataFile"
+      ],
       "valueInFields": [
         "fileInput",
         "arrayInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "dataFile"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "TArrayValueNode": {
+      "path": "Nodes/TArrayValueNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TArrayValueNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "array",
+        "index"
+      ],
       "valueInFields": [
         "arrayInput",
         "indexInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "array",
-        "index"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TTSHelperNode": {
+      "path": "Nodes/TTSHelperNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TTSHelperNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "textInput",
-        "userInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "message",
         "user",
         "charlimit",
         "platform"
-      ]
+      ],
+      "valueInFields": [
+        "textInput",
+        "userInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextArrayGetFlexNode": {
+      "path": "Nodes/TextArrayGetFlexNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextArrayGetFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
-      "valueInFields": [
-        "arrayNameInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "opts",
         "name"
-      ]
+      ],
+      "valueInFields": [
+        "arrayNameInput"
+      ],
+      "valueOutFields": [],
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextArraySetFlexNode": {
+      "path": "Nodes/TextArraySetFlexNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TextArraySetFlexNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "opts",
+        "name"
+      ],
       "valueInFields": [
         "arrayNameInput",
         "appendInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "opts",
-        "name"
-      ]
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextComparisonNode": {
+      "path": "Nodes/TextComparisonNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextComparisonNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "textInput",
-        "text2Input"
-      ],
       "valueOut": 1,
-      "valueOutFields": [
-        "boolOutput"
-      ],
       "values": [
         "text",
         "text2",
         "type"
-      ]
+      ],
+      "valueInFields": [
+        "textInput",
+        "text2Input"
+      ],
+      "valueOutFields": [
+        "boolOutput"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextConcatNode": {
+      "path": "Nodes/TextConcatNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextConcatNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 1,
+      "values": [
+        "result",
+        "eyelookinright"
+      ],
       "valueInFields": [
         "textInput",
         "concatInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "result",
-        "eyelookinright"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextLengthNode": {
+      "path": "Nodes/TextLengthNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextLengthNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "inputs"
+      ],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "numberOutput"
       ],
-      "values": [
-        "inputs"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextReplaceNode": {
+      "path": "Nodes/TextReplaceNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextReplaceNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "text",
+        "old",
+        "new"
+      ],
       "valueInFields": [
         "textInput",
         "oldInput",
         "newInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "text",
-        "old",
-        "new"
-      ]
+      "possiblyIncomplete": false
     },
     "TextSubstringNode": {
+      "path": "Nodes/TextSubstringNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextSubstringNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 1,
+      "values": [
+        "text",
+        "index",
+        "length"
+      ],
       "valueInFields": [
         "textInput",
         "indexInput",
         "lengthInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "textOutput"
       ],
-      "values": [
-        "text",
-        "index",
-        "length"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextSwitchFlexNode": {
-      "execIn": 1,
-      "execOut": 1,
       "path": "Nodes/TextSwitchFlexNode",
-      "possiblyIncomplete": false,
+      "execIn": 1,
+      "execOut": 4,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "opts",
+        "text",
+        "v0",
+        "v1",
+        "v2"
+      ],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "TestName",
-        "_ScreenJumpLevel"
-      ]
+      "dynamicSockets": [
+        "execIn",
+        "execOut",
+        "valueIn",
+        "valueOut"
+      ],
+      "possiblyIncomplete": false
     },
     "TextSwitchNode": {
+      "path": "Nodes/TextSwitchNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TextSwitchNode",
-      "possiblyIncomplete": false,
       "valueIn": 6,
+      "valueOut": 0,
+      "values": [
+        "text",
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+      ],
       "valueInFields": [
         "textInput",
         "value1Input",
@@ -4663,120 +5004,104 @@
         "value4Input",
         "value5Input"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "text",
-        "v1",
-        "v2",
-        "v3",
-        "v4",
-        "v5"
-      ]
+      "dynamicSockets": [
+        "execOut"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TextToBoolNode": {
+      "path": "Nodes/TextToBoolNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextToBoolNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "text"
+      ],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "boolOutput"
       ],
-      "values": [
-        "VNyan"
-      ]
+      "possiblyIncomplete": false
     },
     "TextToColorNode": {
+      "path": "Nodes/TextToColorNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextToColorNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "text"
+      ],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "colorOutput"
       ],
-      "values": [
-        "name"
-      ]
+      "possiblyIncomplete": false
     },
     "TextToDateTimeNode": {
+      "path": "Nodes/TextToDateTimeNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextToDateTimeNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "dateTimeOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "TextToDecimalNode": {
+      "path": "Nodes/TextToDecimalNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextToDecimalNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "text"
+      ],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "decimalOutput"
       ],
-      "values": [
-        "mouthfrownright"
-      ]
+      "possiblyIncomplete": false
     },
     "TextToNumberNode": {
+      "path": "Nodes/TextToNumberNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/TextToNumberNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 1,
+      "values": [
+        "vnarkit"
+      ],
       "valueInFields": [
         "textInput"
       ],
-      "valueOut": 1,
       "valueOutFields": [
         "numberOutput"
       ],
-      "values": [
-        "bsName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "ThrowItemNode": {
+      "path": "Nodes/ThrowItemNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/ThrowItemNode",
-      "possiblyIncomplete": false,
       "valueIn": 10,
-      "valueInFields": [
-        "amountInput",
-        "timeInput",
-        "flinchInput",
-        "delayInput",
-        "volumeInput",
-        "tagInput",
-        "scaleInput",
-        "heightInput",
-        "forceInput",
-        "stickInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "items",
         "flinch",
@@ -4791,113 +5116,144 @@
         "force",
         "sticky",
         "sticktime"
-      ]
+      ],
+      "valueInFields": [
+        "amountInput",
+        "timeInput",
+        "flinchInput",
+        "delayInput",
+        "volumeInput",
+        "tagInput",
+        "scaleInput",
+        "heightInput",
+        "forceInput",
+        "stickInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TiltifyDonationNode": {
+      "path": "Nodes/TiltifyDonationNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/TiltifyDonationNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputMessage",
         "outputAmount",
         "outputCurrency"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TimeScaleNode": {
+      "path": "Nodes/TimeScaleNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TimeScaleNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "blendNeck"
+      ],
       "valueInFields": [
         "scaleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "blendNeck"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TimerNode": {
+      "path": "Nodes/TimerNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/TimerNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
-        "eyelookoutleft"
-      ]
+        "timerName"
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "possiblyIncomplete": false
     },
     "TrackEffectNode": {
+      "path": "Nodes/TrackEffectNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TrackEffectNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "breathe",
+        "tilt",
+        "arm"
+      ],
       "valueInFields": [
         "tiltInput",
         "breatheInput",
         "swayInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "breathe",
-        "tilt",
-        "arm"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TrackerMapSlotNode": {
+      "path": "Nodes/TrackerMapSlotNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TrackerMapSlotNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "slot"
+      ],
       "valueInFields": [
         "slotInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "slot"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TrackerParamNode": {
+      "path": "Nodes/TrackerParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TrackerParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
-      "valueInFields": [
-        "xInput",
-        "yInput",
-        "zInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "paramx",
         "paramy",
         "paramz",
         "tracker",
         "transform"
-      ]
+      ],
+      "valueInFields": [
+        "xInput",
+        "yInput",
+        "zInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TrackingLayerStatusNode": {
+      "path": "Nodes/TrackingLayerStatusNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TrackingLayerStatusNode",
-      "possiblyIncomplete": false,
       "valueIn": 9,
+      "valueOut": 0,
+      "values": [
+        "arkit",
+        "mediapipe",
+        "leap",
+        "vmc1",
+        "vmc2",
+        "vmc3",
+        "vmc4",
+        "steam",
+        "lip"
+      ],
       "valueInFields": [
         "arkitInput",
         "mediapipeInput",
@@ -4909,49 +5265,42 @@
         "steamVRInput",
         "lipsyncInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "arkit",
-        "mediapipe",
-        "leap",
-        "vmc1",
-        "vmc2",
-        "vmc3",
-        "vmc4",
-        "steam",
-        "lip"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TransformParamNode": {
+      "path": "Nodes/TransformParamNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TransformParamNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
-      "valueInFields": [
-        "xInput",
-        "yInput",
-        "zInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "paramx",
         "paramy",
         "paramz",
         "bone",
         "transform"
-      ]
+      ],
+      "valueInFields": [
+        "xInput",
+        "yInput",
+        "zInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TriggerNode": {
+      "path": "Nodes/TriggerNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/TriggerNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 6,
+      "values": [
+        "triggerName"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "value1Output",
         "value2Output",
@@ -4960,18 +5309,16 @@
         "text2Output",
         "text3Output"
       ],
-      "values": [
-        "triggerName"
-      ]
+      "possiblyIncomplete": false
     },
     "TwitchCharityNode": {
+      "path": "Nodes/TwitchCharityNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/TwitchCharityNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 5,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputAmount",
@@ -4979,14 +5326,23 @@
         "outputCharity",
         "outputAmountText"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TwitchDropperNode": {
+      "path": "Nodes/TwitchDropperNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/TwitchDropperNode",
-      "possiblyIncomplete": false,
       "valueIn": 6,
+      "valueOut": 0,
+      "values": [
+        "emotes",
+        "radius",
+        "facecam",
+        "emoteSize",
+        "emoteDespawn",
+        "gravity"
+      ],
       "valueInFields": [
         "amountInput",
         "radiusInput",
@@ -4995,25 +5351,20 @@
         "timeInput",
         "lookInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "emotes",
-        "radius",
-        "facecam",
-        "emoteSize",
-        "emoteDespawn",
-        "gravity"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TwitchPowerUpNode": {
+      "path": "Nodes/TwitchPowerUpNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/TwitchPowerUpNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 5,
+      "values": [
+        "arrayName"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUsername",
         "outputValue",
@@ -5021,136 +5372,150 @@
         "outputRedeem",
         "outputCost"
       ],
-      "values": [
-        "arrayName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "TwitchProfileLoadedNode": {
+      "path": "Nodes/TwitchProfileLoadedNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/TwitchProfileLoadedNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "nameSocket",
         "urlSocket",
         "descSocket"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "UnpackDictionaryNode": {
+      "path": "Nodes/UnpackDictionaryNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/UnpackDictionaryNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "dictionary",
+        "paramName"
+      ],
       "valueInFields": [
         "dataInput",
         "targetInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "dictionary",
-        "paramName"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VMCStatusNode": {
+      "path": "Nodes/VMCStatusNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/VMCStatusNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "layer",
         "status"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSAnimationEventNode": {
+      "path": "Nodes/VTSAnimationEventNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/VTSAnimationEventNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "eventTypeSocket",
         "eventDataSocket",
         "animNameSocket",
         "animLengthSocket"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSAvatarLoadedNode": {
+      "path": "Nodes/VTSAvatarLoadedNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/VTSAvatarLoadedNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "avatarSocket"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSHotkeyEventNode": {
+      "path": "Nodes/VTSHotkeyEventNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/VTSHotkeyEventNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "nameSocket",
         "actionSocket",
         "byAPISocket"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSItemEventNode": {
+      "path": "Nodes/VTSItemEventNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/VTSItemEventNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "typeSocket",
         "fileSocket"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSModelStatusNode": {
+      "path": "Nodes/VTSModelStatusNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/VTSModelStatusNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "posXOutput",
         "posYOutput",
         "sizeOutput",
         "rotationOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSMoveModelNode": {
+      "path": "Nodes/VTSMoveModelNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/VTSMoveModelNode",
-      "possiblyIncomplete": false,
       "valueIn": 5,
+      "valueOut": 0,
+      "values": [
+        "posx",
+        "posy",
+        "rotation",
+        "size",
+        "smoothTime"
+      ],
       "valueInFields": [
         "posXInput",
         "posYInput",
@@ -5158,147 +5523,139 @@
         "sizeInput",
         "smoothTimeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "posx",
-        "posy",
-        "rotation",
-        "size",
-        "smoothTime"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSPogNode": {
+      "path": "Nodes/VTSPogNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/VTSPogNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
-      "valueInFields": [
-        "textInput",
-        "userInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "message",
         "dropdown",
         "user"
-      ]
+      ],
+      "valueInFields": [
+        "textInput",
+        "userInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSSendHotkeyNode": {
+      "path": "Nodes/VTSSendHotkeyNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/VTSSendHotkeyNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "hotkey"
+      ],
       "valueInFields": [
         "fileInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "hotkey"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "VTSSetExpressionNode": {
+      "path": "Nodes/VTSSetExpressionNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/VTSSetExpressionNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "file",
+        "fadeTime",
+        "activeToggle"
+      ],
       "valueInFields": [
         "fileInput",
         "fadeInput",
         "activeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "file",
-        "fadeTime",
-        "activeToggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "Vector3ToDecimalNode": {
+      "path": "Nodes/Vector3ToDecimalNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/Vector3ToDecimalNode",
-      "possiblyIncomplete": true,
       "valueIn": 1,
+      "valueOut": 3,
+      "values": [],
       "valueInFields": [
         "vectorInput"
       ],
-      "valueOut": 3,
       "valueOutFields": [
         "xOutput",
         "yOutput",
         "zOutput"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": true
     },
     "VolumeToDecimalNode": {
+      "path": "Nodes/VolumeToDecimalNode",
       "execIn": 0,
       "execOut": 0,
-      "path": "Nodes/VolumeToDecimalNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
-      "valueOutFields": [
-        "decimalOutput"
-      ],
       "values": [
         "mic",
         "filter"
-      ]
+      ],
+      "valueInFields": [],
+      "valueOutFields": [
+        "decimalOutput"
+      ],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "WSMessageNode": {
+      "path": "Nodes/WSMessageNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/WSMessageNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "address",
+        "message"
+      ],
       "valueInFields": [
         "addressInput",
         "messageInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "address",
-        "message"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "WaitNode": {
+      "path": "Nodes/WaitNode",
       "execIn": 1,
       "execOut": 1,
-      "path": "Nodes/WaitNode",
-      "possiblyIncomplete": false,
       "valueIn": 1,
+      "valueOut": 0,
+      "values": [
+        "wait"
+      ],
       "valueInFields": [
         "waitInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "wait"
-      ]
+      "possiblyIncomplete": false
     },
     "WaterNode": {
+      "path": "Nodes/WaterNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/WaterNode",
-      "possiblyIncomplete": false,
       "valueIn": 4,
-      "valueInFields": [
-        "activeInput",
-        "colorInput",
-        "opacityInput",
-        "toggleInput"
-      ],
       "valueOut": 0,
-      "valueOutFields": [],
       "values": [
         "dir",
         "water_r",
@@ -5307,166 +5664,183 @@
         "opacity",
         "active",
         "toggle"
-      ]
+      ],
+      "valueInFields": [
+        "activeInput",
+        "colorInput",
+        "opacityInput",
+        "toggleInput"
+      ],
+      "valueOutFields": [],
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "WebSocketNode": {
+      "path": "Nodes/WebSocketNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/WebSocketNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "_GamepadLeftX",
+        "parameterValue"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "valueOutput",
         "messageOutput",
         "dataOutput"
       ],
-      "values": [
-        "_GamepadLeftX",
-        "parameterValue"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "WindNode": {
+      "path": "Nodes/WindNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/WindNode",
-      "possiblyIncomplete": false,
       "valueIn": 3,
+      "valueOut": 0,
+      "values": [
+        "dir",
+        "power",
+        "toggle"
+      ],
       "valueInFields": [
         "vectorInput",
         "powerInput",
         "toggleInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "dir",
-        "power",
-        "toggle"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "WorldLoadedNode": {
+      "path": "Nodes/WorldLoadedNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/WorldLoadedNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 1,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputWorld"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YTChatNode": {
+      "path": "Nodes/YTChatNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/YTChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 3,
+      "values": [
+        "userFilter",
+        "userLevel"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUser",
         "outputLevel",
         "outputMessage"
       ],
-      "values": [
-        "userFilter",
-        "userLevel"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YTCommandNode": {
+      "path": "Nodes/YTCommandNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/YTCommandNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 4,
+      "values": [
+        "commandName",
+        "userFilter",
+        "userLevel"
+      ],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUser",
         "outputLevel",
         "outputMessage",
         "outputValue"
       ],
-      "values": [
-        "commandName",
-        "userFilter",
-        "userLevel"
-      ]
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YTMembershipNode": {
+      "path": "Nodes/YTMembershipNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/YTMembershipNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUser",
         "outputMessage"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YTStickerNode": {
+      "path": "Nodes/YTStickerNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/YTStickerNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUser",
         "outputAmount"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YTSubNode": {
+      "path": "Nodes/YTSubNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/YTSubNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 0,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YTSuperChatNode": {
+      "path": "Nodes/YTSuperChatNode",
       "execIn": 0,
       "execOut": 1,
-      "path": "Nodes/YTSuperChatNode",
-      "possiblyIncomplete": false,
       "valueIn": 0,
-      "valueInFields": [],
       "valueOut": 2,
+      "values": [],
+      "valueInFields": [],
       "valueOutFields": [
         "outputUser",
         "outputAmount"
       ],
-      "values": []
+      "valuesUncertain": true,
+      "possiblyIncomplete": false
     },
     "YeetNode": {
+      "path": "Nodes/YeetNode",
       "execIn": 1,
       "execOut": 0,
-      "path": "Nodes/YeetNode",
-      "possiblyIncomplete": false,
       "valueIn": 2,
+      "valueOut": 0,
+      "values": [
+        "yeetPower",
+        "respawnTime"
+      ],
       "valueInFields": [
         "powerInput",
         "timeInput"
       ],
-      "valueOut": 0,
       "valueOutFields": [],
-      "values": [
-        "yeetPower",
-        "respawnTime",
-        "dir"
-      ]
+      "possiblyIncomplete": false
     }
   }
 }

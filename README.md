@@ -133,6 +133,24 @@ point at a real VNyan install. The bundled node-type schema
 generated against Unity `2022.3.62f3` — if a VNyan update changes node
 types or breaks a reflected capability, `vnyan_status` will show it.
 
+## Regenerating the node-type schema
+
+`src/graph/schema.json` describes all ~300 node types' socket layouts. To
+regenerate it for a newer VNyan build:
+
+```bash
+dotnet tool install -g ilspycmd
+ilspycmd -p -o /tmp/acs "<your VNyan>/VNyan_Data/Managed/Assembly-CSharp.dll"
+python tools/extract-node-schema.py /tmp/acs \
+  --unity-version <see Player.log "Initialize engine version"> \
+  --graphs "<your VNyan>/Examples/*.json" \
+  -o src/graph/schema.json
+```
+
+Passing `--graphs` matters: node `values[]` key names can't be read
+reliably from the obfuscated assembly, so the script prefers names observed
+in real VNyan-written graph files and flags the rest `valuesUncertain`.
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE).

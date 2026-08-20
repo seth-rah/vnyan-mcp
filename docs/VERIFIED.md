@@ -74,6 +74,41 @@ obfuscated with no recoverable names) rather than guessed.
 | VNyanNet | `vnyan_vnyannet` | plugin (live) | ✅ degrades to empty results (not an error) when VNyanNet isn't configured |
 | Spout2 / cameras | `vnyan_spout` | plugin (live) | ✅ both tested — `addCamera` with explicit position/rotation/focalLength, confirmed via `listCameras` |
 
+## Pendulum composition and node socket counts
+
+- **Only one pendulum may be linked directly to a given GameObject** -
+  confirmed by VNyan's developer. Two pendulums on the same target fight
+  each other and the motion cancels out; it is a routing problem, not a
+  physics-tuning one. The supported approach is to leave each pendulum's
+  `gameObject` empty, give each a unique `param`, and sum those parameters
+  in a node graph before applying them with a single `ObjectRotNode`. Full
+  recipe: `vnyan_guide topic:'pendulum-composition'`.
+- **`ObjectRotNode`, `ObjectPosNode` and `ObjectScaleNode` zero any axis you
+  don't specify** - stated in each node's own help text. So every axis must
+  be set in a single call. `ObjectScaleNode` is the dangerous one: a partial
+  write collapses the object to zero size on the omitted axes.
+- **`ParamOpNode.operation` is a dropdown index serialized as a string**:
+  `"0"` add, `"1"` subtract, `"2"` multiply, `"3"` divide, `"4"` modulo
+  (read from the decompiled switch).
+- **`SetTimerNode`'s `seconds` value is in milliseconds** despite the key
+  name - VNyan's help text says "Milliseconds to trigger", and a real graph
+  uses `5000` for a 5-second delay.
+- **23 node types declare their sockets as an array or `List<>`, or build
+  them at runtime ("Flex" nodes).** Their real counts come from the Unity
+  prefab, so a static source scan reports 0 and previously made every
+  branching node (`OrderedNode`, all `Filter*Node`, `CompareTextNode`,
+  `RandomNode`, `CyclerNode`, `TextSwitchNode`, ...) unauthorable -
+  `vnyan_graph_write` rejected any wire out of them. These are now marked
+  `dynamicSockets` and the builder grows sockets on demand; 7 exact counts
+  were recovered from real graph files (e.g. `FilterParamNode` has 3 exec
+  outputs).
+- **`values[]` key names cannot be read reliably from decompiled source.**
+  Method bodies are salted with decoy string literals, and re-running the
+  extraction with a different tie-break produced different wrong answers for
+  6 types. The schema now prefers keys observed in real VNyan-written graph
+  files (68 of 304 types) and flags everything else `valuesUncertain`.
+  Regenerate with `tools/extract-node-schema.py`.
+
 ## Known limits (state these plainly, don't imply otherwise)
 
 - **Post-FX and lights are write-only at every tier.** The MCP tracks the
